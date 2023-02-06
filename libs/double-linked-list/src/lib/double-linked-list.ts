@@ -208,6 +208,32 @@ class DoubleLinkedList<T> {
     return this.nodeSet.size;
   }
 
+  indexOfNode(node: Node<T>): number {
+    let tmpNode = this.head;
+    let i = 0;
+    while (tmpNode) {
+      if (tmpNode === node) {
+        return i;
+      }
+      i++;
+      tmpNode = tmpNode.nextNode;
+    }
+    return -1;
+  }
+
+  indexOfValue(value: T): number {
+    let tmpNode = this.head;
+    let i = 0;
+    while (tmpNode) {
+      if (tmpNode.value === value) {
+        return i;
+      }
+      i++;
+      tmpNode = tmpNode.nextNode;
+    }
+    return -1;
+  }
+
   [Symbol.iterator]() {
     let tmpNode = this.head;
 

@@ -349,4 +349,38 @@ describe('DoubleLinkedList', () => {
     expect(dll.peekFirst()?.nextNode?.value).toEqual(4);
     expect(dll.peekLast()?.prevNode?.value).toEqual(4);
   });
+
+  it('indexOfNode works', () => {
+    const dll = new DoubleLinkedList<number>();
+    const node1 = new Node<number>({ value: 2 });
+    dll.addNodeIndex(node1, -1);
+    expect(dll.indexOfNode(node1)).toEqual(0);
+
+    const node2 = new Node<number>({ value: 3 });
+    expect(dll.indexOfNode(node2)).toEqual(-1);
+
+    dll.addNodeIndex(node2, 10);
+    expect(dll.indexOfNode(node2)).toEqual(1);
+
+    const node3 = new Node<number>({ value: 4 });
+    dll.addNodeIndex(node3, 1);
+    expect(dll.indexOfNode(node3)).toEqual(1);
+  });
+
+  it('indexOfValue works', () => {
+    const dll = new DoubleLinkedList<number>();
+    const node1 = new Node<number>({ value: 2 });
+    dll.addNodeIndex(node1, -1);
+    expect(dll.indexOfValue(2)).toEqual(0);
+
+    const node2 = new Node<number>({ value: 3 });
+    expect(dll.indexOfValue(3)).toEqual(-1);
+
+    dll.addNodeIndex(node2, 10);
+    expect(dll.indexOfValue(3)).toEqual(1);
+
+    const node3 = new Node<number>({ value: 4 });
+    dll.addNodeIndex(node3, 1);
+    expect(dll.indexOfValue(4)).toEqual(1);
+  });
 });
