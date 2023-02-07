@@ -1,6 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@nrwl/devkit': ^15.6.3
   '@nrwl/esbuild': 15.6.3
   '@nrwl/eslint-plugin-nx': 15.6.3
   '@nrwl/jest': 15.6.3
@@ -19,6 +20,7 @@ specifiers:
   '@vitest/coverage-c8': ~0.25.8
   '@vitest/ui': ^0.25.8
   axios: ^1.0.0
+  chalk: ^5.2.0
   esbuild: ^0.15.7
   eslint: ~8.15.0
   eslint-config-prettier: 8.1.0
@@ -42,6 +44,7 @@ dependencies:
   tslib: 2.5.0
 
 devDependencies:
+  '@nrwl/devkit': 15.6.3_nx@15.6.3+typescript@4.8.4
   '@nrwl/esbuild': 15.6.3_fyd2w6tdmtiv7fopoubgtds27u
   '@nrwl/eslint-plugin-nx': 15.6.3_wrqdxpx2lmyci54uz4efldzlbe
   '@nrwl/jest': 15.6.3_7nbvt2swijzkpi5mktk3iifwgy
@@ -58,6 +61,7 @@ devDependencies:
   '@typescript-eslint/parser': 5.50.0_oy7hgmlo6357d5kkcjbkfgtg4q
   '@vitest/coverage-c8': 0.25.8_s6wqdchbfx6wfdl7cd3mh4oxbu
   '@vitest/ui': 0.25.8
+  chalk: 5.2.0
   esbuild: 0.15.18
   eslint: 8.15.0
   eslint-config-prettier: 8.1.0_eslint@8.15.0
@@ -3747,6 +3751,11 @@ packages:
     dependencies:
       ansi-styles: 4.3.0
       supports-color: 7.2.0
+    dev: true
+
+  /chalk/5.2.0:
+    resolution: {integrity: sha512-ree3Gqw/nazQAPuJJEy+avdl7QfZMcUvmHIKgEZkGL+xOBzRvup5Hxo6LHuMceSxOabuJLJm5Yp/92R9eMmMvA==}
+    engines: {node: ^12.17.0 || ^14.13 || >=16.0.0}
     dev: true
 
   /char-regex/1.0.2:

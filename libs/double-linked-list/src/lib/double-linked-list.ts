@@ -26,6 +26,10 @@ class DoubleLinkedList<T> {
   private nodeSet = new Set<Node<T>>();
   private valueSet = new Set<T>();
 
+  //
+  // Add Methods
+  //
+
   addFront(value: T): void {
     const newNode = new Node<T>({ value });
     this.addNodeFront(newNode);
@@ -173,41 +177,138 @@ class DoubleLinkedList<T> {
     this.tail = this.head;
   }
 
-  peekFirst(): Node<T> | undefined {
+  //
+  // Peek methods
+  //
+
+  peekHead(): Node<T> | undefined {
     return this?.head;
   }
 
-  peekLast(): Node<T> | undefined {
+  peekTail(): Node<T> | undefined {
     return this?.tail;
   }
 
-  clear() {
-    this.head = undefined;
-    this.tail = undefined;
+  removeNode(node?: Node<T>): Node<T> | undefined {
+    if (node === undefined) {
+      return;
+    }
+
+    if (!this.containsNode(node)) {
+      throw new Error('List does not contain node');
+    }
+    if (node) {
+      if (node.prevNode) {
+        node.prevNode.nextNode = node.nextNode;
+      }
+      if (node.nextNode) {
+        node.nextNode.prevNode = node.prevNode;
+      }
+
+      if (node === this.head) {
+        this.head = node.nextNode;
+      }
+
+      if (node === this.tail) {
+        this.tail = node.prevNode;
+      }
+    }
+    return node;
   }
 
-  containsNode(node: Node<T>) {
+  //
+  // remove methods
+  //
+
+  removeAtIndex(index: number): Node<T> | void {
+    let tmpNode = this.head;
+    let i = 0;
+    while (tmpNode) {
+      if (i++ === index) {
+        return this.removeNode(tmpNode);
+      }
+      tmpNode = tmpNode.nextNode;
+    }
+  }
+
+  removeFirstOccurrence(value: T): Node<T> | void {
+    let tmpNode = this.head;
+    while (tmpNode) {
+      if (tmpNode.value === value) {
+        this.removeNode(tmpNode);
+        return tmpNode;
+      }
+      tmpNode = tmpNode.nextNode;
+    }
+  }
+
+  removeLastOccurrence(value: T): Node<T> | void {
+    let tmpNode = this.tail;
+    while (tmpNode) {
+      if (tmpNode.value === value) {
+        this.removeNode(tmpNode);
+        return tmpNode;
+      }
+      tmpNode = tmpNode.prevNode;
+    }
+  }
+
+  removeAllOccurrences(value: T): Node<T>[] {
+    const out: Node<T>[] = [];
+    let tmpNode = this.head;
+    while (tmpNode) {
+      if (tmpNode.value === value) {
+        this.removeNode(tmpNode);
+        out.push(tmpNode);
+      }
+      tmpNode = tmpNode.nextNode;
+    }
+    return out;
+  }
+
+  removeHead(): Node<T> | undefined {
+    return this.removeNode(this.head);
+  }
+
+  removeTail(): Node<T> | undefined {
+    return this.removeNode(this.tail);
+  }
+
+  //
+  // contain methods
+  //
+  containsNode(node: Node<T>): boolean {
     return this.nodeSet.has(node);
   }
 
-  containsValue(value: T) {
+  containsValue(value: T): boolean {
     return this.valueSet.has(value);
   }
 
-  clone(): DoubleLinkedList<T> {
-    const dll = new DoubleLinkedList<T>();
-    let node = this.head;
-    while (node !== undefined) {
-      dll.addBack(node.value);
-      node = node.nextNode;
+  //
+  // iteration methods
+  //
+
+  map<U>(proc: (value: T) => U): U[] {
+    const out = [];
+    for (const val of this) {
+      if (val) {
+        out.push(proc(val));
+      }
     }
-    return dll;
+    return out;
   }
 
-  get length() {
-    return this.nodeSet.size;
+  forEach(proc: (value: T) => void): void {
+    for (const val of this) {
+      if (val) {
+        proc(val);
+      }
+    }
   }
 
+  //
+  // indexOf methods
   indexOfNode(node: Node<T>): number {
     let tmpNode = this.head;
     let i = 0;
@@ -217,6 +318,19 @@ class DoubleLinkedList<T> {
       }
       i++;
       tmpNode = tmpNode.nextNode;
+    }
+    return -1;
+  }
+
+  lastIndexOfValue(value: T): number {
+    let tmpNode = this.tail;
+    let i = this.length - 1;
+    while (tmpNode) {
+      if (tmpNode.value === value) {
+        return i;
+      }
+      i--;
+      tmpNode = tmpNode.prevNode;
     }
     return -1;
   }
@@ -234,6 +348,35 @@ class DoubleLinkedList<T> {
     return -1;
   }
 
+  //
+  // utility methods
+  //
+
+  clear(): void {
+    this.head = undefined;
+    this.tail = undefined;
+    this.nodeSet.clear();
+    this.valueSet.clear();
+  }
+
+  clone(): DoubleLinkedList<T> {
+    const dll = new DoubleLinkedList<T>();
+    let node = this.head;
+    while (node !== undefined) {
+      dll.addBack(node.value);
+      node = node.nextNode;
+    }
+    return dll;
+  }
+
+  get length(): number {
+    return this.nodeSet.size;
+  }
+
+  toArray(): T[] {
+    return this.map((val) => val);
+  }
+
   [Symbol.iterator]() {
     let tmpNode = this.head;
 
@@ -248,3 +391,4 @@ class DoubleLinkedList<T> {
 }
 
 export { DoubleLinkedList, Node };
+export { NodeProps };
