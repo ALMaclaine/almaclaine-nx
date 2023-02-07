@@ -18,7 +18,9 @@
       "@almaclaine/double-linked-list": [
         "libs/double-linked-list/src/index.ts"
       ],
-      "@almaclaine/priority-queue": ["libs/priority-queue/src/index.ts"]
+      "@almaclaine/no-op": ["libs/no-op/src/index.ts"],
+      "@almaclaine/priority-queue": ["libs/priority-queue/src/index.ts"],
+      "@almaclaine/scheduler": ["libs/scheduler/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

@@ -41,7 +41,7 @@ class PriorityQueue<T> {
   }
 
   addMany(value: T[]): Node<T>[] {
-    return value.sort(this._comparator).map((val) => this.add(val));
+    return value.map((val) => this.add(val));
   }
 
   clear(): void {
