@@ -15,7 +15,10 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@almaclaine/double-linked-list": ["libs/double-linked-list/src/index.ts"]
+      "@almaclaine/double-linked-list": [
+        "libs/double-linked-list/src/index.ts"
+      ],
+      "@almaclaine/priority-queue": ["libs/priority-queue/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

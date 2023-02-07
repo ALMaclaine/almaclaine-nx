@@ -10,9 +10,17 @@ describe('DoubleLinkedList', () => {
 
   it('addFront 1 node should be head and tail', () => {
     const dll = new DoubleLinkedList<number>();
-    dll.addFront(2);
+    const out = dll.addFront(2);
     expect(dll.peekHead()).toMatchObject({ value: 2 });
     expect(dll.peekHead()).toEqual(dll.peekHead());
+    expect(out).toEqual(dll.peekHead());
+  });
+
+  it('peekHeadValue/peekTailValue works', () => {
+    const dll = new DoubleLinkedList<number>();
+    dll.addFront(2);
+    expect(dll.peekHeadValue()).toEqual(2);
+    expect(dll.peekTailValue()).toEqual(2);
   });
 
   it('addFront 2 node should be connected', () => {
@@ -40,16 +48,28 @@ describe('DoubleLinkedList', () => {
 
   it('addFrontMany node should be correct', () => {
     const dll = new DoubleLinkedList<number>();
-    dll.addFrontMany([2, 3, 4]);
+    const out = dll.addFrontMany([2, 3, 4]);
     expect(dll.peekTail()).toMatchObject({ value: 2 });
     expect(dll.peekHead()).toMatchObject({ value: 4 });
+    expect(out[0]).toEqual(dll.peekTail());
+    expect(out[out.length - 1]).toEqual(dll.peekHead());
+  });
+
+  it('addBackMany node should be correct', () => {
+    const dll = new DoubleLinkedList<number>();
+    const out = dll.addBackMany([2, 3, 4]);
+    expect(dll.peekTail()).toMatchObject({ value: 4 });
+    expect(dll.peekHead()).toMatchObject({ value: 2 });
+    expect(out[0]).toEqual(dll.peekHead());
+    expect(out[out.length - 1]).toEqual(dll.peekTail());
   });
 
   it('addBack 1 node should be head and tail', () => {
     const dll = new DoubleLinkedList<number>();
-    dll.addBack(2);
+    const out = dll.addBack(2);
     expect(dll.peekHead()).toMatchObject({ value: 2 });
     expect(dll.peekHead()).toEqual(dll.peekHead());
+    expect(out).toEqual(dll.peekHead());
   });
 
   it('addBack 3 node should be correct', () => {
@@ -172,7 +192,7 @@ describe('DoubleLinkedList', () => {
     expect(() => dll.addNodeBack(node1)).toThrow();
   });
 
-  it('add node before node', () => {
+  it('addNodeBeforeNode', () => {
     const dll = new DoubleLinkedList<number>();
     const node1 = new Node<number>({ value: 2 });
     expect(() => dll.addNodeBeforeNode(node1, node1)).toThrow();
@@ -193,7 +213,22 @@ describe('DoubleLinkedList', () => {
     expect(dll.peekTail()?.prevNode).toEqual(node4);
   });
 
-  it('add node after node', () => {
+  it('addBeforeNode', () => {
+    const dll = new DoubleLinkedList<number>();
+    const node1 = new Node<number>({ value: 2 });
+    expect(() => dll.addNodeBeforeNode(node1, node1)).toThrow();
+    dll.addNodeFront(node1);
+    const out = dll.addBeforeNode(3, node1);
+    expect(dll.peekHead()).toMatchObject({ value: 3 });
+    expect(dll.peekHead()).toEqual(out);
+    expect(dll.peekTail()).toMatchObject({ value: 2 });
+
+    dll.addBeforeNode(4, node1);
+    expect(dll.peekHead()?.nextNode).toMatchObject({ value: 4 });
+    expect(dll.peekTail()?.prevNode).toMatchObject({ value: 4 });
+  });
+
+  it('addNodeAfterNode', () => {
     const dll = new DoubleLinkedList<number>();
     const node1 = new Node<number>({ value: 2 });
     expect(() => dll.addNodeBeforeNode(node1, node1)).toThrow();
@@ -215,6 +250,25 @@ describe('DoubleLinkedList', () => {
 
     expect(dll.peekHead()).toMatchObject({ value: 2 });
     expect(dll.peekTail()).toMatchObject({ value: 3 });
+  });
+
+  it('addAfterNode', () => {
+    const dll = new DoubleLinkedList<number>();
+    const node1 = new Node<number>({ value: 2 });
+    expect(() => dll.addNodeBeforeNode(node1, node1)).toThrow();
+    dll.addNodeFront(node1);
+    const out = dll.addAfterNode(3, node1);
+    expect(dll.peekHead()).toMatchObject({ value: 2 });
+    expect(dll.peekHead()?.nextNode).toEqual(out);
+    expect(dll.peekTail()).toMatchObject({ value: 3 });
+
+    dll.addAfterNode(4, node1);
+    expect(dll.peekHead()?.nextNode).toMatchObject({ value: 4 });
+    expect(dll.peekTail()?.prevNode).toMatchObject({ value: 4 });
+
+    dll.addAfterNode(5, node1);
+    expect(dll.peekHead()?.nextNode).toMatchObject({ value: 5 });
+    expect(dll.peekTail()?.prevNode).toMatchObject({ value: 4 });
   });
 
   it('clear works', () => {
@@ -311,6 +365,82 @@ describe('DoubleLinkedList', () => {
     }
   });
 
+  it('valueIterator works', () => {
+    const dll = new DoubleLinkedList<number>();
+    const values = [2, 3, 4, 5];
+    const node1 = new Node<number>({ value: values[0] });
+    dll.addNodeFront(node1);
+    const node2 = new Node<number>({ value: values[1] });
+    dll.addNodeAfterNode(node2, node1);
+    const node3 = new Node<number>({ value: values[2] });
+    dll.addNodeAfterNode(node3, node1);
+    const node4 = new Node<number>({ value: values[3] });
+    dll.addNodeAfterNode(node4, node1);
+
+    let i = 0;
+    const nodes = [node1, node4, node3, node2];
+    for (const value of dll.valueIterator()) {
+      expect(value).toEqual(nodes[i++].value);
+    }
+  });
+
+  it('nodeIterator works', () => {
+    const dll = new DoubleLinkedList<number>();
+    const values = [2, 3, 4, 5];
+    const node1 = new Node<number>({ value: values[0] });
+    dll.addNodeFront(node1);
+    const node2 = new Node<number>({ value: values[1] });
+    dll.addNodeAfterNode(node2, node1);
+    const node3 = new Node<number>({ value: values[2] });
+    dll.addNodeAfterNode(node3, node1);
+    const node4 = new Node<number>({ value: values[3] });
+    dll.addNodeAfterNode(node4, node1);
+
+    let i = 0;
+    const nodes = [node1, node4, node3, node2];
+    for (const value of dll.nodeIterator()) {
+      expect(value).toEqual(nodes[i++]);
+    }
+  });
+
+  it('valueIteratorReverse works', () => {
+    const dll = new DoubleLinkedList<number>();
+    const values = [2, 3, 4, 5];
+    const node1 = new Node<number>({ value: values[0] });
+    dll.addNodeFront(node1);
+    const node2 = new Node<number>({ value: values[1] });
+    dll.addNodeAfterNode(node2, node1);
+    const node3 = new Node<number>({ value: values[2] });
+    dll.addNodeAfterNode(node3, node1);
+    const node4 = new Node<number>({ value: values[3] });
+    dll.addNodeAfterNode(node4, node1);
+
+    let i = 0;
+    const nodes = [node1, node4, node3, node2].reverse();
+    for (const value of dll.valueIteratorReverse()) {
+      expect(value).toEqual(nodes[i++].value);
+    }
+  });
+
+  it('nodeIteratorReverse works', () => {
+    const dll = new DoubleLinkedList<number>();
+    const values = [2, 3, 4, 5];
+    const node1 = new Node<number>({ value: values[0] });
+    dll.addNodeFront(node1);
+    const node2 = new Node<number>({ value: values[1] });
+    dll.addNodeAfterNode(node2, node1);
+    const node3 = new Node<number>({ value: values[2] });
+    dll.addNodeAfterNode(node3, node1);
+    const node4 = new Node<number>({ value: values[3] });
+    dll.addNodeAfterNode(node4, node1);
+
+    let i = 0;
+    const nodes = [node1, node4, node3, node2].reverse();
+    for (const value of dll.nodeIteratorReverse()) {
+      expect(value).toEqual(nodes[i++]);
+    }
+  });
+
   it('length works', () => {
     const dll = new DoubleLinkedList<number>();
     const values = [2, 3, 4, 5];
@@ -344,8 +474,9 @@ describe('DoubleLinkedList', () => {
 
   it('add index works', () => {
     const dll = new DoubleLinkedList<number>();
-    dll.addIndex(2, -1);
+    const out = dll.addIndex(2, -1);
     expect(dll.peekHead()?.value).toEqual(2);
+    expect(dll.peekHead()).toEqual(out);
 
     dll.addIndex(3, 10);
     expect(dll.peekTail()?.value).toEqual(3);

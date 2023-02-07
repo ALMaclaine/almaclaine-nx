@@ -30,30 +30,33 @@ class DoubleLinkedList<T> {
   // Add Methods
   //
 
-  addFront(value: T): void {
+  addFront(value: T): Node<T> {
     const newNode = new Node<T>({ value });
     this.addNodeFront(newNode);
+    return newNode;
   }
 
-  addFrontMany(values: T[]): void {
-    values.forEach((val) => this.addFront(val));
+  addFrontMany(values: T[]): Node<T>[] {
+    return values.map((val) => this.addFront(val));
   }
 
-  addBack(value: T): void {
+  addBack(value: T): Node<T> {
     const newNode = new Node<T>({ value });
     this.addNodeBack(newNode);
+    return newNode;
   }
 
-  addIndex(value: T, index: number): void {
+  addBackMany(values: T[]): Node<T>[] {
+    return values.map((val) => this.addBack(val));
+  }
+
+  addIndex(value: T, index: number): Node<T> {
     const newNode = new Node<T>({ value });
     this.addNodeIndex(newNode, index);
+    return newNode;
   }
 
-  addBackMany(values: T[]): void {
-    values.forEach((val) => this.addBack(val));
-  }
-
-  private addNode(node: Node<T>) {
+  private addNode(node: Node<T>): void {
     this.valueSet.add(node.value);
     if (this.containsNode(node)) {
       throw new Error('Cannot add same node multiple times');
@@ -62,7 +65,7 @@ class DoubleLinkedList<T> {
     }
   }
 
-  addNodeIndex(node: Node<T>, index: number) {
+  addNodeIndex(node: Node<T>, index: number): void {
     if (index <= 0) {
       this.addNodeFront(node);
     } else if (index >= this.length) {
@@ -149,6 +152,12 @@ class DoubleLinkedList<T> {
     }
   }
 
+  addBeforeNode(value: T, beforeNode: Node<T>): Node<T> {
+    const node = new Node({ value: value });
+    this.addNodeBeforeNode(node, beforeNode);
+    return node;
+  }
+
   addNodeAfterNode(nodeToAdd: Node<T>, afterNode: Node<T>): void {
     if (!this.nodeSet.has(afterNode)) {
       throw new Error('Before node is not part of list');
@@ -172,6 +181,12 @@ class DoubleLinkedList<T> {
     }
   }
 
+  addAfterNode(value: T, afterNode: Node<T>): Node<T> {
+    const node = new Node({ value: value });
+    this.addNodeAfterNode(node, afterNode);
+    return node;
+  }
+
   private addNodeEmpty(node: Node<T>): void {
     this.head = node;
     this.tail = this.head;
@@ -185,8 +200,16 @@ class DoubleLinkedList<T> {
     return this?.head;
   }
 
+  peekHeadValue(): T | undefined {
+    return this?.head?.value;
+  }
+
   peekTail(): Node<T> | undefined {
     return this?.tail;
+  }
+
+  peekTailValue(): T | undefined {
+    return this?.tail?.value;
   }
 
   removeNode(node?: Node<T>): Node<T> | undefined {
@@ -377,16 +400,40 @@ class DoubleLinkedList<T> {
     return this.map((val) => val);
   }
 
-  [Symbol.iterator]() {
+  *valueIterator(): IterableIterator<T> {
     let tmpNode = this.head;
+    while (tmpNode) {
+      yield tmpNode?.value;
+      tmpNode = tmpNode?.nextNode;
+    }
+  }
 
-    return {
-      next: () => {
-        const out = { value: tmpNode?.value, done: !tmpNode };
-        tmpNode = tmpNode?.nextNode;
-        return out;
-      },
-    };
+  *nodeIterator(): IterableIterator<Node<T>> {
+    let tmpNode = this.head;
+    while (tmpNode) {
+      yield tmpNode;
+      tmpNode = tmpNode?.nextNode;
+    }
+  }
+
+  *valueIteratorReverse(): IterableIterator<T> {
+    let tmpNode = this.tail;
+    while (tmpNode) {
+      yield tmpNode?.value;
+      tmpNode = tmpNode?.prevNode;
+    }
+  }
+
+  *nodeIteratorReverse(): IterableIterator<Node<T>> {
+    let tmpNode = this.tail;
+    while (tmpNode) {
+      yield tmpNode;
+      tmpNode = tmpNode?.prevNode;
+    }
+  }
+
+  [Symbol.iterator](): IterableIterator<T> {
+    return this.valueIterator();
   }
 }
 

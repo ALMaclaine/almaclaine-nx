@@ -1,24 +1,24 @@
 {
-  "name": "double-linked-list",
+  "name": "priority-queue",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/double-linked-list/src",
+  "sourceRoot": "libs/priority-queue/src",
   "projectType": "library",
   "targets": {
     "build": {
       "executor": "@nrwl/js:swc",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/libs/double-linked-list",
-        "main": "libs/double-linked-list/src/index.ts",
-        "tsConfig": "libs/double-linked-list/tsconfig.lib.json",
-        "assets": ["libs/double-linked-list/*.md"],
+        "outputPath": "dist/libs/priority-queue",
+        "main": "libs/priority-queue/src/index.ts",
+        "tsConfig": "libs/priority-queue/tsconfig.lib.json",
+        "assets": ["libs/priority-queue/*.md"],
         "buildableProjectDepsInPackageJsonType": "dependencies"
       }
     },
     "publish": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "node tools/scripts/publish.mjs double-linked-list {args.ver} {args.tag}"
+        "command": "node tools/scripts/publish.mjs priority-queue {args.ver} {args.tag}"
       },
       "dependsOn": ["build"]
     },
@@ -26,15 +26,15 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/double-linked-list/**/*.ts"]
+        "lintFilePatterns": ["libs/priority-queue/**/*.ts"]
       }
     },
     "test": {
       "executor": "@nrwl/vite:test",
-      "outputs": ["coverage/libs/double-linked-list"],
+      "outputs": ["coverage/libs/priority-queue"],
       "options": {
         "passWithNoTests": true,
-        "reportsDirectory": "../../coverage/libs/double-linked-list"
+        "reportsDirectory": "../../coverage/libs/priority-queue"
       }
     }
   },
