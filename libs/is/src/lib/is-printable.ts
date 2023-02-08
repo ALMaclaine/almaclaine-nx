@@ -1,6 +1,6 @@
 import { isKind } from './is-kind';
-import { Printable } from '@almaclaine/types';
+import type { Printable } from '@almaclaine/types';
 
 const isPrintable = (val: unknown): val is Printable =>
-  !isKind(val?.toString, 'Undefined');
+  !isKind(val?.toString, 'Undefined'); // eslint-disable-line @typescript-eslint/unbound-method
 export { isPrintable };

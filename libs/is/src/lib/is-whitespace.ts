@@ -1,4 +1,4 @@
-import { Whitespace } from '@almaclaine/types';
+import type { Whitespace } from '@almaclaine/types';
 import { isString } from './is-string';
 import { WHITE_SPACES_SET } from '@almaclaine/constants';
 

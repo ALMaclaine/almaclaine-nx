@@ -1,4 +1,4 @@
-import { Duration } from 'date-fns';
+import type { Duration } from 'date-fns';
 
 type Scheduling = {
   id: string;

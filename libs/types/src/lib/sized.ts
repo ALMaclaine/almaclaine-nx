@@ -1,4 +1,4 @@
 interface Sized {
   length: number;
 }
-export { Sized };
+export type { Sized };

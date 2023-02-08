@@ -1,4 +1,5 @@
-import { DoubleLinkedList, Node } from '@almaclaine/double-linked-list';
+import type { Node } from '@almaclaine/double-linked-list';
+import { DoubleLinkedList } from '@almaclaine/double-linked-list';
 
 type PriorityQueueComparator<T> = (a: T, b: T) => number;
 

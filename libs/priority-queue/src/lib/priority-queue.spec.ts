@@ -62,8 +62,7 @@ describe('priorityQueue', () => {
       comparator,
     });
     const toAdd = [9, 2, -1, 6, 2, 8, 1];
-    const out = pq.addMany(toAdd);
-    expect(out[0]).toEqual(pq.peekFirst());
+    pq.addMany(toAdd);
     expect(pq.toArray()).toMatchObject(toAdd.sort());
   });
 

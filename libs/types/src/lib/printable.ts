@@ -2,4 +2,4 @@ interface Printable {
   toString: () => string;
 }
 
-export { Printable };
+export type { Printable };

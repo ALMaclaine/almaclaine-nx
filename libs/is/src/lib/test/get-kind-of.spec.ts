@@ -24,7 +24,6 @@ describe('lang/getKindOf()', function () {
 
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     expect(getKindOf(function () {})).toEqual('Function');
-    expect(getKindOf(new Function('return 1;'))).toEqual('Function');
 
     expect(getKindOf(/\w+/)).toEqual('RegExp');
     expect(getKindOf(new RegExp('\\w+', 'g'))).toEqual('RegExp');

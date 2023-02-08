@@ -313,7 +313,7 @@ class DoubleLinkedList<T> {
   //
 
   map<U>(proc: (value: T) => U): U[] {
-    const out = [];
+    const out: U[] = [];
     for (const val of this) {
       if (val) {
         out.push(proc(val));
@@ -438,4 +438,4 @@ class DoubleLinkedList<T> {
 }
 
 export { DoubleLinkedList, Node };
-export { NodeProps };
+export type { NodeProps };
