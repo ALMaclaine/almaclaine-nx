@@ -27,13 +27,13 @@ class PriorityQueue<T> {
     const tail = this.dll.peekTail();
     if (!(head || tail)) {
       return this.dll.addFront(value);
-    } else if (head && value <= head.value) {
+    } else if (head && this.compare(value, head.value) <= 0) {
       return this.dll.addFront(value);
-    } else if (tail && value >= tail.value) {
+    } else if (tail && this.compare(value, tail.value) >= 0) {
       return this.dll.addBack(value);
     } else {
       for (const node of this.dll.nodeIterator()) {
-        if (value <= node.value) {
+        if (this.compare(value, node.value) <= 0) {
           return this.dll.addBeforeNode(value, node);
         }
       }
@@ -61,16 +61,16 @@ class PriorityQueue<T> {
     return this.dll.peekHead();
   }
 
+  peekFirstValue(): T | undefined {
+    return this.dll.peekHeadValue();
+  }
+
   removeFirstValue(): T | undefined {
     return this.dll.removeHead()?.value;
   }
 
   removeLastValue(): T | undefined {
     return this.dll.removeTail()?.value;
-  }
-
-  peekFirstValue(): T | undefined {
-    return this.dll.peekHeadValue();
   }
 
   removeNode(node?: Node<T>): Node<T> | undefined {
@@ -115,4 +115,4 @@ class PriorityQueue<T> {
 }
 
 export { PriorityQueue };
-export type { PriorityQueueProps };
+export type { PriorityQueueProps, PriorityQueueComparator, Node };
