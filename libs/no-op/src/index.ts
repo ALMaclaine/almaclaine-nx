@@ -1,1 +1,1 @@
-export { noOp } from './lib/no-op';
+export { noOp, noOpObj } from './lib/no-op';

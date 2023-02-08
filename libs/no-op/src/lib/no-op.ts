@@ -2,4 +2,6 @@ const noOp: () => void = () => {
   // noOp
 };
 
-export { noOp };
+const noOpObj = () => ({});
+
+export { noOp, noOpObj };

@@ -1,24 +1,23 @@
 {
-  "name": "scheduler",
+  "name": "is",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/scheduler/src",
+  "sourceRoot": "libs/is/src",
   "projectType": "library",
   "targets": {
     "build": {
       "executor": "@nrwl/js:swc",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/libs/scheduler",
-        "main": "libs/scheduler/src/index.ts",
-        "tsConfig": "libs/scheduler/tsconfig.lib.json",
-        "assets": ["libs/scheduler/*.md"],
-        "buildableProjectDepsInPackageJsonType": "dependencies"
+        "outputPath": "dist/libs/is",
+        "main": "libs/is/src/index.ts",
+        "tsConfig": "libs/is/tsconfig.lib.json",
+        "assets": ["libs/is/*.md"]
       }
     },
     "publish": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "node tools/scripts/publish.mjs scheduler {args.ver} {args.tag}"
+        "command": "node tools/scripts/publish.mjs is {args.ver} {args.tag}"
       },
       "dependsOn": ["build"]
     },
@@ -26,15 +25,15 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/scheduler/**/*.ts"]
+        "lintFilePatterns": ["libs/is/**/*.ts"]
       }
     },
     "test": {
       "executor": "@nrwl/vite:test",
-      "outputs": ["coverage/libs/scheduler"],
+      "outputs": ["coverage/libs/is"],
       "options": {
         "passWithNoTests": true,
-        "reportsDirectory": "../../coverage/libs/scheduler"
+        "reportsDirectory": "../../coverage/libs/is"
       }
     }
   },

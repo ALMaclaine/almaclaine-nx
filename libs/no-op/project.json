@@ -11,7 +11,8 @@
         "outputPath": "dist/libs/no-op",
         "main": "libs/no-op/src/index.ts",
         "tsConfig": "libs/no-op/tsconfig.lib.json",
-        "assets": ["libs/no-op/*.md"]
+        "assets": ["libs/no-op/*.md"],
+        "buildableProjectDepsInPackageJsonType": "dependencies"
       }
     },
     "publish": {
