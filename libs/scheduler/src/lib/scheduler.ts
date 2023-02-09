@@ -22,8 +22,11 @@ class Scheduler {
     const { timeToExecute, repeat, interval } = ephemScheduling;
 
     if (isArray(timeToExecute)) {
-      for (const executionTimes of timeToExecute) {
-        const tmpScheduling = { ...ephemScheduling, executionTimes };
+      for (const executionTime of timeToExecute) {
+        const tmpScheduling = {
+          ...ephemScheduling,
+          timeToExecute: executionTime,
+        };
         this.ephemeralScheduler(tmpScheduling, schedulingCallback);
       }
     } else {
@@ -41,13 +44,13 @@ class Scheduler {
     this.emitter.on('start', () => {
       const now = Date.now();
       const peek = this.queue.peekFirstValue();
-      if (peek && peek.timeToExecute <= now) {
+      if (peek && peek?.timeToExecute <= now) {
         const item = this.queue.removeFirstValue();
         if (item) {
           this.emitter.emit('finished', item);
         }
       }
-      process.nextTick(() => this.emitter.emit('start'));
+      setImmediate(() => this.emitter.emit('start'));
     });
   }
 
@@ -94,10 +97,20 @@ const scheduler = () => {
 
   sch.ephemeralScheduler(
     {
-      timeToExecute: now + 7000,
+      timeToExecute: [now + 7000, now + 800, now + 9000],
     },
     () => console.log('exec3')
   );
+
+  setTimeout(() => {
+    console.log('set time out');
+    sch.ephemeralScheduler(
+      {
+        timeToExecute: Date.now(),
+      },
+      () => console.log('exec4')
+    );
+  }, 15000);
 };
 
 export { scheduler };
