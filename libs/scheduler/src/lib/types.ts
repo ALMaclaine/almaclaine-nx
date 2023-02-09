@@ -1,6 +1,6 @@
 import type { Duration } from 'date-fns';
 
-type EphemeralScheduling = {
+type SchedulingSetup = {
   timeToExecute: number | number[] | Date | Date[];
   repeat?: number;
   interval?: Duration;
@@ -8,4 +8,4 @@ type EphemeralScheduling = {
 
 type SchedulingCallback = () => void;
 
-export type { EphemeralScheduling, SchedulingCallback };
+export type { SchedulingSetup, SchedulingCallback };

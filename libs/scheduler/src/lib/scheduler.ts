@@ -1,9 +1,10 @@
 import { EventEmitter } from 'events';
-import type { EphemeralScheduling, SchedulingCallback } from './types';
+import type { SchedulingSetup, SchedulingCallback } from './types';
 import { isArray } from '@almaclaine/is';
 import { CallbackManager } from './callback-manager';
 import { Scheduling } from './scheduling';
 import { SchedulerQueue } from './scheduler-queue';
+import { add } from 'date-fns';
 
 class Scheduler {
   private readonly emitter = new EventEmitter();
@@ -15,8 +16,8 @@ class Scheduler {
     this.addFinished();
   }
 
-  ephemeralScheduler(
-    ephemScheduling: EphemeralScheduling,
+  schedule(
+    ephemScheduling: SchedulingSetup,
     schedulingCallback: SchedulingCallback
   ) {
     const { timeToExecute, repeat, interval } = ephemScheduling;
@@ -27,7 +28,7 @@ class Scheduler {
           ...ephemScheduling,
           timeToExecute: executionTime,
         };
-        this.ephemeralScheduler(tmpScheduling, schedulingCallback);
+        this.schedule(tmpScheduling, schedulingCallback);
       }
     } else {
       const scheduling = new Scheduling({ timeToExecute, repeat, interval });
@@ -59,14 +60,9 @@ class Scheduler {
       const func = this.callbackManager.getCallback(scheduling.id);
       func();
 
-      if (scheduling.repeat > 0) {
-        const obj = {
-          id: scheduling.id,
-          interval: scheduling.interval,
-          repeat: scheduling.repeat - 1,
-          timeToExecute: scheduling.timeToExecute + scheduling.interval,
-        };
-        this.queue.add(new Scheduling(obj));
+      if (scheduling.shouldRepeat()) {
+        scheduling.setupNextRepeat();
+        this.queue.add(scheduling);
       } else {
         this.callbackManager.removeCallback(scheduling.id);
       }
@@ -77,7 +73,7 @@ class Scheduler {
 const scheduler = () => {
   const sch = new Scheduler();
   const now = Date.now();
-  sch.ephemeralScheduler(
+  sch.schedule(
     {
       timeToExecute: new Date(),
       repeat: 3,
@@ -86,7 +82,7 @@ const scheduler = () => {
     () => console.log('exec1')
   );
 
-  sch.ephemeralScheduler(
+  sch.schedule(
     {
       timeToExecute: now + 5000,
     },
@@ -95,7 +91,7 @@ const scheduler = () => {
 
   sch.start();
 
-  sch.ephemeralScheduler(
+  sch.schedule(
     {
       timeToExecute: [now + 7000, now + 800, now + 9000],
     },
@@ -104,7 +100,7 @@ const scheduler = () => {
 
   setTimeout(() => {
     console.log('set time out');
-    sch.ephemeralScheduler(
+    sch.schedule(
       {
         timeToExecute: Date.now(),
       },
