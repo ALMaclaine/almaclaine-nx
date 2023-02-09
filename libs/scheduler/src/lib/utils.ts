@@ -8,4 +8,19 @@ const addDurationToDate = (date: Date, duration: Duration): Date => {
   return add(date, duration);
 };
 
-export { dateDifferenceToTimestamp, addDurationToDate, uuid };
+const addDurationToNow = (duration: Duration): Date => {
+  return add(new Date(), duration);
+};
+
+const date0 = new Date(0);
+const durationToTimestamp = (duration: Duration): number => {
+  return add(date0, duration).getTime();
+};
+
+export {
+  dateDifferenceToTimestamp,
+  addDurationToDate,
+  addDurationToNow,
+  durationToTimestamp,
+  uuid,
+};

@@ -54,6 +54,7 @@ describe('priorityQueue', () => {
     expect(pq.peekLast()?.prevNode?.value).toEqual(0);
 
     expect(pq.removeFirstValue()).toEqual(out.value);
+    expect(pq.peekFirstValue()).not.toEqual(out.value);
     expect(pq.peekLast()?.value).toEqual(pq.removeLastValue());
   });
 

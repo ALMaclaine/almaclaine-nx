@@ -1,28 +1,25 @@
 import { SchedulerQueue } from './scheduler-queue';
 import type { Node } from '@almaclaine/priority-queue';
 import { expect } from 'vitest';
-import type { Scheduling } from './types';
+import { Scheduling } from './scheduling';
 
-const scheduling1 = {
+const scheduling1 = new Scheduling({
   id: 'id1',
   timeToExecute: 0,
   repeat: 0,
-  interval: 0,
-};
+});
 
-const scheduling2 = {
+const scheduling2 = new Scheduling({
   id: 'id2',
   timeToExecute: 2,
   repeat: 0,
-  interval: 0,
-};
+});
 
-const scheduling3 = {
+const scheduling3 = new Scheduling({
   id: 'id3',
   timeToExecute: 1,
   repeat: 0,
-  interval: 0,
-};
+});
 
 describe('SchedulerQueue', () => {
   it('SchedulerQueue starts out empty', () => {
@@ -69,6 +66,7 @@ describe('SchedulerQueue', () => {
     expect(sq.peekLast()?.prevNode?.value).toEqual(scheduling3);
 
     expect(sq.removeFirstValue()).toEqual(out.value);
+    expect(sq.peekFirstValue()).not.toEqual(out.value);
     expect(sq.peekLast()?.value).toEqual(sq.removeLastValue());
   });
 

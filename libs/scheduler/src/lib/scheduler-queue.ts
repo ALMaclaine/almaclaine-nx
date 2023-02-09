@@ -1,6 +1,6 @@
 import type { PriorityQueueComparator, Node } from '@almaclaine/priority-queue';
 import { PriorityQueue } from '@almaclaine/priority-queue';
-import type { Scheduling } from './types';
+import type { Scheduling } from './scheduling';
 
 class SchedulerQueue {
   private readonly idNodeMap = new Map<string, Node<Scheduling>>();
@@ -46,16 +46,27 @@ class SchedulerQueue {
   }
 
   removeFirstValue(): Scheduling | undefined {
-    return this.pq.peekFirstValue();
+    const sch = this.pq.removeFirstValue();
+    if (sch) {
+      this.idNodeMap.delete(sch.id);
+    }
+    return sch;
   }
 
   removeLastValue(): Scheduling | undefined {
-    return this.pq.removeLastValue();
+    const sch = this.pq.removeLastValue();
+    if (sch) {
+      this.idNodeMap.delete(sch.id);
+    }
+    return sch;
   }
 
   removeNode(node?: Node<Scheduling>): Node<Scheduling> | undefined {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-    return this.pq.removeNode(node);
+    const sch = this.pq.removeNode(node);
+    if (sch) {
+      this.idNodeMap.delete(sch.value.id);
+    }
+    return sch;
   }
 
   removeNodeById(uuid: string) {

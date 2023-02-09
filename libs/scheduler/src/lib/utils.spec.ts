@@ -1,4 +1,9 @@
-import { addDurationToDate, dateDifferenceToTimestamp } from './utils';
+import {
+  addDurationToDate,
+  dateDifferenceToTimestamp,
+  addDurationToNow,
+  durationToTimestamp,
+} from './utils';
 
 describe('utils', () => {
   it('dateDifferenceToTimestamp work', () => {
@@ -15,5 +20,16 @@ describe('utils', () => {
     expect(addDurationToDate(new Date(0), { minutes: 2 }).getTime()).toEqual(
       120000
     );
+  });
+
+  it('addDurationToNow work', () => {
+    expect(addDurationToNow({ minutes: 2 }).getTime()).toEqual(
+      Date.now() + 120000
+    );
+  });
+
+  it('durationToTimestamp work', () => {
+    expect(durationToTimestamp({ minutes: 2 })).toEqual(120000);
+    expect(durationToTimestamp({})).toEqual(0);
   });
 });
