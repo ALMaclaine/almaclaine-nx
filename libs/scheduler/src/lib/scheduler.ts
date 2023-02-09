@@ -56,13 +56,16 @@ class Scheduler {
       const func = this.callbackManager.getCallback(scheduling.id);
       func();
 
-      if (scheduling.repeat) {
+      if (scheduling.repeat > 0) {
         const obj = {
-          ...scheduling.toObj(),
+          id: scheduling.id,
+          interval: scheduling.interval,
           repeat: scheduling.repeat - 1,
           timeToExecute: scheduling.timeToExecute + scheduling.interval,
         };
         this.queue.add(new Scheduling(obj));
+      } else {
+        this.callbackManager.removeCallback(scheduling.id);
       }
     });
   }

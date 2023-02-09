@@ -27,4 +27,14 @@ describe('CallbackManager', () => {
     cm.addCallback('id', func);
     expect(cm.getCallback('id')).toEqual(func);
   });
+
+  it('removeCallback works', () => {
+    const cm = new CallbackManager();
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    const func = () => {};
+    cm.addCallback('id', func);
+    expect(cm.getCallback('id')).toEqual(func);
+    cm.removeCallback('id');
+    expect(cm.getCallback('id')).toEqual(noOp);
+  });
 });

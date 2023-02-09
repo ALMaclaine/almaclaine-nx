@@ -19,6 +19,10 @@ class CallbackManager {
     this.callbackMap.set(id, schedulingCallback);
   }
 
+  removeCallback(id: string): void {
+    this.callbackMap.delete(id);
+  }
+
   getCallback(id: string): SchedulingCallback {
     const val = this.callbackMap.get(id);
     if (val) {
