@@ -4,7 +4,6 @@ import { isArray } from '@almaclaine/is';
 import { CallbackManager } from './callback-manager';
 import { Scheduling } from './scheduling';
 import { SchedulerQueue } from './scheduler-queue';
-import { add } from 'date-fns';
 
 class Scheduler {
   private readonly emitter = new EventEmitter();
@@ -109,4 +108,4 @@ const scheduler = () => {
   }, 15000);
 };
 
-export { scheduler };
+export { scheduler, Scheduler };

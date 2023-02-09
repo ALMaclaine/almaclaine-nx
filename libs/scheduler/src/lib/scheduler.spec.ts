@@ -1,7 +1,22 @@
-import { scheduler } from './scheduler';
+import { Scheduler } from './scheduler';
+import { vitest } from 'vitest';
 
-describe('scheduler', () => {
-  it('should work', () => {
-    expect(scheduler()).toEqual('scheduler');
+describe('Scheduler', () => {
+  it('basic scheduling should work', async () => {
+    const scheduler = new Scheduler();
+    const func = vitest.fn();
+    scheduler.start();
+    await new Promise((res) => {
+      scheduler.schedule(
+        {
+          timeToExecute: Date.now(),
+        },
+        () => {
+          func();
+          res({});
+        }
+      );
+    });
+    expect(func).toHaveBeenCalled();
   });
 });
