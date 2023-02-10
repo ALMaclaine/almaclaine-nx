@@ -19,6 +19,7 @@
       "@almaclaine/double-linked-list": [
         "libs/double-linked-list/src/index.ts"
       ],
+      "@almaclaine/ical": ["libs/ical/src/index.ts"],
       "@almaclaine/is": ["libs/is/src/index.ts"],
       "@almaclaine/no-op": ["libs/no-op/src/index.ts"],
       "@almaclaine/priority-queue": ["libs/priority-queue/src/index.ts"],
