@@ -1,7 +1,12 @@
-import { ical } from './ical';
+import { ICalParser } from './ical';
+import { getIcsFiles } from './test-utils';
 
-describe('ical', () => {
+describe('ICalParser', () => {
   it('should work', () => {
-    expect(ical()).toEqual('ical');
+    const parser = new ICalParser();
+    const files = getIcsFiles();
+    const out = parser.parseICal(files[0]);
+    console.log(out);
+    // expect(parser.parseICal(files[0])).toEqual('ical');
   });
 });

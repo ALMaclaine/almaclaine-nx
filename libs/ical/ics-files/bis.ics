@@ -1660,7 +1660,7 @@ CLASS:PUBLIC
 UID:5fef4f80-9a44-4ea2-9df1-67ac39cf30ab
 DTSTART;TZID=US-Eastern:20221117T100000
 DURATION:PT0M
-SUMMARY:Occupational Requirements in the United States  
+SUMMARY:Occupational Requirements in the United States
 LOCATION:Washington\, DC
 TRANSP:TRANSPARENT
 CATEGORIES:IMPORTANT, BLS
@@ -3123,7 +3123,7 @@ CLASS:PUBLIC
 UID:aec871ef-fa1b-4669-a941-8cfbe8d6a64b
 DTSTART;TZID=US-Eastern:20230921T100000
 DURATION:PT0M
-SUMMARY:Unpaid Eldercare in the United States 
+SUMMARY:Unpaid Eldercare in the United States
 LOCATION:Washington\, DC
 TRANSP:TRANSPARENT
 CATEGORIES:IMPORTANT, BLS
@@ -3376,7 +3376,7 @@ CLASS:PUBLIC
 UID:6004f034-9217-47fd-92e2-e0bfab76bcde
 DTSTART;TZID=US-Eastern:20231117T100000
 DURATION:PT0M
-SUMMARY:Occupational Requirements in the United States  
+SUMMARY:Occupational Requirements in the United States
 LOCATION:Washington\, DC
 TRANSP:TRANSPARENT
 CATEGORIES:IMPORTANT, BLS

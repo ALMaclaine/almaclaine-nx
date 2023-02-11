@@ -1,0 +1,4 @@
+const EVENT_BEGIN = 'BEGIN:VEVENT';
+const EVENT_END = 'END:VEVENT';
+
+export { EVENT_BEGIN, EVENT_END };
