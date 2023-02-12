@@ -29,7 +29,7 @@ const validateVCalendar = (lines: Line[]): Option<CalendarStartEnd> => {
 const T_INDEX = 8;
 const Z_INDEX = 15;
 const LENGTH = 16;
-const validateFormat = (date: string): boolean => {
+const validateDateFormat = (date: string): boolean => {
   const d = date.split('');
 
   if (d.length !== LENGTH || d[T_INDEX] !== 'T' || d[Z_INDEX] !== 'Z') {
@@ -42,7 +42,7 @@ const validateFormat = (date: string): boolean => {
 };
 
 const iCalDateParser = (date: string): Option<Date> => {
-  if (!validateFormat(date)) {
+  if (!validateDateFormat(date)) {
     return none();
   }
 
@@ -88,7 +88,7 @@ const matchKey = (str: string): Option<[string, string]> => {
 
 export {
   validateVCalendar,
-  validateFormat,
+  validateDateFormat,
   iCalDateParser,
   testBegin,
   matchBegin,

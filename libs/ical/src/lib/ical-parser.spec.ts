@@ -16,6 +16,7 @@ describe('ICalHeaderParser', () => {
       expect(event['DTSTART']).not.toEqual(undefined);
       expect(event['DTSTART']).not.toEqual('');
     }
+
     expect(out0.header).toMatchObject({
       PRODID: '-//Department of Labor//Bureau of Labor Statistics//EN',
       VERSION: '2.0',
@@ -52,7 +53,6 @@ describe('ICalHeaderParser', () => {
       expect(event['DTSTART']).not.toEqual(undefined);
       expect(event['DTSTART']).not.toEqual('');
     }
-
     expect(out1.header).toMatchObject({
       PRODID: '-//Google Inc//Google Calendar 70.9054//EN',
       VERSION: '2.0',

@@ -6,7 +6,7 @@ import {
   testBegin,
   testEnd,
   testKey,
-  validateFormat,
+  validateDateFormat,
   validateVCalendar,
 } from './utils';
 import { expect } from 'vitest';
@@ -72,15 +72,15 @@ describe('utils', () => {
 
   describe('validateFormat', () => {
     it('should work', () => {
-      expect(validateFormat('20140422X233000Z')).toBeFalsy();
-      expect(validateFormat('20140422T233000Y')).toBeFalsy();
-      expect(validateFormat('20a40422T233000Z')).toBeFalsy();
-      expect(validateFormat('1994-11-05T08:15:30-05:00')).toBeFalsy();
-      expect(validateFormat('asdfgjfhgjkdfhsg')).toBeFalsy();
-      expect(validateFormat('word')).toBeFalsy();
+      expect(validateDateFormat('20140422X233000Z')).toBeFalsy();
+      expect(validateDateFormat('20140422T233000Y')).toBeFalsy();
+      expect(validateDateFormat('20a40422T233000Z')).toBeFalsy();
+      expect(validateDateFormat('1994-11-05T08:15:30-05:00')).toBeFalsy();
+      expect(validateDateFormat('asdfgjfhgjkdfhsg')).toBeFalsy();
+      expect(validateDateFormat('word')).toBeFalsy();
 
-      expect(validateFormat('20140422T233000Z')).toBeTruthy();
-      expect(validateFormat('20141203T012000Z')).toBeTruthy();
+      expect(validateDateFormat('20140422T233000Z')).toBeTruthy();
+      expect(validateDateFormat('20141203T012000Z')).toBeTruthy();
     });
   });
 

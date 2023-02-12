@@ -8,7 +8,7 @@ import {
   testKey,
 } from './utils';
 import { DoubleLinkedList } from '@almaclaine/double-linked-list';
-import { isNone, someOrError } from '@almaclaine/types';
+import { someOrError } from '@almaclaine/types';
 
 class ICalHeaderParser {
   private beginStack = new DoubleLinkedList<string>();
@@ -59,14 +59,6 @@ class ICalHeaderParser {
     } else {
       return false;
     }
-  }
-
-  private tryBeginEvent(line: Line): boolean {
-    if (testBegin(line)) {
-      const newBegin = this.getBegin(line);
-      return newBegin === 'VEVENT';
-    }
-    return false;
   }
 
   private tryEnd(line: Line): boolean {
