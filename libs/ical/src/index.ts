@@ -1,1 +1,1 @@
-export * from './lib/ical';
+export * from './lib/ical-header-parser';

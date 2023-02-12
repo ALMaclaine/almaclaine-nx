@@ -9,33 +9,33 @@ import {
   validateFormat,
   validateVCalendar,
 } from './utils';
-import { getIcsFiles } from './test-utils';
 import { expect } from 'vitest';
+import { none, some } from '@almaclaine/types';
+import { getIcsFiles } from './test-utils';
 
 describe('utils', () => {
   describe('validateVCalendar', () => {
     it('should work', () => {
-      expect(validateVCalendar(''.split('\n'))).toMatchObject({ valid: false });
-      expect(validateVCalendar('words'.split('\n'))).toMatchObject({
-        valid: false,
-      });
-      expect(validateVCalendar('words \n \n words'.split('\n'))).toMatchObject({
-        valid: false,
-      });
-      expect(validateVCalendar('END:VCALENDAR'.split('\n'))).toMatchObject({
-        valid: false,
-      });
-      expect(validateVCalendar('BEGIN:VCALENDAR'.split('\n'))).toMatchObject({
-        valid: false,
-      });
+      expect(validateVCalendar(''.split('\n'))).toMatchObject(none());
+      expect(validateVCalendar('words'.split('\n'))).toMatchObject(none());
+      expect(validateVCalendar('words \n \n words'.split('\n'))).toMatchObject(
+        none()
+      );
+      expect(validateVCalendar('END:VCALENDAR'.split('\n'))).toMatchObject(
+        none()
+      );
+      expect(validateVCalendar('BEGIN:VCALENDAR'.split('\n'))).toMatchObject(
+        none()
+      );
 
       expect(
         validateVCalendar('BEGIN:VCALENDAR\nEND:VCALENDAR'.split('\n'))
-      ).toMatchObject({
-        valid: true,
-        indexStart: 0,
-        indexEnd: 1,
-      });
+      ).toMatchObject(
+        some({
+          indexStart: 0,
+          indexEnd: 1,
+        })
+      );
 
       expect(
         validateVCalendar(
@@ -43,11 +43,12 @@ describe('utils', () => {
             '\n'
           )
         )
-      ).toMatchObject({
-        valid: true,
-        indexStart: 0,
-        indexEnd: 3,
-      });
+      ).toMatchObject(
+        some({
+          indexStart: 0,
+          indexEnd: 3,
+        })
+      );
 
       expect(
         validateVCalendar(
@@ -55,11 +56,12 @@ describe('utils', () => {
             '\n'
           )
         )
-      ).toMatchObject({
-        valid: true,
-        indexStart: 3,
-        indexEnd: 6,
-      });
+      ).toMatchObject(
+        some({
+          indexStart: 3,
+          indexEnd: 6,
+        })
+      );
 
       const files = getIcsFiles();
       for (const file of files) {
@@ -83,45 +85,45 @@ describe('utils', () => {
   });
 
   describe('iCalDateParser', () => {
-    it('Invalid input format throws error', () => {
-      expect(() => iCalDateParser('20140422X233000Z')).toThrow();
-      expect(() => iCalDateParser('20140422T233000Y')).toThrow();
-      expect(() => iCalDateParser('20a40422T233000Z')).toThrow();
-      expect(() => iCalDateParser('1994-11-05T08:15:30-05:00')).toThrow();
-      expect(() => iCalDateParser('asdfgjfhgjkdfhsg')).toThrow();
-      expect(() => iCalDateParser('butt')).toThrow();
+    it('Invalid input format yields none', () => {
+      expect(iCalDateParser('20140422X233000Z')).toEqual(none());
+      expect(iCalDateParser('20140422T233000Y')).toEqual(none());
+      expect(iCalDateParser('20a40422T233000Z')).toEqual(none());
+      expect(iCalDateParser('1994-11-05T08:15:30-05:00')).toEqual(none());
+      expect(iCalDateParser('asdfgjfhgjkdfhsg')).toEqual(none());
+      expect(iCalDateParser('butt')).toEqual(none());
     });
 
     it('Date gets parsed correctly', () => {
       let d = iCalDateParser('20140422T233000Z');
-      expect(d.getUTCDate()).toEqual(22);
+      expect(d.value?.getUTCDate()).toEqual(22);
 
       d = iCalDateParser('20141203T012000Z');
-      expect(d.getUTCDate()).toEqual(3);
+      expect(d.value?.getUTCDate()).toEqual(3);
     });
 
     it('Hour gets parsed correctly', () => {
       let d = iCalDateParser('20140422T233000Z');
-      expect(d.getUTCHours()).toEqual(23);
+      expect(d.value?.getUTCHours()).toEqual(23);
 
       d = iCalDateParser('20141203T012000Z');
-      expect(d.getUTCHours()).toEqual(1);
+      expect(d.value?.getUTCHours()).toEqual(1);
     });
 
     it('Minutes get parsed correctly', () => {
       let d = iCalDateParser('20140422T233000Z');
-      expect(d.getUTCMinutes()).toEqual(30);
+      expect(d.value?.getUTCMinutes()).toEqual(30);
 
       d = iCalDateParser('20141203T012000Z');
-      expect(d.getUTCMinutes()).toEqual(20);
+      expect(d.value?.getUTCMinutes()).toEqual(20);
     });
 
     it('Month gets parsed correctly', () => {
       let d = iCalDateParser('20140422T233000Z');
-      expect(d.getUTCMonth()).toEqual(3);
+      expect(d.value?.getUTCMonth()).toEqual(3);
 
       d = iCalDateParser('20141223T012000Z');
-      expect(d.getUTCMonth()).toEqual(11);
+      expect(d.value?.getUTCMonth()).toEqual(11);
     });
   });
 
@@ -136,8 +138,10 @@ describe('utils', () => {
 
   describe('matchBegin', () => {
     it('should work', () => {
-      expect(matchBegin('BEGIN:')).toEqual('');
-      expect(matchBegin('BEGIN: AWD AWD AW')).toEqual(' AWD AWD AW');
+      expect(matchBegin('BEGIN:')).toMatchObject(some(''));
+      expect(matchBegin('BEGIN: AWD AWD AW')).toMatchObject(
+        some(' AWD AWD AW')
+      );
     });
   });
 
@@ -152,8 +156,8 @@ describe('utils', () => {
 
   describe('matchEnd', () => {
     it('should work', () => {
-      expect(matchEnd('END:')).toEqual('');
-      expect(matchEnd('END: AWD AWD AW')).toEqual(' AWD AWD AW');
+      expect(matchEnd('END:')).toMatchObject(some(''));
+      expect(matchEnd('END: AWD AWD AW')).toMatchObject(some(' AWD AWD AW'));
     });
   });
 
@@ -171,12 +175,15 @@ describe('utils', () => {
 
   describe('matchKey', () => {
     it('should work', () => {
-      expect(matchKey('RED:')).toEqual(['RED', '']);
-      expect(matchKey('BOO: AWD AWD AW')).toEqual(['BOO', ' AWD AWD AW']);
+      expect(matchKey('RED:')?.value).toEqual(['RED', '']);
+      expect(matchKey('BOO: AWD AWD AW')?.value).toEqual([
+        'BOO',
+        ' AWD AWD AW',
+      ]);
       expect(
         matchKey(
           'PRODID:-//Department of Labor//Bureau of Labor Statistics//EN'
-        )
+        )?.value
       ).toEqual([
         'PRODID',
         '-//Department of Labor//Bureau of Labor Statistics//EN',

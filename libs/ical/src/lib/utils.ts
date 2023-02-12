@@ -1,18 +1,13 @@
 import type { Line } from './types';
+import type { Option } from '@almaclaine/types';
+import { ifTrueSome, none, some } from '@almaclaine/types';
 
-type CalendarValidation =
-  | {
-      valid: true;
-      indexStart: number;
-      indexEnd: number;
-    }
-  | {
-      valid: false;
-      indexStart?: undefined;
-      indexEnd?: undefined;
-    };
+type CalendarStartEnd = {
+  indexStart: number;
+  indexEnd: number;
+};
 
-const validateVCalendar = (lines: Line[]): CalendarValidation => {
+const validateVCalendar = (lines: Line[]): Option<CalendarStartEnd> => {
   let indexStart = 0;
   while (lines[indexStart] === '') {
     indexStart++;
@@ -26,15 +21,7 @@ const validateVCalendar = (lines: Line[]): CalendarValidation => {
   const lastValid = lines[indexEnd] === 'END:VCALENDAR';
 
   const valid = firstValid && lastValid;
-  if (valid) {
-    return {
-      valid,
-      indexEnd,
-      indexStart,
-    };
-  } else {
-    return { valid };
-  }
+  return ifTrueSome(valid, { indexEnd, indexStart });
 };
 
 // const trimVCalendar =
@@ -54,9 +41,9 @@ const validateFormat = (date: string): boolean => {
     .every((x) => !isNaN(parseInt(x)));
 };
 
-const iCalDateParser = (date: string): Date => {
+const iCalDateParser = (date: string): Option<Date> => {
   if (!validateFormat(date)) {
-    throw new Error('Not a valid iCal date format');
+    return none();
   }
 
   const year = parseInt(date.slice(0, 4));
@@ -66,37 +53,37 @@ const iCalDateParser = (date: string): Date => {
   const minute = parseInt(date.slice(11, 13));
   const second = parseInt(date.slice(13, 15));
 
-  return new Date(Date.UTC(year, month, day, hour, minute, second));
+  return some(new Date(Date.UTC(year, month, day, hour, minute, second)));
+};
+
+const match = (str: string, reg: RegExp): Option<string> => {
+  const match = reg.exec(str);
+  if (!match) {
+    return none();
+  }
+  return some(match[1]);
 };
 
 const BEGIN_REGEX = /^BEGIN:(.*)/;
 const testBegin = (str: string): boolean => BEGIN_REGEX.test(str);
-const matchBegin = (str: string): string => {
-  const match = BEGIN_REGEX.exec(str);
-  if (!match) {
-    throw new Error('Match does not exist');
-  }
-  return match[1];
+const matchBegin = (str: string): Option<string> => {
+  return match(str, BEGIN_REGEX);
 };
 
 const END_REGEX = /^END:(.*)/;
 const testEnd = (str: string): boolean => END_REGEX.test(str);
-const matchEnd = (str: string): string => {
-  const match = END_REGEX.exec(str);
-  if (!match) {
-    throw new Error('Match does not exist');
-  }
-  return match[1];
+const matchEnd = (str: string): Option<string> => {
+  return match(str, END_REGEX);
 };
 
 const KEY_REGEX = /^([A-Z-]+)[:;](.*)/;
 const testKey = (str: string): boolean => KEY_REGEX.test(str);
-const matchKey = (str: string): [string, string] => {
+const matchKey = (str: string): Option<[string, string]> => {
   const match = KEY_REGEX.exec(str);
   if (!match) {
-    throw new Error('Match does not exist');
+    return none();
   }
-  return [match[1], match[2]];
+  return some([match[1], match[2]]);
 };
 
 export {

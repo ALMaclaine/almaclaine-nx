@@ -6,13 +6,14 @@ import {
   testBegin,
   testEnd,
   testKey,
-  validateVCalendar,
 } from './utils';
 import { DoubleLinkedList } from '@almaclaine/double-linked-list';
+import { isNone, someOrError } from '@almaclaine/types';
 
-class ICalParser {
+class ICalHeaderParser {
   private beginStack = new DoubleLinkedList<string>();
   private outLevelStack = new DoubleLinkedList<RecordOrValue>();
+  private eventsBegan = false;
 
   private peekTopRecord(): RecordOrValue {
     const currentOut = this.outLevelStack.peekHeadValue();
@@ -29,15 +30,15 @@ class ICalParser {
 
   private getBegin(line: Line): string {
     const newBegin = matchBegin(line);
-    if (!newBegin) {
-      throw new Error('Empty BEGIN');
-    }
-    return newBegin;
+    return someOrError(newBegin, 'Empty BEGIN');
   }
 
   private tryKey(line: Line): boolean {
     if (testKey(line)) {
-      const [key, value] = matchKey(line);
+      const [key, value] = someOrError(
+        matchKey(line),
+        `Invalid Key Pair: ${line}`
+      );
       const currentOut = this.peekTopRecord();
       currentOut[key] = value;
       return true;
@@ -49,9 +50,6 @@ class ICalParser {
   private tryBegin(line: Line): boolean {
     if (testBegin(line)) {
       const newBegin = this.getBegin(line);
-      if (newBegin === 'VEVENT') {
-        return true;
-      }
       const currentOut = this.peekTopRecord();
       const newObj = {};
       currentOut[newBegin] = newObj;
@@ -63,10 +61,18 @@ class ICalParser {
     }
   }
 
+  private tryBeginEvent(line: Line): boolean {
+    if (testBegin(line)) {
+      const newBegin = this.getBegin(line);
+      return newBegin === 'VEVENT';
+    }
+    return false;
+  }
+
   private tryEnd(line: Line): boolean {
     if (testEnd(line)) {
+      const end = someOrError(matchEnd(line));
       const peekFront = this.beginStack.peekHeadValue();
-      const end = matchEnd(line);
       if (peekFront !== end) {
         throw new Error(
           `Invalid iCal object, mismatched begin/ends: begin: ${peekFront} end: ${end}`
@@ -81,13 +87,7 @@ class ICalParser {
     }
   }
 
-  private;
-
-  parseICal(str: string): RecordOrValue {
-    const lines: Line[] = str.split('\n');
-    if (!validateVCalendar(lines)) {
-      throw new Error('Invalid VCalendar, missing begin or ending tag');
-    }
+  parseICalHeader(lines: Line[]) {
     this.clear();
     this.outLevelStack.addFront({});
     for (const line of lines) {
@@ -96,10 +96,6 @@ class ICalParser {
       }
 
       if (this.tryBegin(line)) {
-        const match = matchBegin(line);
-        if (match === 'VEVENT') {
-          break;
-        }
         // nothing to do
       } else if (this.tryEnd(line)) {
         // nothing to do
@@ -115,6 +111,11 @@ class ICalParser {
     }
     throw new Error('Record should exist');
   }
+
+  parseICalHeaderString(str: string): RecordOrValue {
+    const lines: Line[] = str.split('\n');
+    return this.parseICalHeader(lines);
+  }
 }
 
-export { ICalParser };
+export { ICalHeaderParser };

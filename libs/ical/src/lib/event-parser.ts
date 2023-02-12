@@ -2,6 +2,7 @@ import type { Line, RecordOrValue } from './types';
 import { EVENT_BEGIN, EVENT_END } from './constants';
 import type { Option } from '@almaclaine/types';
 import { matchKey, testKey } from './utils';
+import { none, some, someOrError } from '@almaclaine/types';
 
 class EventParser {
   private record: RecordOrValue = {};
@@ -14,39 +15,30 @@ class EventParser {
     this.active = false;
   }
 
-  private returnInvalid(): Option<RecordOrValue> {
-    return {
-      valid: false,
-    };
-  }
-
-  private returnValid(): Option<RecordOrValue> {
-    return {
-      valid: true,
-      value: this.record,
-    };
-  }
-
   private handleEventBegin(): Option<RecordOrValue> {
     this.clear();
     this.active = true;
-    return this.returnInvalid();
+    return none();
   }
 
   private handleEventEnd(): Option<RecordOrValue> {
     if (this.active) {
       this.active = false;
       this.flush();
-      return this.returnValid();
+      return some(this.record);
     } else {
-      return this.returnInvalid();
+      return none();
     }
   }
 
   private handleKey(line: Line): Option<RecordOrValue> {
     this.flush();
-    [this.lastKey, this.lastValue] = matchKey(line);
-    return this.returnInvalid();
+    const match = matchKey(line);
+    [this.lastKey, this.lastValue] = someOrError(
+      match,
+      `Invalid key pair: ${line}`
+    );
+    return none();
   }
 
   private flush() {
@@ -57,7 +49,7 @@ class EventParser {
 
   private handleContinuation(line: Line): Option<RecordOrValue> {
     this.lastValue += line.slice(1);
-    return this.returnInvalid();
+    return none();
   }
 
   private isContinuation(line: Line) {
@@ -66,7 +58,7 @@ class EventParser {
 
   nextLine(line: Line): Option<RecordOrValue> {
     if (line.trim() === '') {
-      return this.returnInvalid();
+      return none();
     }
 
     if (line.trim() === EVENT_BEGIN) {
