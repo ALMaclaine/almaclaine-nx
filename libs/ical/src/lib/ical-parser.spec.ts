@@ -1,4 +1,3 @@
-import { ICalHeaderParser } from './ical-header-parser';
 import { getIcsFiles } from './test-utils';
 import { ICalParser } from './ical-parser';
 

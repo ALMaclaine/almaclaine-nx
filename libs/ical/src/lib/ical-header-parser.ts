@@ -8,7 +8,7 @@ import {
   testKey,
 } from './utils';
 import { DoubleLinkedList } from '@almaclaine/double-linked-list';
-import { someOrError } from '@almaclaine/types';
+import { someOrError } from '@almaclaine/option';
 
 class ICalHeaderParser {
   private beginStack = new DoubleLinkedList<string>();

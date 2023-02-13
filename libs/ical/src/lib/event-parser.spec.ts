@@ -1,7 +1,7 @@
 import { EventParser } from './event-parser';
 import { EVENT_BEGIN, EVENT_END } from './constants';
 import { expect } from 'vitest';
-import { none, some } from '@almaclaine/types';
+import { none, some } from '@almaclaine/option';
 
 describe('EventParser', () => {
   it('should return invalid option if passed event_end when inactive', () => {

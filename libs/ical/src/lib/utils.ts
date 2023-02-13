@@ -1,6 +1,6 @@
 import type { Line } from './types';
-import type { Option } from '@almaclaine/types';
-import { ifTrueSome, none, some } from '@almaclaine/types';
+import type { Option } from '@almaclaine/option';
+import { ifTrueSome, none, some } from '@almaclaine/option';
 
 type CalendarStartEnd = {
   indexStart: number;

@@ -2,7 +2,7 @@ import { EventParser } from './event-parser';
 import { ICalHeaderParser } from './ical-header-parser';
 import type { Line, RecordOrValue } from './types';
 import { EVENT_BEGIN } from './constants';
-import { isSome, someOrError } from '@almaclaine/types';
+import { isSome, someOrError } from '@almaclaine/option';
 import { validateVCalendar } from './utils';
 
 const PARSE_ICAL_ERROR =

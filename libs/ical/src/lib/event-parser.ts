@@ -1,8 +1,8 @@
 import type { Line, RecordOrValue } from './types';
 import { EVENT_BEGIN, EVENT_END } from './constants';
-import type { Option } from '@almaclaine/types';
+import type { Option } from '@almaclaine/option';
 import { matchKey, testKey } from './utils';
-import { none, some, someOrError } from '@almaclaine/types';
+import { none, some, someOrError } from '@almaclaine/option';
 
 class EventParser {
   private record: RecordOrValue = {};

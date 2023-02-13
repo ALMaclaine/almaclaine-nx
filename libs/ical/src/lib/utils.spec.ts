@@ -10,7 +10,7 @@ import {
   validateVCalendar,
 } from './utils';
 import { expect } from 'vitest';
-import { none, some } from '@almaclaine/types';
+import { none, some } from '@almaclaine/option';
 import { getIcsFiles } from './test-utils';
 
 describe('utils', () => {
