@@ -29,24 +29,29 @@ export default async function publishExecutor(
     );
   }
   srcPackageJson.version = version;
-  logger.info('Writing new version to package.json');
-  writeJsonFile(srcPackagePath, srcPackageJson);
 
   const buildPackagePath = `${context.root}/dist/${libPath}/package.json`;
   const buildPackageJson =
     readJsonFile<Record<string, string | Record<string, string>>>(
       buildPackagePath
     );
+  buildPackageJson.version = version;
 
   delete buildPackageJson['exports']['.'];
   writeJsonFile(buildPackagePath, buildPackageJson);
 
-  for await (const s of await runExecutor(
-    { project: context.projectName, target: 'publish:upload' },
-    { ver: version, tag: 'next', mfa },
-    context
-  )) {
-    logger.info(s);
+  try {
+    for await (const s of await runExecutor(
+      { project: context.projectName, target: 'publish:upload' },
+      { ver: version, tag: 'next', mfa },
+      context
+    )) {
+      logger.info(s);
+    }
+    logger.info('Writing new version to package.json');
+    writeJsonFile(srcPackagePath, srcPackageJson);
+  } catch (err) {
+    logger.error(err);
   }
   logger.debug('End publishExecutor');
   return { success: true };

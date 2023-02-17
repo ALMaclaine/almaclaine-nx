@@ -22,7 +22,7 @@
     "publish:upload": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "node tools/scripts/publish.mjs uuid {args.ver} {args.tag} {args.mfa}"
+        "command": "node tools/scripts/publish.mjs double-linked-list {args.ver} {args.tag} {args.mfa}"
       },
       "dependsOn": ["build"]
     },

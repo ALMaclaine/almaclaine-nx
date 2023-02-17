@@ -1,5 +1,9 @@
 {
   "name": "@almaclaine/env",
-  "version": "0.0.1",
-  "type": "module"
+  "version": "0.0.2",
+  "type": "module",
+  "exports": {
+    "types": "./src/index.d.ts",
+    "default": "./src/index.js"
+  }
 }

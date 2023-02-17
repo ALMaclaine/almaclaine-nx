@@ -1,5 +1,9 @@
 {
   "name": "@almaclaine/double-linked-list",
-  "version": "0.0.7",
-  "type": "module"
+  "version": "0.0.8",
+  "type": "module",
+  "exports": {
+    "types": "./src/index.d.ts",
+    "default": "./src/index.js"
+  }
 }

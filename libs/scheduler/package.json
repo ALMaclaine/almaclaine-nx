@@ -1,8 +1,9 @@
 {
   "name": "@almaclaine/scheduler",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "type": "module",
-  "nx": {
-    "implicitDependencies": ["!events"]
+  "exports": {
+    "types": "./src/index.d.ts",
+    "default": "./src/index.js"
   }
 }

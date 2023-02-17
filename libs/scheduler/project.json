@@ -9,6 +9,7 @@
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/scheduler",
+        "implicitDependencies": ["!events"],
         "main": "libs/scheduler/src/index.ts",
         "tsConfig": "libs/scheduler/tsconfig.lib.json",
         "assets": ["libs/scheduler/*.md"],
@@ -22,7 +23,7 @@
     "publish:upload": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "node tools/scripts/publish.mjs uuid {args.ver} {args.tag} {args.mfa}"
+        "command": "node tools/scripts/publish.mjs scheduler {args.ver} {args.tag} {args.mfa}"
       },
       "dependsOn": ["build"]
     },

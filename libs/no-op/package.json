@@ -1,5 +1,9 @@
 {
   "name": "@almaclaine/no-op",
-  "version": "0.0.3",
-  "type": "module"
+  "version": "0.0.4",
+  "type": "module",
+  "exports": {
+    "types": "./src/index.d.ts",
+    "default": "./src/index.js"
+  }
 }
