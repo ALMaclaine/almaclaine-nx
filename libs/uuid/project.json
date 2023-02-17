@@ -14,10 +14,10 @@
         "assets": ["libs/uuid/*.md"]
       }
     },
-    "publish": {
+    "publish:upload": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "node tools/scripts/publish.mjs uuid {args.ver} {args.tag}"
+        "command": "node tools/scripts/publish.mjs uuid {args.ver} {args.tag} {args.mfa}"
       },
       "dependsOn": ["build"]
     },
@@ -35,6 +35,9 @@
         "passWithNoTests": true,
         "reportsDirectory": "../../coverage/libs/uuid"
       }
+    },
+    "publish": {
+      "executor": "@almaclaine/publish:publish"
     }
   },
   "tags": []

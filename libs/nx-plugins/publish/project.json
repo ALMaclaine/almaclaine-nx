@@ -1,0 +1,67 @@
+{
+  "name": "nx-plugins-publish",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/nx-plugins/publish/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/nx-plugins/publish",
+        "main": "libs/nx-plugins/publish/src/index.ts",
+        "tsConfig": "libs/nx-plugins/publish/tsconfig.lib.json",
+        "assets": [
+          "libs/nx-plugins/publish/*.md",
+          {
+            "input": "./libs/nx-plugins/publish/src",
+            "glob": "**/!(*.ts)",
+            "output": "./src"
+          },
+          {
+            "input": "./libs/nx-plugins/publish/src",
+            "glob": "**/*.d.ts",
+            "output": "./src"
+          },
+          {
+            "input": "./libs/nx-plugins/publish",
+            "glob": "generators.json",
+            "output": "."
+          },
+          {
+            "input": "./libs/nx-plugins/publish",
+            "glob": "executors.json",
+            "output": "."
+          }
+        ]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/nx-plugins/publish/**/*.ts",
+          "libs/nx-plugins/publish/generators.json",
+          "libs/nx-plugins/publish/executors.json",
+          "libs/nx-plugins/publish/package.json"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/nx-plugins/publish/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    }
+  },
+  "tags": []
+}

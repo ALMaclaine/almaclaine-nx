@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "version": 2,
+  "cli": "nx",
+  "title": "Build executor",
+  "description": "",
+  "type": "object",
+  "properties": {
+    "packageName": {
+      "type": "string",
+      "description": "Package To Publish"
+    },
+    "bumpType": {
+      "type": "string",
+      "description": "bump type or version to publish"
+    },
+    "mfaCode": {
+      "type": "string",
+      "description": "Publishing MFA code"
+    }
+  },
+  "required": []
+}

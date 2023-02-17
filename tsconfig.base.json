@@ -25,6 +25,7 @@
       "@almaclaine/no-op": ["libs/no-op/src/index.ts"],
       "@almaclaine/option": ["libs/option/src/index.ts"],
       "@almaclaine/priority-queue": ["libs/priority-queue/src/index.ts"],
+      "@almaclaine/publish": ["libs/nx-plugins/publish/src/index.ts"],
       "@almaclaine/scheduler": ["libs/scheduler/src/index.ts"],
       "@almaclaine/types": ["libs/types/src/index.ts"],
       "@almaclaine/uuid": ["libs/uuid/src/index.ts"]
