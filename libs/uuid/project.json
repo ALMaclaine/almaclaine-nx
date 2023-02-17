@@ -14,6 +14,10 @@
         "assets": ["libs/uuid/*.md"]
       }
     },
+    "publish": {
+      "executor": "@almaclaine/publish:publish",
+      "dependsOn": ["build"]
+    },
     "publish:upload": {
       "executor": "nx:run-commands",
       "options": {
@@ -35,9 +39,6 @@
         "passWithNoTests": true,
         "reportsDirectory": "../../coverage/libs/uuid"
       }
-    },
-    "publish": {
-      "executor": "@almaclaine/publish:publish"
     }
   },
   "tags": []

@@ -16,9 +16,13 @@
       }
     },
     "publish": {
+      "executor": "@almaclaine/publish:publish",
+      "dependsOn": ["build"]
+    },
+    "publish:upload": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "node tools/scripts/publish.mjs constants {args.ver} {args.tag}"
+        "command": "node tools/scripts/publish.mjs uuid {args.ver} {args.tag} {args.mfa}"
       },
       "dependsOn": ["build"]
     },

@@ -2,22 +2,8 @@ import type { ExecutorContext } from '@nrwl/devkit';
 import { logger, readJsonFile, runExecutor, writeJsonFile } from '@nrwl/devkit';
 import * as semver from 'semver';
 
-export interface PublishExecutorOptions {
-  mfaCode: number;
-}
-
-const runBuild = async (context: ExecutorContext) => {
-  logger.debug('Running build');
-  for await (const s of await runExecutor(
-    { project: context.projectName, target: 'build' },
-    {},
-    context
-  )) {
-    logger.info(s);
-  }
-};
 export default async function publishExecutor(
-  options: PublishExecutorOptions,
+  options: unknown,
   context: ExecutorContext
 ): Promise<{ success: boolean }> {
   logger.debug('Start publishExecutor');
@@ -45,8 +31,6 @@ export default async function publishExecutor(
   srcPackageJson.version = version;
   logger.info('Writing new version to package.json');
   writeJsonFile(srcPackagePath, srcPackageJson);
-
-  await runBuild(context);
 
   const buildPackagePath = `${context.root}/dist/${libPath}/package.json`;
   const buildPackageJson =
