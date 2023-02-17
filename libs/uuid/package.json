@@ -1,5 +1,5 @@
 {
   "name": "@almaclaine/uuid",
-  "version": "0.0.2",
-  "type": "commonjs"
+  "version": "0.0.3",
+  "type": "module"
 }
