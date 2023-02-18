@@ -6,12 +6,40 @@
   "targets": {
     "build": {
       "executor": "@nrwl/js:swc",
+      "dependsOn": [{ "projects": "dependencies", "target": "build" }, "build:esm", "build:cjs"],
       "outputs": ["{options.outputPath}"],
       "options": {
+        "clean": false,
         "outputPath": "dist/libs/types",
         "main": "libs/types/src/index.ts",
         "tsConfig": "libs/types/tsconfig.lib.json",
         "assets": ["libs/types/*.md"],
+        "buildableProjectDepsInPackageJsonType": "dependencies"
+      }
+    },
+    "build:esm": {
+      "executor": "@nrwl/js:swc",
+      "dependsOn": [{ "projects": "dependencies", "target": "build" }],
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/types/esm",
+        "main": "libs/types/src/index.ts",
+        "tsConfig": "libs/types/tsconfig.lib.json",
+        "assets": ["libs/types/*.md"],
+        "swcrc": "libs/types/.lib.esm.swcrc",
+        "buildableProjectDepsInPackageJsonType": "dependencies"
+      }
+    },
+    "build:cjs": {
+      "executor": "@nrwl/js:swc",
+      "dependsOn": [{ "projects": "dependencies", "target": "build" }],
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/types/cjs",
+        "main": "libs/types/src/index.ts",
+        "tsConfig": "libs/types/tsconfig.lib.json",
+        "assets": ["libs/types/*.md"],
+        "swcrc": "libs/types/.lib.cjs.swcrc",
         "buildableProjectDepsInPackageJsonType": "dependencies"
       }
     },

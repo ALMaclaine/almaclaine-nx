@@ -1,9 +1,8 @@
 {
   "name": "@almaclaine/option",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "type": "module",
-  "exports": {
-    "types": "./src/index.d.ts",
-    "default": "./src/index.js"
-  }
+  "main": "cjs/src/index.js",
+  "module": "esm/src/index.js",
+  "types": "src/index.d.ts"
 }

@@ -6,12 +6,41 @@
   "targets": {
     "build": {
       "executor": "@nrwl/js:swc",
+      "dependsOn": [{ "projects": "dependencies", "target": "build" }, "build:esm", "build:cjs"],
       "outputs": ["{options.outputPath}"],
       "options": {
+        "clean": false,
         "outputPath": "dist/libs/ical",
         "main": "libs/ical/src/index.ts",
         "tsConfig": "libs/ical/tsconfig.lib.json",
-        "assets": ["libs/ical/*.md"]
+        "assets": ["libs/ical/*.md"],
+        "buildableProjectDepsInPackageJsonType": "dependencies"
+      }
+    },
+    "build:esm": {
+      "executor": "@nrwl/js:swc",
+      "dependsOn": [{ "projects": "dependencies", "target": "build:esm" }],
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/ical/esm",
+        "main": "libs/ical/src/index.ts",
+        "tsConfig": "libs/ical/tsconfig.lib.json",
+        "assets": ["libs/ical/*.md"],
+        "swcrc": "libs/ical/.lib.esm.swcrc",
+        "buildableProjectDepsInPackageJsonType": "dependencies"
+      }
+    },
+    "build:cjs": {
+      "executor": "@nrwl/js:swc",
+      "dependsOn": [{ "projects": "dependencies", "target": "build:cjs" }],
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/ical/cjs",
+        "main": "libs/ical/src/index.ts",
+        "tsConfig": "libs/ical/tsconfig.lib.json",
+        "assets": ["libs/ical/*.md"],
+        "swcrc": "libs/ical/.lib.cjs.swcrc",
+        "buildableProjectDepsInPackageJsonType": "dependencies"
       }
     },
     "publish": {

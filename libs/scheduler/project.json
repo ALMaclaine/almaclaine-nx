@@ -6,13 +6,40 @@
   "targets": {
     "build": {
       "executor": "@nrwl/js:swc",
+      "dependsOn": [{ "projects": "dependencies", "target": "build" }, "build:esm", "build:cjs"],
       "outputs": ["{options.outputPath}"],
       "options": {
+        "clean": false,
         "outputPath": "dist/libs/scheduler",
-        "implicitDependencies": ["!events"],
         "main": "libs/scheduler/src/index.ts",
         "tsConfig": "libs/scheduler/tsconfig.lib.json",
         "assets": ["libs/scheduler/*.md"],
+        "buildableProjectDepsInPackageJsonType": "dependencies"
+      }
+    },
+    "build:esm": {
+      "executor": "@nrwl/js:swc",
+      "outputs": ["{options.outputPath}"],
+      "dependsOn": [{ "projects": "dependencies", "target": "build:esm" }],
+      "options": {
+        "outputPath": "dist/libs/scheduler/esm",
+        "main": "libs/scheduler/src/index.ts",
+        "tsConfig": "libs/scheduler/tsconfig.lib.json",
+        "assets": ["libs/scheduler/*.md"],
+        "swcrc": "libs/scheduler/.lib.esm.swcrc",
+        "buildableProjectDepsInPackageJsonType": "dependencies"
+      }
+    },
+    "build:cjs": {
+      "executor": "@nrwl/js:swc",
+      "outputs": ["{options.outputPath}"],
+      "dependsOn": [{ "projects": "dependencies", "target": "build:cjs" }],
+      "options": {
+        "outputPath": "dist/libs/scheduler/cjs",
+        "main": "libs/scheduler/src/index.ts",
+        "tsConfig": "libs/scheduler/tsconfig.lib.json",
+        "assets": ["libs/scheduler/*.md"],
+        "swcrc": "libs/scheduler/.lib.cjs.swcrc",
         "buildableProjectDepsInPackageJsonType": "dependencies"
       }
     },

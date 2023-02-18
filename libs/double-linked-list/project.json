@@ -6,12 +6,40 @@
   "targets": {
     "build": {
       "executor": "@nrwl/js:swc",
+      "dependsOn": [{ "projects": "dependencies", "target": "build" }, "build:esm", "build:cjs"],
       "outputs": ["{options.outputPath}"],
       "options": {
+        "clean": false,
         "outputPath": "dist/libs/double-linked-list",
         "main": "libs/double-linked-list/src/index.ts",
         "tsConfig": "libs/double-linked-list/tsconfig.lib.json",
         "assets": ["libs/double-linked-list/*.md"],
+        "buildableProjectDepsInPackageJsonType": "dependencies"
+      }
+    },
+    "build:esm": {
+      "executor": "@nrwl/js:swc",
+      "outputs": ["{options.outputPath}"],
+      "dependsOn": [{ "projects": "dependencies", "target": "build:esm" }],
+      "options": {
+        "outputPath": "dist/libs/double-linked-list/esm",
+        "main": "libs/double-linked-list/src/index.ts",
+        "tsConfig": "libs/double-linked-list/tsconfig.lib.json",
+        "assets": ["libs/double-linked-list/*.md"],
+        "swcrc": "libs/double-linked-list/.lib.esm.swcrc",
+        "buildableProjectDepsInPackageJsonType": "dependencies"
+      }
+    },
+    "build:cjs": {
+      "executor": "@nrwl/js:swc",
+      "outputs": ["{options.outputPath}"],
+      "dependsOn": [{ "projects": "dependencies", "target": "build:cjs" }],
+      "options": {
+        "outputPath": "dist/libs/double-linked-list/cjs",
+        "main": "libs/double-linked-list/src/index.ts",
+        "tsConfig": "libs/double-linked-list/tsconfig.lib.json",
+        "assets": ["libs/double-linked-list/*.md"],
+        "swcrc": "libs/double-linked-list/.lib.cjs.swcrc",
         "buildableProjectDepsInPackageJsonType": "dependencies"
       }
     },

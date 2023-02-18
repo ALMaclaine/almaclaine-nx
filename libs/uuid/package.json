@@ -1,9 +1,8 @@
 {
   "name": "@almaclaine/uuid",
   "type": "module",
-  "exports": {
-    "types": "./src/index.d.ts",
-    "default": "./src/index.js"
-  },
-  "version": "0.0.8"
+  "version": "0.0.14",
+  "main": "cjs/src/index.js",
+  "module": "esm/src/index.js",
+  "types": "src/index.d.ts"
 }

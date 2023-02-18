@@ -30,15 +30,16 @@ export default async function publishExecutor(
   }
   srcPackageJson.version = version;
 
-  const buildPackagePath = `${context.root}/dist/${libPath}/package.json`;
+  const basePath = `${context.root}/dist/${libPath}`;
+  const buildPackagePath = `${basePath}/esm/package.json`;
   const buildPackageJson =
     readJsonFile<Record<string, string | Record<string, string>>>(
       buildPackagePath
     );
   buildPackageJson.version = version;
 
-  delete buildPackageJson['exports']['.'];
-  writeJsonFile(buildPackagePath, buildPackageJson);
+  delete buildPackageJson['exports'];
+  writeJsonFile(`${basePath}/package.json`, buildPackageJson);
 
   try {
     for await (const s of await runExecutor(
