@@ -1,7 +1,6 @@
 {
   "name": "@almaclaine/types",
-  "version": "0.0.13",
-  "type": "module",
+  "version": "0.0.14",
   "main": "cjs/src/index.js",
   "module": "esm/src/index.js",
   "types": "src/index.d.ts"

@@ -1,7 +1,6 @@
 {
   "name": "@almaclaine/env",
-  "version": "0.0.3",
-  "type": "module",
+  "version": "0.0.7",
   "main": "cjs/src/index.js",
   "module": "esm/src/index.js",
   "types": "src/index.d.ts"

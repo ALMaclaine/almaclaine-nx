@@ -1,7 +1,6 @@
 {
   "name": "@almaclaine/uuid",
-  "type": "module",
-  "version": "0.0.14",
+  "version": "0.0.17",
   "main": "cjs/src/index.js",
   "module": "esm/src/index.js",
   "types": "src/index.d.ts"

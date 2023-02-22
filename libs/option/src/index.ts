@@ -1,4 +1,4 @@
-export type { Option } from '../../option/src/lib/option';
+export type { Option } from './lib/option';
 
 export {
   some,
@@ -8,4 +8,4 @@ export {
   someOrElse,
   someOrError,
   ifTrueSome,
-} from '../../option/src/lib/option';
+} from './lib/option';

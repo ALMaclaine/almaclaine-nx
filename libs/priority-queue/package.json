@@ -1,7 +1,6 @@
 {
   "name": "@almaclaine/priority-queue",
-  "version": "0.0.9",
-  "type": "module",
+  "version": "0.0.10",
   "main": "cjs/src/index.js",
   "module": "esm/src/index.js",
   "types": "src/index.d.ts"

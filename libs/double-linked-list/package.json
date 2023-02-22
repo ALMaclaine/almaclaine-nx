@@ -1,7 +1,6 @@
 {
   "name": "@almaclaine/double-linked-list",
-  "version": "0.0.8",
-  "type": "module",
+  "version": "0.0.9",
   "main": "cjs/src/index.js",
   "module": "esm/src/index.js",
   "types": "src/index.d.ts"

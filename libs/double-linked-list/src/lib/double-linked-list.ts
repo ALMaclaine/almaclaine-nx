@@ -7,16 +7,12 @@ type NodeProps<T> = {
 class Node<T> {
   nextNode?: Node<T>;
   prevNode?: Node<T>;
-  private readonly _value: T;
+  readonly value: T;
 
   constructor({ value, nextNode, prevNode }: NodeProps<T>) {
     this.nextNode = nextNode;
     this.prevNode = prevNode;
-    this._value = value;
-  }
-
-  get value(): T {
-    return this._value;
+    this.value = value;
   }
 }
 
@@ -57,10 +53,10 @@ class DoubleLinkedList<T> {
   }
 
   private addNode(node: Node<T>): void {
-    this.valueSet.add(node.value);
     if (this.containsNode(node)) {
       throw new Error('Cannot add same node multiple times');
     } else {
+      this.valueSet.add(node.value);
       this.nodeSet.add(node);
     }
   }
