@@ -38,7 +38,12 @@ class Node<T> {
   }
 }
 
-class DouleLinkedList<T> {
+class ListEndNodes<T> {
+  private tail: O.Option<Node<T>> = O.none;
+  private head: O.Option<Node<T>> = O.none;
+}
+
+class DoubleLinkedList<T> {
   readonly _tag = 'DouleLinkedList' as const;
   private tail: O.Option<Node<T>> = O.none;
   private head: O.Option<Node<T>> = O.none;
