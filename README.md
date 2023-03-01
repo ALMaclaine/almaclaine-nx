@@ -1,5 +1,8 @@
 # Almaclaine
 
+## generate package
+pnpm nx g @nrwl/js:lib random --publishable --importPath=@almaclaine/random --buildable --compiler=swc
+
 ## publishing
 `node tools/scripts/publish.mjs "double-linked-list" "0.0.6" next ######`
 
