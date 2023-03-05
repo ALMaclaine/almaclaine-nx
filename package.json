@@ -2,7 +2,11 @@
   "name": "almaclaine",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "build:bundle-tracer": "nx run bundle-tracer:build",
+    "watch:bundle-tracer": "nx run cli:build --watch",
+    "bundle-tracer": "node dist/libs/bundle-tracer"
+  },
   "private": true,
   "devDependencies": {
     "@nrwl/devkit": "^15.6.3",
@@ -19,6 +23,7 @@
     "@swc-node/register": "^1.4.2",
     "@swc/cli": "~0.1.55",
     "@swc/core": "^1.2.173",
+    "@swc/jest": "0.2.20",
     "@types/jest": "28.1.1",
     "@types/node": "18.7.1",
     "@types/semver": "^7.3.13",
@@ -48,6 +53,7 @@
   "dependencies": {
     "@swc/helpers": "~0.4.11",
     "axios": "^1.0.0",
+    "commander": "^10.0.0",
     "date-fns": "^2.29.3",
     "fp-ts": "^2.13.1",
     "semver": "^7.3.8",

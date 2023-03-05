@@ -1,0 +1,6 @@
+{
+  "name": "@almaclaine/bundle-tracer",
+  "version": "0.0.1",
+  "type": "commonjs",
+  "bin": "./src/bundle-tracer.js"
+}

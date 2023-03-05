@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@almaclaine/bundle-tracer": ["libs/bundle-tracer/src/index.ts"],
       "@almaclaine/constants": ["libs/constants/src/index.ts"],
       "@almaclaine/double-linked-list": [
         "libs/double-linked-list/src/index.ts"
