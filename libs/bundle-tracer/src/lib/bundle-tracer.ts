@@ -4,35 +4,34 @@ import {
   writeFileSync,
   existsSync,
   readdirSync,
+  readFileSync,
   lstatSync,
 } from 'fs';
-import { resolve, basename } from 'path';
+import { resolve, basename, join } from 'path';
 const program = new Command();
 
 const DIR = `./.bundle-tracer`;
 const CONFIG = `${DIR}/config.json`;
 
-// program
-//   .command('init <directory>')
-//   .description('initialize bundle-tracer directory')
-//   .action((bundleDirectory) => {
-//     if (!existsSync(DIR)) {
-//       mkdirSync(DIR);
-//     } else {
-//       console.log(`${DIR} already exists, skipping creation`);
-//     }
-//
-//     if (!existsSync(CONFIG)) {
-//       const config = {
-//         bundleDirectory: bundleDirectory as string,
-//       };
-//       writeFileSync(join(DIR, 'config.json'), JSON.stringify(config, null, 4));
-//     } else {
-//       console.log(`config.json already exists, skipping creation`);
-//     }
-//   });
-//
-// program.parse();
+program
+  .command('init <directory>')
+  .description('initialize bundle-tracer directory')
+  .action((bundleDirectory) => {
+    if (!existsSync(DIR)) {
+      mkdirSync(DIR);
+    } else {
+      console.log(`${DIR} already exists, skipping creation`);
+    }
+
+    if (!existsSync(CONFIG)) {
+      const config = {
+        bundleDirectory: bundleDirectory as string,
+      };
+      writeFileSync(join(DIR, 'config.json'), JSON.stringify(config, null, 4));
+    } else {
+      console.log(`config.json already exists, skipping creation`);
+    }
+  });
 
 type File = {
   type: 'file';
@@ -90,13 +89,13 @@ function traceDirectory(dir: string): Directory {
   };
 }
 
-// console.log(JSON.stringify(traceDirectory('./dist'), null, 4));
-
-const out1 = traceDirectory('./dist');
-const out2 = traceDirectory('./dist');
-out2.directories.pop();
-out2.directories[0].directories[0].files;
-out2.directories[0].directories[0].files.pop();
+program
+  .command('trace <directory>')
+  .description('initialize bundle-tracer directory')
+  .action((dir: string) => {
+    const out = traceDirectory(dir);
+    writeFileSync('./trace.json', JSON.stringify(out, null, 4));
+  });
 
 type FileChange = {
   path: string;
@@ -196,4 +195,13 @@ function diffDirectory(
   };
 }
 
-console.log(diffDirectory(out1, out2));
+program
+  .command('diff <trace1> <trace2>')
+  .description('initialize bundle-tracer directory')
+  .action((trace1: string, trace2: string) => {
+    const dir1 = JSON.parse(readFileSync(trace1, 'utf-8')) as Directory;
+    const dir2 = JSON.parse(readFileSync(trace2, 'utf-8')) as Directory;
+    console.log(diffDirectory(dir1, dir2));
+  });
+
+program.parse();
