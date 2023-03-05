@@ -55,8 +55,16 @@ function isDirectory(dir: string, file: string): boolean {
   return lstat.isDirectory();
 }
 
+function removeUuid(str: string) {
+  if (/^[\w-]+(\w{8})\./.test(str)) {
+    return str.replace(/-\w{8}\./, '.');
+  } else {
+    return str;
+  }
+}
+
 function processFiles(dir: string, file: string): File {
-  const fullPath = resolve(dir, file);
+  const fullPath = removeUuid(resolve(dir, file));
   const lstat = lstatSync(fullPath);
   return {
     type: 'file',
