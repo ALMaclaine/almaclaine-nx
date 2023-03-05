@@ -58,7 +58,7 @@ function isDirectory(dir: string, file: string): boolean {
 }
 
 function removeUuid(str: string) {
-  if (/^[\w-]+(\w{8})\./.test(str)) {
+  if (/[\w-]+(\w{8})\./.test(str)) {
     return str.replace(/-\w{8}\./, '.');
   } else {
     return str;
@@ -165,16 +165,13 @@ function diffDirectory(
     // else clause handled above
   }
 
-  if (sizeChange !== 0) {
-    changedDirectories.push({ path: newDir.path, size: sizeChange });
-  }
-
   const directoriesToCheck: DirectoryMatch[] = [];
 
   for (const { path, size } of newDir.directories) {
     const has = oldDir.directories.find((val) => val.path === path);
     if (!has) {
       addedDirectories.push({ path, size });
+      sizeChange += size;
     }
   }
 
@@ -183,9 +180,14 @@ function diffDirectory(
     const has = newDir.directories.find((val) => val.path === path);
     if (!has) {
       removedDirectories.push({ path, size });
+      sizeChange -= size;
     } else {
       directoriesToCheck.push({ oldDir: prevDir, newDir: has });
     }
+  }
+
+  if (sizeChange !== 0) {
+    changedDirectories.push({ path: newDir.path, size: sizeChange });
   }
 
   for (const dirToCheck of directoriesToCheck) {
