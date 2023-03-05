@@ -37,7 +37,9 @@ type File = {
   type: 'file';
   size: number;
   name: string;
+  nameNoId: string;
   path: string;
+  pathNoId: string;
 };
 
 type Directory = {
@@ -64,13 +66,16 @@ function removeUuid(str: string) {
 }
 
 function processFiles(dir: string, file: string): File {
-  const fullPath = removeUuid(resolve(dir, file));
+  const fullPath = resolve(dir, file);
   const lstat = lstatSync(fullPath);
+  const name = basename(file);
   return {
     type: 'file',
     size: lstat.size,
-    name: basename(file),
+    name: name,
+    nameNoId: removeUuid(name),
     path: fullPath,
+    pathNoId: removeUuid(fullPath),
   };
 }
 
@@ -137,8 +142,8 @@ function diffDirectory(
 
   let sizeChange = 0;
 
-  for (const { path, size } of oldDir.files) {
-    const has = newDir.files.find((val) => val.path === path);
+  for (const { pathNoId, path, size } of oldDir.files) {
+    const has = newDir.files.find((val) => val.pathNoId === pathNoId);
     if (!has) {
       sizeChange -= size;
       removedFiles.push({ path, size });
@@ -151,8 +156,8 @@ function diffDirectory(
     }
   }
 
-  for (const { path, size } of newDir.files) {
-    const has = oldDir.files.find((val) => val.path === path);
+  for (const { pathNoId, path, size } of newDir.files) {
+    const has = oldDir.files.find((val) => val.pathNoId === pathNoId);
     if (!has) {
       sizeChange += size;
       addedFiles.push({ path, size });
