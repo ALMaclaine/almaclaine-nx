@@ -6,7 +6,14 @@
   "targets": {
     "build": {
       "executor": "@nrwl/js:swc",
-      "dependsOn": [{ "projects": "dependencies", "target": "build" }, "build:esm", "build:cjs"],
+      "dependsOn": [
+        {
+          "projects": "dependencies",
+          "target": "build"
+        },
+        "build:esm",
+        "build:cjs"
+      ],
       "outputs": ["{options.outputPath}"],
       "options": {
         "clean": false,
@@ -19,7 +26,12 @@
     },
     "build:esm": {
       "executor": "@nrwl/js:swc",
-      "dependsOn": [{ "projects": "dependencies", "target": "build:esm" }],
+      "dependsOn": [
+        {
+          "projects": "dependencies",
+          "target": "build:esm"
+        }
+      ],
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/ical/esm",
@@ -32,7 +44,12 @@
     },
     "build:cjs": {
       "executor": "@nrwl/js:swc",
-      "dependsOn": [{ "projects": "dependencies", "target": "build:cjs" }],
+      "dependsOn": [
+        {
+          "projects": "dependencies",
+          "target": "build:cjs"
+        }
+      ],
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/ical/cjs",
@@ -50,7 +67,7 @@
     "publish:upload": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "node tools/scripts/publish.mjs ical {args.ver} {args.tag} {args.mfa}"
+        "command": "node tools/scripts/publish.cjs ical {args.ver} {args.tag} {args.mfa}"
       },
       "dependsOn": ["build"]
     },

@@ -6,7 +6,14 @@
   "targets": {
     "build": {
       "executor": "@nrwl/js:swc",
-      "dependsOn": [{ "projects": "dependencies", "target": "build" }, "build:esm", "build:cjs"],
+      "dependsOn": [
+        {
+          "projects": "dependencies",
+          "target": "build"
+        },
+        "build:esm",
+        "build:cjs"
+      ],
       "outputs": ["{options.outputPath}"],
       "options": {
         "clean": false,
@@ -20,7 +27,12 @@
     "build:esm": {
       "executor": "@nrwl/js:swc",
       "outputs": ["{options.outputPath}"],
-      "dependsOn": [{ "projects": "dependencies", "target": "build:esm" }],
+      "dependsOn": [
+        {
+          "projects": "dependencies",
+          "target": "build:esm"
+        }
+      ],
       "options": {
         "outputPath": "dist/libs/constants/esm",
         "main": "libs/constants/src/index.ts",
@@ -33,7 +45,12 @@
     "build:cjs": {
       "executor": "@nrwl/js:swc",
       "outputs": ["{options.outputPath}"],
-      "dependsOn": [{ "projects": "dependencies", "target": "build:cjs" }],
+      "dependsOn": [
+        {
+          "projects": "dependencies",
+          "target": "build:cjs"
+        }
+      ],
       "options": {
         "outputPath": "dist/libs/constants/cjs",
         "main": "libs/constants/src/index.ts",
@@ -50,7 +67,7 @@
     "publish:upload": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "node tools/scripts/publish.mjs constants {args.ver} {args.tag} {args.mfa}"
+        "command": "node tools/scripts/publish.cjs constants {args.ver} {args.tag} {args.mfa}"
       },
       "dependsOn": ["build"]
     },

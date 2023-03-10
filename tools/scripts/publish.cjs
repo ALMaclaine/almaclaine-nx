@@ -7,10 +7,9 @@
  * You might need to authenticate with NPM before running this script.
  */
 
-import { readCachedProjectGraph } from '@nrwl/devkit';
-import { execSync } from 'child_process';
-import { readFileSync, writeFileSync } from 'fs';
-import chalk from 'chalk';
+const { readCachedProjectGraph } = require('@nrwl/devkit');
+const { execSync } = require('child_process');
+const { readFileSync, writeFileSync } = require('fs');
 
 function invariant(condition, message) {
   if (!condition) {
@@ -19,7 +18,7 @@ function invariant(condition, message) {
   }
 }
 
-// Executing publish script: node path/to/publish.mjs {name} --version {version} --tag {tag}
+// Executing publish script: node path/to/publish.cjs {name} --version {version} --tag {tag}
 // Default "tag" to "next" so we won't publish the "latest" tag by accident.
 const [, , name, version, tag = 'next', otp] = process.argv;
 
@@ -53,7 +52,7 @@ try {
   writeFileSync(`package.json`, JSON.stringify(json, null, 2));
 } catch (e) {
   console.error(
-    chalk.bold.red(`Error reading package.json file from library build output.`)
+    `Error reading package.json file from library build output.`
   );
 }
 
