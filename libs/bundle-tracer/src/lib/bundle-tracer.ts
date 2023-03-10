@@ -186,11 +186,9 @@ function diffDirectory(
     }
   }
 
-  if (sizeChange !== 0) {
-    changedDirectories.push({ path: newDir.path, size: sizeChange });
-  }
-
   for (const dirToCheck of directoriesToCheck) {
+    const sizeDiff = dirToCheck.newDir.size - dirToCheck.oldDir.size;
+    sizeChange += sizeDiff;
     const out = diffDirectory(dirToCheck.oldDir, dirToCheck.newDir);
     addedDirectories = [...addedDirectories, ...out.addedDirectories];
     addedFiles = [...addedFiles, ...out.addedFiles];
@@ -198,6 +196,10 @@ function diffDirectory(
     removedFiles = [...removedFiles, ...out.removedFiles];
     changedFiles = [...changedFiles, ...out.changedFiles];
     changedDirectories = [...changedDirectories, ...out.changedDirectories];
+  }
+
+  if (sizeChange !== 0) {
+    changedDirectories.push({ path: newDir.path, size: sizeChange });
   }
 
   return {
@@ -216,7 +218,7 @@ program
   .action((trace1: string, trace2: string) => {
     const dir1 = JSON.parse(readFileSync(trace1, 'utf-8')) as Directory;
     const dir2 = JSON.parse(readFileSync(trace2, 'utf-8')) as Directory;
-    console.log(diffDirectory(dir1, dir2));
+    console.log(JSON.stringify(diffDirectory(dir1, dir2)));
   });
 
 program.parse();
