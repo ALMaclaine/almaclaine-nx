@@ -23,6 +23,10 @@
       "@almaclaine/env": ["libs/env/src/index.ts"],
       "@almaclaine/ical": ["libs/ical/src/index.ts"],
       "@almaclaine/is": ["libs/is/src/index.ts"],
+      "@almaclaine/mantine-provider": ["libs/mantine-provider/src/index.ts"],
+      "@almaclaine/next-mantine-document": [
+        "libs/next-mantine-document/src/index.ts"
+      ],
       "@almaclaine/no-op": ["libs/no-op/src/index.ts"],
       "@almaclaine/option": ["libs/option/src/index.ts"],
       "@almaclaine/priority-queue": ["libs/priority-queue/src/index.ts"],
@@ -30,6 +34,12 @@
       "@almaclaine/random": ["libs/random/src/index.ts"],
       "@almaclaine/scheduler": ["libs/scheduler/src/index.ts"],
       "@almaclaine/types": ["libs/types/src/index.ts"],
+      "@almaclaine/use-mantine-color-scheme-provider": [
+        "libs/use-mantine-color-scheme-provider/src/index.ts"
+      ],
+      "@almaclaine/use-setup-mantine-color-scheme-provider": [
+        "libs/use-setup-mantine-color-scheme-provider/src/index.ts"
+      ],
       "@almaclaine/uuid": ["libs/uuid/src/index.ts"]
     }
   },

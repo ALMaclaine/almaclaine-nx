@@ -31,7 +31,7 @@ export default async function publishExecutor(
   srcPackageJson.version = version;
 
   const basePath = `${context.root}/dist/${libPath}`;
-  const buildPackagePath = `${basePath}/esm/package.json`;
+  const buildPackagePath = `${basePath}/package.json`;
   const buildPackageJson =
     readJsonFile<Record<string, string | Record<string, string>>>(
       buildPackagePath

@@ -13,7 +13,7 @@ const { readFileSync, writeFileSync } = require('fs');
 
 function invariant(condition, message) {
   if (!condition) {
-    console.error(chalk.bold.red(message));
+    console.error(message);
     process.exit(1);
   }
 }
