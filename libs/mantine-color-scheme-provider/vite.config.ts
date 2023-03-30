@@ -4,7 +4,7 @@ import react from '@vitejs/plugin-react';
 import viteTsConfigPaths from 'vite-tsconfig-paths';
 
 export default defineConfig({
-  cacheDir: '../../node_modules/.vite/next-mantine-document',
+  cacheDir: '../../node_modules/.vite/mantine-color-scheme-provider',
 
   plugins: [
     react(),

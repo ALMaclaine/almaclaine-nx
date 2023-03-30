@@ -23,10 +23,10 @@
       "@almaclaine/env": ["libs/env/src/index.ts"],
       "@almaclaine/ical": ["libs/ical/src/index.ts"],
       "@almaclaine/is": ["libs/is/src/index.ts"],
-      "@almaclaine/mantine-provider": ["libs/mantine-provider/src/index.ts"],
-      "@almaclaine/next-mantine-document": [
-        "libs/next-mantine-document/src/index.ts"
+      "@almaclaine/mantine-color-scheme-provider": [
+        "libs/mantine-color-scheme-provider/src/index.ts"
       ],
+      "@almaclaine/mantine-provider": ["libs/mantine-provider/src/index.ts"],
       "@almaclaine/no-op": ["libs/no-op/src/index.ts"],
       "@almaclaine/option": ["libs/option/src/index.ts"],
       "@almaclaine/priority-queue": ["libs/priority-queue/src/index.ts"],

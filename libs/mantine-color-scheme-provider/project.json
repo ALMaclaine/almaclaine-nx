@@ -1,37 +1,39 @@
 {
-  "name": "next-mantine-document",
+  "name": "mantine-color-scheme-provider",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/next-mantine-document/src",
+  "sourceRoot": "libs/mantine-color-scheme-provider/src",
   "projectType": "library",
   "tags": [],
   "targets": {
     "lint": {
       "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/mantine-color-scheme-provider/**/*.{ts,tsx,js,jsx}"
+        ]
+      }
+    },
+    "build": {
+      "executor": "@nrwl/rollup:rollup",
+      "outputs": ["{options.outputPath}"],
       "dependsOn": [
         {
           "projects": "dependencies",
           "target": "build"
         }
       ],
-      "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/next-mantine-document/**/*.{ts,tsx,js,jsx}"]
-      }
-    },
-    "build": {
-      "executor": "@nrwl/rollup:rollup",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/libs/next-mantine-document",
-        "tsConfig": "libs/next-mantine-document/tsconfig.lib.json",
-        "project": "libs/next-mantine-document/package.json",
-        "entryFile": "libs/next-mantine-document/src/index.ts",
+        "outputPath": "dist/libs/mantine-color-scheme-provider",
+        "tsConfig": "libs/mantine-color-scheme-provider/tsconfig.lib.json",
+        "project": "libs/mantine-color-scheme-provider/package.json",
+        "entryFile": "libs/mantine-color-scheme-provider/src/index.ts",
         "external": ["react/jsx-runtime"],
         "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
         "compiler": "babel",
         "assets": [
           {
-            "glob": "libs/next-mantine-document/README.md",
+            "glob": "libs/mantine-color-scheme-provider/README.md",
             "input": ".",
             "output": "."
           }
@@ -45,16 +47,16 @@
     "publish:upload": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "node tools/scripts/publish.cjs next-mantine-document {args.ver} {args.tag} {args.mfa}"
+        "command": "node tools/scripts/publish.cjs mantine-color-scheme-provider {args.ver} {args.tag} {args.mfa}"
       },
       "dependsOn": ["build"]
     },
     "test": {
       "executor": "@nrwl/vite:test",
-      "outputs": ["coverage/libs/next-mantine-document"],
+      "outputs": ["coverage/libs/mantine-color-scheme-provider"],
       "options": {
         "passWithNoTests": true,
-        "reportsDirectory": "../../coverage/libs/next-mantine-document"
+        "reportsDirectory": "../../coverage/libs/mantine-color-scheme-provider"
       }
     }
   }
