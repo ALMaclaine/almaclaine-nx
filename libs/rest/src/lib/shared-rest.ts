@@ -52,7 +52,7 @@ const timeoutRequest = (
 ) => {
   const { req, abort } = request(fetchOptions);
   const timeoutRef = setTimeout(abort, timeout);
-  req.then(() => clearTimeout(timeoutRef));
+  void req.then(() => clearTimeout(timeoutRef));
   return { req, abort };
 };
 
