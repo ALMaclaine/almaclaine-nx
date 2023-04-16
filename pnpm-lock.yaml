@@ -37,9 +37,11 @@ specifiers:
   '@vitejs/plugin-react': ^3.0.0
   '@vitest/coverage-c8': ~0.25.8
   '@vitest/ui': ^0.25.8
+  aws-cdk-lib: ^2.74.0
   axios: ^1.0.0
   chalk: ^5.2.0
   commander: ^10.0.0
+  constructs: ^10.1.312
   cookies-next: ^2.1.1
   date-fns: ^2.29.3
   esbuild: 0.17.5
@@ -80,8 +82,10 @@ dependencies:
   '@mantine/hooks': 6.0.1_react@18.2.0
   '@mantine/next': 6.0.1_qqau3dvbojnwvgou4gzbrwl7sy
   '@swc/helpers': 0.4.14
+  aws-cdk-lib: 2.74.0_constructs@10.1.312
   axios: 1.3.2
   commander: 10.0.0
+  constructs: 10.1.312
   cookies-next: 2.1.1
   date-fns: 2.29.3
   fp-ts: 2.13.1
@@ -160,6 +164,18 @@ packages:
     dependencies:
       '@jridgewell/gen-mapping': 0.1.1
       '@jridgewell/trace-mapping': 0.3.17
+
+  /@aws-cdk/asset-awscli-v1/2.2.141:
+    resolution: {integrity: sha512-kl4Cr1vNMm7a7g0jhOK2o7t0wcxLAz8jgB+m4u4xGsjk+AxEol7hd1Ob4twEbRXGLC8tEHjEaVVgWNTwwP647A==}
+    dev: false
+
+  /@aws-cdk/asset-kubectl-v20/2.1.1:
+    resolution: {integrity: sha512-U1ntiX8XiMRRRH5J1IdC+1t5CE89015cwyt5U63Cpk0GnMlN5+h9WsWMlKlPXZR4rdq/m806JRlBMRpBUB2Dhw==}
+    dev: false
+
+  /@aws-cdk/asset-node-proxy-agent-v5/2.0.117:
+    resolution: {integrity: sha512-cQlqZdQf82XMyChx9rRo6O47EXXsWb3bSU9WiEyywr07OjS3239mkKtz51UVRymckZK2lyBdL/JAQb/AMuDJhA==}
+    dev: false
 
   /@babel/code-frame/7.18.6:
     resolution: {integrity: sha512-TDCmlK5eOvH+eH7cdAFlNXeVJqWIQ7gW9tY1GJIpUtFb6CmjVyq2VM3u71bOyR8CRihcCgMUYoDNyLXao3+70Q==}
@@ -5135,6 +5151,29 @@ packages:
     engines: {node: '>= 0.4'}
     dev: true
 
+  /aws-cdk-lib/2.74.0_constructs@10.1.312:
+    resolution: {integrity: sha512-cPoYEVmJ06pi57q4uW2v/dwXvkr9JHDeSd4+ylBALccbYiRPlZw0OiNH+F2B+hrDVAiaYZWV3HE8hVDDON4+ZA==}
+    engines: {node: '>= 14.15.0'}
+    peerDependencies:
+      constructs: ^10.0.0
+    dependencies:
+      '@aws-cdk/asset-awscli-v1': 2.2.141
+      '@aws-cdk/asset-kubectl-v20': 2.1.1
+      '@aws-cdk/asset-node-proxy-agent-v5': 2.0.117
+      constructs: 10.1.312
+    dev: false
+    bundledDependencies:
+      - '@balena/dockerignore'
+      - case
+      - fs-extra
+      - ignore
+      - jsonschema
+      - minimatch
+      - punycode
+      - semver
+      - table
+      - yaml
+
   /axe-core/4.6.3:
     resolution: {integrity: sha512-/BQzOX780JhsxDnPpH4ZiyrJAzcd8AfzFPkv+89veFSr1rcMjuq2JDCwypKaPeB6ljHp9KjXhPpjgCvQlWYuqg==}
     engines: {node: '>=4'}
@@ -5841,6 +5880,11 @@ packages:
     resolution: {integrity: sha512-U73+6lQFmfiNPrYbXqr6kZ1i1wiRqXnp2nhMsINseWXO8lDau0LGEffJ8kQi4EjLZympVgRdvqjAgiZ1tgzDDA==}
     engines: {node: '>=0.8'}
     dev: true
+
+  /constructs/10.1.312:
+    resolution: {integrity: sha512-eC6tBCDIz/arXAvJwqlv+fPZb6tly4Z58kcTFygSLDp+XuqOxuLTaEyBcLcJQy20+zeUopgWw7K2Go0EWmJ8NQ==}
+    engines: {node: '>= 14.17.0'}
+    dev: false
 
   /content-disposition/0.5.4:
     resolution: {integrity: sha512-FveZTNuGw04cxlAiWbzi6zTAL/lhehaWbTtgluJh4/E95DqMwTmha3KZN1aAWA8cFIhHzMZUvLevkw5Rqk+tSQ==}
