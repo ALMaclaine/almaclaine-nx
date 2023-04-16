@@ -21,7 +21,7 @@ class UserConstruct extends Construct {
 
   get user(): User {
     if (!this._user) {
-      throw Error('Table not initialized');
+      throw Error('User not initialized');
     }
     return this._user;
   }
