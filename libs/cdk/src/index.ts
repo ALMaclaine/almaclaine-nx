@@ -25,13 +25,4 @@ export type { CognitoConstructOptions } from './lib/constructs/cognito';
 export { UserConstruct, generateUserName } from './lib/constructs/user';
 export type { UserConstructOptions } from './lib/constructs/user';
 
-export { UserStack } from './lib/stacks/user';
-export type { UserStackProps } from './lib/stacks/user';
-
-export { AuthStack } from './lib/stacks/auth';
-export type { AuthStackProps } from './lib/stacks/auth';
-
-export { TableStack } from './lib/stacks/table';
-export type { TableStackProps } from './lib/stacks/table';
-
 export { createApp } from './lib/utils/create-app';
