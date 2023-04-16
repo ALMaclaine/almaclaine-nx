@@ -1,7 +1,7 @@
 {
-  "name": "random",
+  "name": "rest",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/random/src",
+  "sourceRoot": "libs/rest/src",
   "projectType": "library",
   "targets": {
     "build": {
@@ -17,10 +17,10 @@
       "outputs": ["{options.outputPath}"],
       "options": {
         "clean": false,
-        "outputPath": "dist/libs/random",
-        "main": "libs/random/src/index.ts",
-        "tsConfig": "libs/random/tsconfig.lib.json",
-        "assets": ["libs/random/*.md"],
+        "outputPath": "dist/libs/rest",
+        "main": "libs/rest/src/index.ts",
+        "tsConfig": "libs/rest/tsconfig.lib.json",
+        "assets": ["libs/rest/*.md"],
         "buildableProjectDepsInPackageJsonType": "dependencies"
       }
     },
@@ -34,11 +34,11 @@
         }
       ],
       "options": {
-        "outputPath": "dist/libs/random/esm",
-        "main": "libs/random/src/index.ts",
-        "tsConfig": "libs/random/tsconfig.lib.json",
-        "assets": ["libs/random/*.md"],
-        "swcrc": "libs/random/.lib.esm.swcrc",
+        "outputPath": "dist/libs/rest/esm",
+        "main": "libs/rest/src/index.ts",
+        "tsConfig": "libs/rest/tsconfig.lib.json",
+        "assets": ["libs/rest/*.md"],
+        "swcrc": "libs/rest/.lib.esm.swcrc",
         "buildableProjectDepsInPackageJsonType": "dependencies"
       }
     },
@@ -52,11 +52,11 @@
         }
       ],
       "options": {
-        "outputPath": "dist/libs/random/cjs",
-        "main": "libs/random/src/index.ts",
-        "tsConfig": "libs/random/tsconfig.lib.json",
-        "assets": ["libs/random/*.md"],
-        "swcrc": "libs/random/.lib.cjs.swcrc",
+        "outputPath": "dist/libs/rest/cjs",
+        "main": "libs/rest/src/index.ts",
+        "tsConfig": "libs/rest/tsconfig.lib.json",
+        "assets": ["libs/rest/*.md"],
+        "swcrc": "libs/rest/.lib.cjs.swcrc",
         "buildableProjectDepsInPackageJsonType": "dependencies"
       }
     },
@@ -64,10 +64,10 @@
       "executor": "@almaclaine/publish:publish",
       "dependsOn": ["build"]
     },
-    "publish": {
+    "publish:upload": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "node tools/scripts/publish.cjs random {args.ver} {args.tag}"
+        "command": "node tools/scripts/publish.cjs rest {args.ver} {args.tag} {args.mfa}"
       },
       "dependsOn": ["build"]
     },
@@ -75,15 +75,15 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/random/**/*.ts"]
+        "lintFilePatterns": ["libs/rest/**/*.ts"]
       }
     },
     "test": {
       "executor": "@nrwl/vite:test",
-      "outputs": ["coverage/libs/random"],
+      "outputs": ["coverage/libs/rest"],
       "options": {
         "passWithNoTests": true,
-        "reportsDirectory": "../../coverage/libs/random"
+        "reportsDirectory": "../../coverage/libs/rest"
       }
     }
   },

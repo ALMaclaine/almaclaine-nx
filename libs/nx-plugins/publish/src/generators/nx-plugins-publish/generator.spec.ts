@@ -1,8 +1,9 @@
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
-import { Tree, readProjectConfiguration } from '@nrwl/devkit';
+import type { Tree} from '@nrwl/devkit';
+import { readProjectConfiguration } from '@nrwl/devkit';
 
 import generator from './generator';
-import { NxPluginsPublishGeneratorSchema } from './schema';
+import type { NxPluginsPublishGeneratorSchema } from './schema';
 
 describe('nx-plugins-publish generator', () => {
   let appTree: Tree;
