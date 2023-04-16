@@ -33,3 +33,5 @@ export type { AuthStackProps } from './lib/stacks/auth';
 
 export { TableStack } from './lib/stacks/table';
 export type { TableStackProps } from './lib/stacks/table';
+
+export { createApp } from './lib/utils/create-app';
