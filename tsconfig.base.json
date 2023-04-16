@@ -34,7 +34,9 @@
       "@almaclaine/publish": ["libs/nx-plugins/publish/src/index.ts"],
       "@almaclaine/random": ["libs/random/src/index.ts"],
       "@almaclaine/rest": ["libs/rest/src/index.ts"],
+      "@almaclaine/s3": ["libs/s3/src/index.ts"],
       "@almaclaine/scheduler": ["libs/scheduler/src/index.ts"],
+      "@almaclaine/sqs": ["libs/sqs/src/index.ts"],
       "@almaclaine/types": ["libs/types/src/index.ts"],
       "@almaclaine/use-mantine-color-scheme-provider": [
         "libs/use-mantine-color-scheme-provider/src/index.ts"
