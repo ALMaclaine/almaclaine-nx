@@ -27,9 +27,9 @@ function createSQSClient(config: SQSClientConfig = {}) {
   return new SQSClient(config);
 }
 
-function getMessage(url: string, sqs: SQSClient) {
+function getMessage(url: string, sqs: SQSClient, waitTime = 20) {
   return sqs.send(
-    new ReceiveMessageCommand({ QueueUrl: url, WaitTimeSeconds: 20 })
+    new ReceiveMessageCommand({ QueueUrl: url, WaitTimeSeconds: waitTime })
   );
 }
 
