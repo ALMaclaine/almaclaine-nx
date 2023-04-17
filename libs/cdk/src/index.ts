@@ -14,7 +14,24 @@ export {
   getStackNameFromProps,
 } from './lib/utils/get-stack-name';
 
-export { generateCfnOutputName } from './lib/utils/cfn-output-name';
+export {
+  generateCfnOutputName,
+  generateCfnUserPoolName,
+  generateCfnUserPoolClientName,
+  generateCfnTableStack,
+  generateCfnUserStack,
+  generateCfnAuthStack,
+  generateCfnTableName,
+  generateCfnTableArn,
+  generateCfnVercelServerUser,
+  generateVercelServerUserArn,
+  generateCfnDeadQueueName,
+  generateCfnQueueName,
+  generateCfnQueueStack,
+  generateCfnS3BucketName,
+  generateCfnS3BucketArn,
+  generateCfnS3Stack,
+} from './lib/utils/cfn-outputs';
 
 export { TableConstruct, generateTableName } from './lib/constructs/table';
 export type { TableConstructOptions } from './lib/constructs/table';
