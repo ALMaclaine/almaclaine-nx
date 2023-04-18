@@ -18,22 +18,36 @@ export {
   generateCfnOutputName,
   generateCfnUserPoolName,
   generateCfnUserPoolClientName,
-  generateCfnTableStack,
-  generateCfnUserStack,
-  generateCfnAuthStack,
-  generateCfnTableName,
-  generateCfnTableArn,
-  generateCfnVercelServerUser,
-  generateVercelServerUserArn,
   generateCfnDeadQueueName,
   generateCfnQueueName,
-  generateCfnQueueStack,
-  generateCfnS3BucketName,
-  generateCfnS3BucketArn,
-  generateCfnS3Stack,
   generateCfnQueueUrl,
   generateCfnQueueArn,
+  generateCfnDeadQueueArn,
+  generateCfnDeadQueueUrl,
 } from './lib/utils/cfn-outputs/cfn-outputs';
+
+export {
+  generateCfnTableStack,
+  generateCfnS3Stack,
+  generateCfnUserStack,
+  generateCfnAuthStack,
+  generateCfnQueueStack,
+} from './lib/utils/cfn-outputs/cfn-outputs-stack';
+
+export {
+  generateCfnTableName,
+  generateCfnTableArn,
+} from './lib/utils/cfn-outputs/cfn-outputs-table';
+
+export {
+  generateCfnVercelServerUserName,
+  generateVercelServerUserArn,
+} from './lib/utils/cfn-outputs/cfn-outputs-user';
+
+export {
+  generateCfnS3BucketName,
+  generateCfnS3BucketArn,
+} from './lib/utils/cfn-outputs/cfn-outputs-s3';
 
 export { TableConstruct, generateTableName } from './lib/constructs/table';
 export type { TableConstructOptions } from './lib/constructs/table';

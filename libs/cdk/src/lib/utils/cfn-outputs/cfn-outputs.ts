@@ -22,7 +22,15 @@ function generateCfnQueueArn(pre: string) {
 }
 
 function generateCfnDeadQueueName(pre: string) {
-  // return generateCfnQueueName(generateUrl(pre));
+  return generateName(prefix(pre, 'DeadQueue'));
+}
+
+function generateCfnDeadQueueArn(pre: string) {
+  return generateArn(prefix(pre, 'DeadQueue'));
+}
+
+function generateCfnDeadQueueUrl(pre: string) {
+  return generateUrl(prefix(pre, 'DeadQueue'));
 }
 
 function generateCfnUserPoolName(pre: string) {
@@ -41,4 +49,6 @@ export {
   generateCfnQueueName,
   generateCfnQueueUrl,
   generateCfnQueueArn,
+  generateCfnDeadQueueArn,
+  generateCfnDeadQueueUrl,
 };
