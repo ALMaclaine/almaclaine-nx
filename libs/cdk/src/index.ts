@@ -31,7 +31,9 @@ export {
   generateCfnS3BucketName,
   generateCfnS3BucketArn,
   generateCfnS3Stack,
-} from './lib/utils/cfn-outputs';
+  generateCfnQueueUrl,
+  generateCfnQueueArn,
+} from './lib/utils/cfn-outputs/cfn-outputs';
 
 export { TableConstruct, generateTableName } from './lib/constructs/table';
 export type { TableConstructOptions } from './lib/constructs/table';
