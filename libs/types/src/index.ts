@@ -1,4 +1,10 @@
-export type { ObjectValues } from './lib/object-values';
+export type { ArrayCallback } from './lib/array-callback';
+export type { ComparatorBoolean } from './lib/comparator-boolean';
+export type { ExecFunction, ExecReturn, ExecRecord } from './lib/exec-function';
+export type { ArrayPredicate, Predicate } from './lib/predicate';
 export type { Printable } from './lib/printable';
-export type { Whitespace } from './lib/whitespace';
 export type { Sized } from './lib/sized';
+export type { Spread } from './lib/spread';
+export type { Transform } from './lib/transform';
+export type { TypeOrArray } from './lib/type-or-array';
+export type { Whitespace } from './lib/whitespace';

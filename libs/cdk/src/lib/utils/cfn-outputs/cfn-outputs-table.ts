@@ -5,7 +5,7 @@ function generateCfnTableName(pre: string) {
 }
 
 function generateCfnTableArn(pre: string) {
-  return generateArn(generateCfnTableName(pre));
+  return generateArn(prefix(pre, 'Table'));
 }
 
 export { generateCfnTableName, generateCfnTableArn };
