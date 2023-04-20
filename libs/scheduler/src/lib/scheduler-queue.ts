@@ -50,6 +50,7 @@ class SchedulerQueue {
     if (sch) {
       this.idNodeMap.delete(sch.id);
     }
+
     return sch;
   }
 
@@ -58,6 +59,7 @@ class SchedulerQueue {
     if (sch) {
       this.idNodeMap.delete(sch.id);
     }
+
     return sch;
   }
 
@@ -66,6 +68,7 @@ class SchedulerQueue {
     if (sch) {
       this.idNodeMap.delete(sch.value.id);
     }
+
     return sch;
   }
 

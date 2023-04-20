@@ -38,6 +38,7 @@ class PriorityQueue<T> {
         }
       }
     }
+
     throw new Error('Should not occur');
   }
 

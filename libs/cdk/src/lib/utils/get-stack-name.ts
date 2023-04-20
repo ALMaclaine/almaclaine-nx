@@ -2,7 +2,7 @@ import type { Stages } from '../constants';
 import type { StackProps } from 'aws-cdk-lib';
 
 function getStackName(id: string, stage: Stages): string {
-  return `${id}-stack-${stage}`;
+  return `${id}-stack-${stage as string}`;
 }
 
 function getStackNameFromProps(id: string, props: StackProps): string {

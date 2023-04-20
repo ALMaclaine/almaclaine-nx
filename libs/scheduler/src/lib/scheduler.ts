@@ -50,6 +50,7 @@ class Scheduler {
           this.emitter.emit('finished', item);
         }
       }
+
       setImmediate(() => this.emitter.emit('start'));
     });
   }

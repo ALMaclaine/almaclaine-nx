@@ -22,6 +22,7 @@ class TableConstruct extends Construct {
     if (!this._table) {
       throw Error('Table not initialized');
     }
+
     return this._table;
   }
 

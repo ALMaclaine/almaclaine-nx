@@ -12,6 +12,7 @@ const getEnv = (envVar: string): Option<string> => {
   if (!val) {
     return none();
   }
+
   return some(val);
 };
 
@@ -20,6 +21,7 @@ const setEnv = (envVar: string, value?: string): void => {
   if (!process?.env) {
     return;
   }
+
   process.env[envVar] = value;
 };
 

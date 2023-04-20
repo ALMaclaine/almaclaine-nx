@@ -19,6 +19,7 @@ describe('EventParser', () => {
   it('should return valid when passing event_begin then event_end', () => {
     const parser = new EventParser();
     parser.nextLine(EVENT_BEGIN);
+
     const out1 = parser.nextLine(EVENT_END);
     expect(out1).toMatchObject(some({}));
   });
@@ -27,6 +28,7 @@ describe('EventParser', () => {
     const parser = new EventParser();
     parser.nextLine(EVENT_BEGIN);
     parser.nextLine('SEQUENCE:1');
+
     const out1 = parser.nextLine(EVENT_END);
     expect(out1).toMatchObject(some({ SEQUENCE: '1' }));
   });
@@ -37,6 +39,7 @@ describe('EventParser', () => {
     parser.nextLine('SEQUENCE:1');
     parser.nextLine(EVENT_BEGIN);
     parser.nextLine('SEQUENCE:2');
+
     const out1 = parser.nextLine(EVENT_END);
     expect(out1).toMatchObject(some({ SEQUENCE: '2' }));
   });
@@ -51,6 +54,7 @@ describe('EventParser', () => {
     parser.nextLine('UID:4f0b35ca-13c9-4cbe-bacb-57bb8ac9834f');
     parser.nextLine('DURATION:PT0M');
     parser.nextLine('DTSTART;TZID=US-Eastern:20220112T083000');
+
     const out1 = parser.nextLine(EVENT_END);
     expect(out1).toMatchObject(
       some({
@@ -72,6 +76,7 @@ describe('EventParser', () => {
     parser.nextLine('DURATION:PT0M');
     parser.nextLine('\n\n');
     parser.nextLine('DTSTART;TZID=US-Eastern:20220112T083000');
+
     const out1 = parser.nextLine(EVENT_END);
     expect(out1).toMatchObject(
       some({
@@ -89,6 +94,7 @@ describe('EventParser', () => {
     parser.nextLine('SEQUENCE:1');
     parser.nextLine('UID:4f0b35ca-13c9-4cbe-bacb-57bb8ac9834f');
     parser.nextLine('DURATION:PT0M');
+
     const out1 = parser.nextLine('DTSTART;TZID=US-Eastern:20220112T083000');
     expect(out1).toMatchObject(none());
   });

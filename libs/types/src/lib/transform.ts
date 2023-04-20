@@ -1,2 +1,2 @@
 type Transform<T> = (val: T) => T;
-export { Transform };
+export type { Transform };

@@ -29,6 +29,7 @@
         "libs/mantine-color-scheme-provider/src/index.ts"
       ],
       "@almaclaine/mantine-provider": ["libs/mantine-provider/src/index.ts"],
+      "@almaclaine/math": ["libs/math/src/index.ts"],
       "@almaclaine/no-op": ["libs/no-op/src/index.ts"],
       "@almaclaine/option": ["libs/option/src/index.ts"],
       "@almaclaine/priority-queue": ["libs/priority-queue/src/index.ts"],
@@ -38,6 +39,7 @@
       "@almaclaine/s3": ["libs/s3/src/index.ts"],
       "@almaclaine/scheduler": ["libs/scheduler/src/index.ts"],
       "@almaclaine/sqs": ["libs/sqs/src/index.ts"],
+      "@almaclaine/string": ["libs/string/src/index.ts"],
       "@almaclaine/types": ["libs/types/src/index.ts"],
       "@almaclaine/use-mantine-color-scheme-provider": [
         "libs/use-mantine-color-scheme-provider/src/index.ts"

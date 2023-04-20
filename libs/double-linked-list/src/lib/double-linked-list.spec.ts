@@ -99,6 +99,7 @@ describe('DoubleLinkedList', () => {
     const dll = new DoubleLinkedList<number>();
     const node1 = new Node<number>({ value: 2 });
     dll.addNodeFront(node1);
+
     const node2 = new Node<number>({ value: 3 });
     dll.addNodeFront(node2);
     expect(dll.peekHead()).toMatchObject({ value: 3 });
@@ -117,6 +118,7 @@ describe('DoubleLinkedList', () => {
     const dll = new DoubleLinkedList<number>();
     const node1 = new Node<number>({ value: 2 });
     dll.addNodeFront(node1);
+
     const node2 = new Node<number>({ value: 3 });
     dll.addNodeFront(node2);
     expect(dll.peekHead()).toMatchObject({ value: 3 });
@@ -197,6 +199,7 @@ describe('DoubleLinkedList', () => {
     const node1 = new Node<number>({ value: 2 });
     expect(() => dll.addNodeBeforeNode(node1, node1)).toThrow();
     dll.addNodeFront(node1);
+
     const node2 = new Node<number>({ value: 3 });
     dll.addNodeBeforeNode(node2, node1);
     expect(dll.peekHead()).toMatchObject({ value: 3 });
@@ -218,6 +221,7 @@ describe('DoubleLinkedList', () => {
     const node1 = new Node<number>({ value: 2 });
     expect(() => dll.addNodeBeforeNode(node1, node1)).toThrow();
     dll.addNodeFront(node1);
+
     const out = dll.addBeforeNode(3, node1);
     expect(dll.peekHead()).toMatchObject({ value: 3 });
     expect(dll.peekHead()).toEqual(out);
@@ -233,6 +237,7 @@ describe('DoubleLinkedList', () => {
     const node1 = new Node<number>({ value: 2 });
     expect(() => dll.addNodeBeforeNode(node1, node1)).toThrow();
     dll.addNodeFront(node1);
+
     const node2 = new Node<number>({ value: 3 });
     dll.addNodeAfterNode(node2, node1);
     expect(dll.peekHead()).toMatchObject({ value: 2 });
@@ -257,6 +262,7 @@ describe('DoubleLinkedList', () => {
     const node1 = new Node<number>({ value: 2 });
     expect(() => dll.addNodeBeforeNode(node1, node1)).toThrow();
     dll.addNodeFront(node1);
+
     const out = dll.addAfterNode(3, node1);
     expect(dll.peekHead()).toMatchObject({ value: 2 });
     expect(dll.peekHead()?.nextNode).toEqual(out);
@@ -301,6 +307,7 @@ describe('DoubleLinkedList', () => {
     const dll = new DoubleLinkedList<number>();
     const node1 = new Node<number>({ value: 2 });
     dll.addNodeFront(node1);
+
     const node2 = new Node<number>({ value: 3 });
     dll.addNodeAfterNode(node2, node1);
     expect(dll.peekHead()).toMatchObject({ value: 2 });
@@ -351,10 +358,13 @@ describe('DoubleLinkedList', () => {
     const values = [2, 3, 4, 5];
     const node1 = new Node<number>({ value: values[0] });
     dll.addNodeFront(node1);
+
     const node2 = new Node<number>({ value: values[1] });
     dll.addNodeAfterNode(node2, node1);
+
     const node3 = new Node<number>({ value: values[2] });
     dll.addNodeAfterNode(node3, node1);
+
     const node4 = new Node<number>({ value: values[3] });
     dll.addNodeAfterNode(node4, node1);
 
@@ -370,10 +380,13 @@ describe('DoubleLinkedList', () => {
     const values = [2, 3, 4, 5];
     const node1 = new Node<number>({ value: values[0] });
     dll.addNodeFront(node1);
+
     const node2 = new Node<number>({ value: values[1] });
     dll.addNodeAfterNode(node2, node1);
+
     const node3 = new Node<number>({ value: values[2] });
     dll.addNodeAfterNode(node3, node1);
+
     const node4 = new Node<number>({ value: values[3] });
     dll.addNodeAfterNode(node4, node1);
 
@@ -389,10 +402,13 @@ describe('DoubleLinkedList', () => {
     const values = [2, 3, 4, 5];
     const node1 = new Node<number>({ value: values[0] });
     dll.addNodeFront(node1);
+
     const node2 = new Node<number>({ value: values[1] });
     dll.addNodeAfterNode(node2, node1);
+
     const node3 = new Node<number>({ value: values[2] });
     dll.addNodeAfterNode(node3, node1);
+
     const node4 = new Node<number>({ value: values[3] });
     dll.addNodeAfterNode(node4, node1);
 
@@ -408,10 +424,13 @@ describe('DoubleLinkedList', () => {
     const values = [2, 3, 4, 5];
     const node1 = new Node<number>({ value: values[0] });
     dll.addNodeFront(node1);
+
     const node2 = new Node<number>({ value: values[1] });
     dll.addNodeAfterNode(node2, node1);
+
     const node3 = new Node<number>({ value: values[2] });
     dll.addNodeAfterNode(node3, node1);
+
     const node4 = new Node<number>({ value: values[3] });
     dll.addNodeAfterNode(node4, node1);
 
@@ -427,10 +446,13 @@ describe('DoubleLinkedList', () => {
     const values = [2, 3, 4, 5];
     const node1 = new Node<number>({ value: values[0] });
     dll.addNodeFront(node1);
+
     const node2 = new Node<number>({ value: values[1] });
     dll.addNodeAfterNode(node2, node1);
+
     const node3 = new Node<number>({ value: values[2] });
     dll.addNodeAfterNode(node3, node1);
+
     const node4 = new Node<number>({ value: values[3] });
     dll.addNodeAfterNode(node4, node1);
 
@@ -446,10 +468,13 @@ describe('DoubleLinkedList', () => {
     const values = [2, 3, 4, 5];
     const node1 = new Node<number>({ value: values[0] });
     dll.addNodeFront(node1);
+
     const node2 = new Node<number>({ value: values[1] });
     dll.addNodeAfterNode(node2, node1);
+
     const node3 = new Node<number>({ value: values[2] });
     dll.addNodeAfterNode(node3, node1);
+
     const node4 = new Node<number>({ value: values[3] });
     dll.addNodeAfterNode(node4, node1);
 
@@ -543,8 +568,10 @@ describe('DoubleLinkedList', () => {
     const dll = new DoubleLinkedList<number>();
     const node1 = new Node<number>({ value: 2 });
     dll.addNodeIndex(node1, -1);
+
     const node2 = new Node<number>({ value: 3 });
     dll.addNodeIndex(node2, 10);
+
     const node3 = new Node<number>({ value: 4 });
     dll.addNodeIndex(node3, 1);
 
@@ -559,8 +586,10 @@ describe('DoubleLinkedList', () => {
     const dll = new DoubleLinkedList<number>();
     const node1 = new Node<number>({ value: 2 });
     dll.addNodeIndex(node1, -1);
+
     const node2 = new Node<number>({ value: 3 });
     dll.addNodeIndex(node2, 10);
+
     const node3 = new Node<number>({ value: 4 });
     dll.addNodeIndex(node3, 1);
 
@@ -573,8 +602,10 @@ describe('DoubleLinkedList', () => {
     const dll = new DoubleLinkedList<number>();
     const node1 = new Node<number>({ value: 2 });
     dll.addNodeIndex(node1, -1);
+
     const node2 = new Node<number>({ value: 3 });
     dll.addNodeIndex(node2, 10);
+
     const node3 = new Node<number>({ value: 4 });
     dll.addNodeIndex(node3, 1);
 
@@ -587,8 +618,10 @@ describe('DoubleLinkedList', () => {
     const dll = new DoubleLinkedList<number>();
     const node1 = new Node<number>({ value: 2 });
     dll.addNodeIndex(node1, -1);
+
     const node2 = new Node<number>({ value: 3 });
     dll.addNodeIndex(node2, 10);
+
     const node3 = new Node<number>({ value: 4 });
     dll.addNodeIndex(node3, 1);
 
@@ -601,8 +634,10 @@ describe('DoubleLinkedList', () => {
     const dll = new DoubleLinkedList<number>();
     const node1 = new Node<number>({ value: 2 });
     dll.addNodeIndex(node1, -1);
+
     const node2 = new Node<number>({ value: 3 });
     dll.addNodeIndex(node2, 10);
+
     const node3 = new Node<number>({ value: 4 });
     dll.addNodeIndex(node3, 1);
 
@@ -614,8 +649,10 @@ describe('DoubleLinkedList', () => {
     const dll = new DoubleLinkedList<number>();
     const node1 = new Node<number>({ value: 2 });
     dll.addNodeIndex(node1, -1);
+
     const node2 = new Node<number>({ value: 3 });
     dll.addNodeIndex(node2, 10);
+
     const node3 = new Node<number>({ value: 4 });
     dll.addNodeIndex(node3, 1);
 
@@ -629,8 +666,10 @@ describe('DoubleLinkedList', () => {
     const dll = new DoubleLinkedList<number>();
     const node1 = new Node<number>({ value: 2 });
     dll.addNodeIndex(node1, -1);
+
     const node2 = new Node<number>({ value: 2 });
     dll.addNodeIndex(node2, 100);
+
     const node3 = new Node<number>({ value: 2 });
     dll.addNodeIndex(node3, 100);
 
@@ -642,8 +681,10 @@ describe('DoubleLinkedList', () => {
     const dll = new DoubleLinkedList<number>();
     const node1 = new Node<number>({ value: 2 });
     dll.addNodeIndex(node1, -1);
+
     const node2 = new Node<number>({ value: 2 });
     dll.addNodeIndex(node2, 100);
+
     const node3 = new Node<number>({ value: 2 });
     dll.addNodeIndex(node3, 100);
 
@@ -655,8 +696,10 @@ describe('DoubleLinkedList', () => {
     const dll = new DoubleLinkedList<number>();
     const node1 = new Node<number>({ value: 2 });
     dll.addNodeIndex(node1, -1);
+
     const node2 = new Node<number>({ value: 2 });
     dll.addNodeIndex(node2, 100);
+
     const node3 = new Node<number>({ value: 2 });
     dll.addNodeIndex(node3, 100);
 
@@ -671,8 +714,10 @@ describe('DoubleLinkedList', () => {
     const dll = new DoubleLinkedList<number>();
     const node1 = new Node<number>({ value: 2 });
     dll.addNodeIndex(node1, -1);
+
     const node2 = new Node<number>({ value: 2 });
     dll.addNodeIndex(node2, 100);
+
     const node3 = new Node<number>({ value: 3 });
     dll.addNodeIndex(node3, 100);
 

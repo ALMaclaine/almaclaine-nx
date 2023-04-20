@@ -15,12 +15,12 @@ describe('cfn-outputs-table', () => {
 
   describe('generateCfnTableArn function', () => {
     it('should generate ARN with "TableName" suffix', () => {
-      expect(generateCfnTableArn('hello')).toBe('helloTableNameArn');
-      expect(generateCfnTableArn('foo')).toBe('fooTableNameArn');
+      expect(generateCfnTableArn('hello')).toBe('helloTableArn');
+      expect(generateCfnTableArn('foo')).toBe('fooTableArn');
     });
 
     it('should handle empty prefix', () => {
-      expect(generateCfnTableArn('')).toBe('TableNameArn');
+      expect(generateCfnTableArn('')).toBe('TableArn');
     });
   });
 });

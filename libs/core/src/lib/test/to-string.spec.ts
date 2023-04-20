@@ -25,6 +25,7 @@ describe('lang/toString', () => {
 
   it('should print objects correctly', () => {
     expect(toString({})).toBe('{}');
+
     const obj = { a: 2, b: { c: 3 } };
     expect(toString(obj)).toBe(JSON.stringify(obj));
   });

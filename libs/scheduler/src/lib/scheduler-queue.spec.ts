@@ -5,19 +5,19 @@ import { Scheduling } from './scheduling';
 
 const scheduling1 = new Scheduling({
   id: 'id1',
-  timeToExecute: 0,
+  timeToExecute: Date.now(),
   repeat: 0,
 });
 
 const scheduling2 = new Scheduling({
   id: 'id2',
-  timeToExecute: 2,
+  timeToExecute: Date.now() + 2,
   repeat: 0,
 });
 
 const scheduling3 = new Scheduling({
   id: 'id3',
-  timeToExecute: 1,
+  timeToExecute: Date.now() + 1,
   repeat: 0,
 });
 
@@ -156,6 +156,7 @@ describe('SchedulerQueue', () => {
     const sq = new SchedulerQueue();
     const toAdd = [scheduling1, scheduling2, scheduling3];
     sq.addMany(toAdd);
+
     const sorted = toAdd.sort((val1, val2) => sq.compare(val1, val2));
     expect(sq.map((val) => val)).toMatchObject(sorted);
   });
@@ -164,8 +165,10 @@ describe('SchedulerQueue', () => {
     const sq = new SchedulerQueue();
     const toAdd = [scheduling1, scheduling2, scheduling3];
     sq.addMany(toAdd);
+
     const test: Scheduling[] = [];
     sq.forEach((val) => test.push(val));
+
     const sorted = toAdd.sort((val1, val2) => sq.compare(val1, val2));
     expect(test).toMatchObject(sorted);
   });

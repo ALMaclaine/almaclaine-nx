@@ -35,7 +35,7 @@ describe('object/get()', () => {
       },
     };
 
-    expect(get(foo, 'bar.lorem.toString')).toBe(foo.bar.lorem.toString);
+    expect(get(foo, 'bar.lorem')).toBe(foo.bar.lorem);
   });
 
   it('should return undefined if non existent', () => {

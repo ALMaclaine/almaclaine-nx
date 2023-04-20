@@ -8,6 +8,7 @@ import {
   lstatSync,
 } from 'fs';
 import { resolve, basename, join } from 'path';
+
 const program = new Command();
 
 const DIR = `./.bundle-tracer`;
@@ -189,6 +190,7 @@ function diffDirectory(
   for (const dirToCheck of directoriesToCheck) {
     const sizeDiff = dirToCheck.newDir.size - dirToCheck.oldDir.size;
     sizeChange += sizeDiff;
+
     const out = diffDirectory(dirToCheck.oldDir, dirToCheck.newDir);
     addedDirectories = [...addedDirectories, ...out.addedDirectories];
     addedFiles = [...addedFiles, ...out.addedFiles];

@@ -33,6 +33,7 @@ class EventParser {
 
   private handleKey(line: Line): Option<RecordOrValue> {
     this.flush();
+
     const match = matchKey(line);
     [this.lastKey, this.lastValue] = someOrError(
       match,

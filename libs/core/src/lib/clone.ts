@@ -42,6 +42,7 @@ const _clone = (val: unknown): unknown => {
   } else if (isDate(val)) {
     return cloneDate(val);
   }
+
   return val;
 };
 

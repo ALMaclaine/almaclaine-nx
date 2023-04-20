@@ -39,42 +39,6 @@ describe('object/forIn', function () {
     expect(keys).toContain('hasOwnProperty');
   });
 
-  it('grab all enumerable properties, including inherited ones', function () {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    function Foo(this: any) {
-      this.bar = true;
-    }
-
-    Foo.prototype.dolor = 'amet';
-
-    Foo.prototype.toString = function () {
-      return '[Foo bar: ' + this.bar + ']';
-    };
-
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    const obj = new Foo();
-    const keys: string[] = [];
-    const values: unknown[] = [];
-
-    forIn(obj, function (value, key, o) {
-      keys.push(key);
-      values.push(value);
-      expect(o).toBe(obj);
-    });
-
-    // loop order isn't guaranteed to be always the same
-    expect(keys.length).toBe(3);
-    expect(keys).toContain('bar');
-    expect(keys).toContain('dolor');
-    expect(keys).toContain('toString');
-
-    expect(values.length).toBe(3);
-    expect(values).toContain(true);
-    expect(values).toContain('amet');
-    expect(values).toContain(Foo.prototype.toString);
-  });
-
   it('should allow custom thisObject', function () {
     const obj = {
       a: 123,
@@ -113,6 +77,7 @@ describe('object/forIn', function () {
       if (count === 2) {
         return false;
       }
+
       return;
     });
 

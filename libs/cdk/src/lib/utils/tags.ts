@@ -7,6 +7,7 @@ import { none, some } from '@almaclaine/option';
 class Tags extends Map<string, string> {
   constructor(struct: Construct) {
     super();
+
     const stack = Stack.of(struct);
     const tags = stack.tags.renderTags() as TagManager;
     this.fromTagManager(tags);
@@ -33,6 +34,7 @@ class Tags extends Map<string, string> {
     if (!value) {
       throw new Error(`Tag ${key} does not exist`);
     }
+
     return value;
   }
 

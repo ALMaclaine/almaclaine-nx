@@ -88,6 +88,7 @@ describe('lang/cloneDeep()', function () {
 
   it('should copy custom instances by reference by default', function () {
     class CustomType {}
+
     const a = {
       test: new CustomType(),
     };

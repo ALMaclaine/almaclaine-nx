@@ -28,6 +28,7 @@ const getUuidBase = (str: string, reg: RegExp): Option<string> => {
   if (!match) {
     return none();
   }
+
   return some(match[1]);
 };
 
@@ -35,6 +36,7 @@ const getUuidStart = (str: string): Option<string> => {
   if (!isUuidStart(str)) {
     return none();
   }
+
   return getUuidBase(str, UUID_START_REGEX);
 };
 
@@ -42,6 +44,7 @@ const getUuidEnd = (str: string): Option<string> => {
   if (!isUuidEnd(str)) {
     return none();
   }
+
   return getUuidBase(str, UUID_END_REGEX);
 };
 
@@ -49,6 +52,7 @@ const getUuid = (str: string): Option<string> => {
   if (!isUuid(str)) {
     return none();
   }
+
   return getUuidBase(str, UUID_REGEX);
 };
 

@@ -20,6 +20,7 @@ class ICalHeaderParser {
     if (!currentOut) {
       throw new Error('Should always be a top object');
     }
+
     return currentOut;
   }
 
@@ -97,10 +98,12 @@ class ICalHeaderParser {
         throw new Error(`Line didnt match: ${line}`);
       }
     }
+
     const record = this.outLevelStack.peekHeadValue();
     if (record) {
       return record;
     }
+
     throw new Error('Record should exist');
   }
 

@@ -12,12 +12,14 @@ const validateVCalendar = (lines: Line[]): Option<CalendarStartEnd> => {
   while (lines[indexStart] === '') {
     indexStart++;
   }
+
   const firstValid = lines[indexStart] === 'BEGIN:VCALENDAR';
 
   let indexEnd = lines.length - 1;
   while (lines[indexEnd] === '') {
     indexEnd--;
   }
+
   const lastValid = lines[indexEnd] === 'END:VCALENDAR';
 
   const valid = firstValid && lastValid;
@@ -61,6 +63,7 @@ const match = (str: string, reg: RegExp): Option<string> => {
   if (!match) {
     return none();
   }
+
   return some(match[1]);
 };
 
@@ -83,6 +86,7 @@ const matchKey = (str: string): Option<[string, string]> => {
   if (!match) {
     return none();
   }
+
   return some([match[1], match[2]]);
 };
 

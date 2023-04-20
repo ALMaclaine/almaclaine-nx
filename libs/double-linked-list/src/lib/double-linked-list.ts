@@ -74,6 +74,7 @@ class DoubleLinkedList<T> {
           this.addNodeAfterNode(node, tmpNode);
           return;
         }
+
         tmpNode = tmpNode.nextNode;
       }
     }
@@ -141,6 +142,7 @@ class DoubleLinkedList<T> {
     if (beforeNode.prevNode?.nextNode) {
       beforeNode.prevNode.nextNode = nodeToAdd;
     }
+
     beforeNode.prevNode = nodeToAdd;
 
     if (beforeNode === this.head) {
@@ -170,6 +172,7 @@ class DoubleLinkedList<T> {
     if (afterNode.nextNode?.prevNode) {
       afterNode.nextNode.prevNode = nodeToAdd;
     }
+
     afterNode.nextNode = nodeToAdd;
 
     if (afterNode === this.tail) {
@@ -216,10 +219,12 @@ class DoubleLinkedList<T> {
     if (!this.containsNode(node)) {
       throw new Error('List does not contain node');
     }
+
     if (node) {
       if (node.prevNode) {
         node.prevNode.nextNode = node.nextNode;
       }
+
       if (node.nextNode) {
         node.nextNode.prevNode = node.prevNode;
       }
@@ -232,6 +237,7 @@ class DoubleLinkedList<T> {
         this.tail = node.prevNode;
       }
     }
+
     return node;
   }
 
@@ -246,6 +252,7 @@ class DoubleLinkedList<T> {
       if (i++ === index) {
         return this.removeNode(tmpNode);
       }
+
       tmpNode = tmpNode.nextNode;
     }
   }
@@ -257,6 +264,7 @@ class DoubleLinkedList<T> {
         this.removeNode(tmpNode);
         return tmpNode;
       }
+
       tmpNode = tmpNode.nextNode;
     }
   }
@@ -268,6 +276,7 @@ class DoubleLinkedList<T> {
         this.removeNode(tmpNode);
         return tmpNode;
       }
+
       tmpNode = tmpNode.prevNode;
     }
   }
@@ -280,6 +289,7 @@ class DoubleLinkedList<T> {
         this.removeNode(tmpNode);
         out.push(tmpNode);
       }
+
       tmpNode = tmpNode.nextNode;
     }
     return out;
@@ -335,6 +345,7 @@ class DoubleLinkedList<T> {
       if (tmpNode === node) {
         return i;
       }
+
       i++;
       tmpNode = tmpNode.nextNode;
     }
@@ -348,6 +359,7 @@ class DoubleLinkedList<T> {
       if (tmpNode.value === value) {
         return i;
       }
+
       i--;
       tmpNode = tmpNode.prevNode;
     }
@@ -361,6 +373,7 @@ class DoubleLinkedList<T> {
       if (tmpNode.value === value) {
         return i;
       }
+
       i++;
       tmpNode = tmpNode.nextNode;
     }

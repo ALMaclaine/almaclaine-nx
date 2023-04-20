@@ -25,6 +25,7 @@ class S3Construct extends Construct {
     if (!this._bucket) {
       throw Error('S3 Bucket not initialized');
     }
+
     return this._bucket;
   }
 

@@ -1,5 +1,5 @@
 import { exec } from '../exec';
-import type { ExecFunction } from '@almaclaine/types';
+import type { ExecFunction, ExecRecord } from '@almaclaine/types';
 
 describe('lang/exec()', () => {
   it('exec works', () => {
@@ -14,25 +14,21 @@ describe('lang/exec()', () => {
     );
     expect(val1).toBe(2);
 
-    let val2;
-    let val3;
-    let val4;
-    const testFunc: ExecFunction = (v1, v2, v3) => {
-      val2 = v1;
-      val3 = v2;
-      val4 = v3;
+    const testFunc: ExecFunction = (v1, v2: string, v3: ExecRecord) => {
+      expect(v1).toBe(2);
+      expect(v2).toBe('a');
+      expect(v3).toMatchObject({ a: 2 });
       return true;
     };
     exec(testFunc, { a: 2 }, 'a');
-    expect(val2).toBe(2);
-    expect(val3).toBe('a');
-    expect(val4).toMatchObject({ a: 2 });
 
     let val5;
+
     function testFunc2(this: never) {
       val5 = this['a'];
       return true;
     }
+
     exec(testFunc2, { a: 2 }, 'a', { a: 3 });
     expect(val5).toBe(3);
   });

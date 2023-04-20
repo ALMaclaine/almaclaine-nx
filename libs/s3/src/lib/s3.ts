@@ -26,6 +26,7 @@ class S3ClientManager {
     if (res) {
       return res;
     }
+
     const s3Client = new S3Client(config);
     this._s3Clients.set(config, s3Client);
     return s3Client;

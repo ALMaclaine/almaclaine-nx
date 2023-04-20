@@ -18,6 +18,34 @@
               }
             ]
           }
+        ],
+        "padding-line-between-statements": [
+          "warn",
+          {
+            "blankLine": "always",
+            "prev": "*",
+            "next": ["const", "let", "var", "multiline-const", "multiline-let", "multiline-var"]
+          },
+          {
+            "blankLine": "any",
+            "prev": ["const", "let", "var", "multiline-const", "multiline-let", "multiline-var"],
+            "next": ["const", "let", "var", "multiline-const", "multiline-let", "multiline-var"]
+          },
+          {
+            "blankLine": "always",
+            "prev": ["try", "function", "if"],
+            "next": "*"
+          },
+          {
+            "blankLine": "always",
+            "prev": "*",
+            "next": ["function"]
+          },
+          {
+            "blankLine": "any",
+            "prev": "*",
+            "next": "break"
+          }
         ]
       }
     },

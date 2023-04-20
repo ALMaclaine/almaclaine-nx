@@ -7,6 +7,7 @@ export default async function publishExecutor(
   context: ExecutorContext
 ): Promise<{ success: boolean }> {
   logger.debug('Start publishExecutor');
+
   const version = process.env['V'].replace('v', '');
   if (!semver.valid(version)) {
     throw new Error('Must set V env variable to valid version');
@@ -28,6 +29,7 @@ export default async function publishExecutor(
       `Provided version is less than or equal to current version: ${currentVersion}`
     );
   }
+
   srcPackageJson.version = version;
 
   const basePath = `${context.root}/dist/${libPath}`;
@@ -54,6 +56,7 @@ export default async function publishExecutor(
   } catch (err) {
     logger.error(err);
   }
+
   logger.debug('End publishExecutor');
   return { success: true };
 }

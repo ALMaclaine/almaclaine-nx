@@ -18,8 +18,10 @@ describe('lang/is', () => {
     expect(is(1, 1)).toBe(true);
     expect(is(0, 0)).toBe(true);
     expect(is('a', 'a')).toBe(true);
+
     const obj = {};
     expect(is(obj, obj)).toBe(true);
+
     const arr: unknown[] = [];
     expect(is(arr, arr)).toBe(true);
     expect(is(NaN, NaN)).toBe(true);

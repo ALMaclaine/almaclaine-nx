@@ -52,6 +52,7 @@ class Scheduling {
       if (date.getTime() > now) {
         return true;
       }
+
       date = add(date, interval);
     }
     return false;
@@ -73,6 +74,7 @@ class Scheduling {
       if (repeat >= 0 && iterations === 0) {
         break;
       }
+
       iterations--;
     }
     return date.getTime();

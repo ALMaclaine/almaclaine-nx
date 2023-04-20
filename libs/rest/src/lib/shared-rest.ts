@@ -41,6 +41,7 @@ const request = (fetchOptions: FetchOptions) => {
     if (!throwOnError || res.ok) {
       return res;
     }
+
     throw new Error(res.statusText);
   });
   return { req, abort };

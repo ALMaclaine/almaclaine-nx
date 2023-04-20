@@ -6,13 +6,70 @@
   "targets": {
     "build": {
       "executor": "@nrwl/js:swc",
+      "dependsOn": [
+        {
+          "projects": "dependencies",
+          "target": "build"
+        },
+        "build:esm",
+        "build:cjs"
+      ],
       "outputs": ["{options.outputPath}"],
       "options": {
+        "clean": false,
         "outputPath": "dist/libs/core",
         "main": "libs/core/src/index.ts",
         "tsConfig": "libs/core/tsconfig.lib.json",
-        "assets": ["libs/core/*.md"]
+        "assets": ["libs/core/*.md"],
+        "buildableProjectDepsInPackageJsonType": "dependencies"
       }
+    },
+    "build:esm": {
+      "executor": "@nrwl/js:swc",
+      "outputs": ["{options.outputPath}"],
+      "dependsOn": [
+        {
+          "projects": "dependencies",
+          "target": "build:esm"
+        }
+      ],
+      "options": {
+        "outputPath": "dist/libs/core/esm",
+        "main": "libs/core/src/index.ts",
+        "tsConfig": "libs/core/tsconfig.lib.json",
+        "assets": ["libs/core/*.md"],
+        "swcrc": "libs/core/.lib.esm.swcrc",
+        "buildableProjectDepsInPackageJsonType": "dependencies"
+      }
+    },
+    "build:cjs": {
+      "executor": "@nrwl/js:swc",
+      "outputs": ["{options.outputPath}"],
+      "dependsOn": [
+        {
+          "projects": "dependencies",
+          "target": "build:cjs"
+        }
+      ],
+      "options": {
+        "outputPath": "dist/libs/core/cjs",
+        "main": "libs/core/src/index.ts",
+        "tsConfig": "libs/core/tsconfig.lib.json",
+        "assets": ["libs/core/*.md"],
+        "swcrc": "libs/core/.lib.cjs.swcrc",
+        "buildableProjectDepsInPackageJsonType": "dependencies"
+      }
+    },
+    "publish": {
+      "executor": "@almaclaine/publish:publish",
+      "dependsOn": ["build"]
+    },
+    "publish:upload": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node tools/scripts/publish.cjs core {args.ver} {args.tag} {args.mfa}"
+      },
+      "dependsOn": ["build"]
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",

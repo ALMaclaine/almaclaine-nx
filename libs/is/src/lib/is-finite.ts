@@ -8,6 +8,7 @@ const isFinite = (val: unknown): val is number => {
     // need to use isNumber because of Number constructor
     return globalThis.isFinite(val);
   }
+
   return false;
 };
 export { isFinite };

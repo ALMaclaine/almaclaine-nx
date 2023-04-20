@@ -157,6 +157,7 @@ describe('priorityQueue', () => {
     });
     const toAdd = [1, 2, 3];
     pq.addMany(toAdd);
+
     const test: number[] = [];
     pq.forEach((val) => test.push(2 * val));
     expect(test).toMatchObject([2, 4, 6]);

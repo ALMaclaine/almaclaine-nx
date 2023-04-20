@@ -1,2 +1,2 @@
 type TypeOrArray<T> = T | T[];
-export { TypeOrArray };
+export type { TypeOrArray };

@@ -18,8 +18,10 @@ describe('lang/isnt', () => {
     expect(isnt(1, 1)).toBe(false);
     expect(isnt(0, 0)).toBe(false);
     expect(isnt('a', 'a')).toBe(false);
+
     const obj = {};
     expect(isnt(obj, obj)).toBe(false);
+
     const arr: unknown[] = [];
     expect(isnt(arr, arr)).toBe(false);
     expect(isnt(NaN, NaN)).toBe(false);

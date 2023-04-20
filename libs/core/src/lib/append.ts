@@ -6,6 +6,7 @@ const append = <T>(arr1: T[], add: T[] | T = []) => {
   } else {
     arr1.push(add);
   }
+
   return arr1;
 };
 export { append };

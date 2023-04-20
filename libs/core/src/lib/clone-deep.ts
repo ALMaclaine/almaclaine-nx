@@ -32,7 +32,7 @@ const cloneObject = (source: unknown, instanceClone: unknown): unknown => {
   }
 };
 
-const cloneArray = (arr: unknown[], instanceClone: unknown): unknown => {
+const cloneArray = (arr: unknown[], instanceClone: unknown): unknown[] => {
   const out = [];
   let i = -1;
   const n = arr.length;

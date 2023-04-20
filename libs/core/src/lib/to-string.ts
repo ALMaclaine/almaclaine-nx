@@ -17,6 +17,7 @@ const toString = (val: unknown): string => {
   if (str === '[object Object]') {
     return JSON.stringify(val);
   }
+
   return str;
 };
 export { toString };

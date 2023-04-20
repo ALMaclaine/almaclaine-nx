@@ -8,4 +8,4 @@ type ExecFunction = (
   obj: ExecRecord
   // returns or boolean so any function is accepted
 ) => ExecReturn;
-export { ExecFunction, ExecReturn, ExecRecord };
+export type { ExecFunction, ExecReturn, ExecRecord };

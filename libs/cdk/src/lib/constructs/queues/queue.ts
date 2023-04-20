@@ -35,6 +35,7 @@ class QueueConstruct extends Construct {
     if (!this._queue) {
       throw Error('Queue not initialized');
     }
+
     return this._queue;
   }
 

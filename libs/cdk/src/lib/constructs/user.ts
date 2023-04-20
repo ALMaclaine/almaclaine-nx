@@ -23,6 +23,7 @@ class UserConstruct extends Construct {
     if (!this._user) {
       throw Error('User not initialized');
     }
+
     return this._user;
   }
 

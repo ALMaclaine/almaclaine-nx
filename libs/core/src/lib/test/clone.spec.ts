@@ -45,6 +45,7 @@ describe('lang/clone', function () {
 
   it('should not clone objects created with custom constructor', function () {
     class TestType {}
+
     const src = new TestType();
     const result = clone(src);
     expect(result).toBe(src);

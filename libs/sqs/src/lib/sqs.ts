@@ -17,6 +17,7 @@ class SQSClientManager {
     if (res) {
       return res;
     }
+
     const s3Client = new SQSClient(config);
     this._s3Clients.set(config, s3Client);
     return s3Client;
