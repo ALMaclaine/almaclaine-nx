@@ -1,6 +1,3 @@
-const UNDEFINED = undefined;
-const NULL = null;
-
 const WHITE_SPACES = [
   ' ',
   '\n',
@@ -28,7 +25,6 @@ const WHITE_SPACES = [
   '\u205F',
   '\u3000',
 ] as const;
-
 const WHITE_SPACES_SET = new Set<string>(WHITE_SPACES);
-
-export { UNDEFINED, NULL, WHITE_SPACES_SET, WHITE_SPACES };
+export { WHITE_SPACES_SET };
+export { WHITE_SPACES };

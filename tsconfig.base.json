@@ -24,6 +24,7 @@
         "libs/double-linked-list/src/index.ts"
       ],
       "@almaclaine/env": ["libs/env/src/index.ts"],
+      "@almaclaine/equals": ["libs/equals/src/index.ts"],
       "@almaclaine/ical": ["libs/ical/src/index.ts"],
       "@almaclaine/is": ["libs/is/src/index.ts"],
       "@almaclaine/mantine-color-scheme-provider": [

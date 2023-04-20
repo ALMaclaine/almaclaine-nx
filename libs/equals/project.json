@@ -1,0 +1,91 @@
+{
+  "name": "equals",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/equals/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:swc",
+      "dependsOn": [
+        {
+          "projects": "dependencies",
+          "target": "build"
+        },
+        "build:esm",
+        "build:cjs"
+      ],
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "clean": false,
+        "outputPath": "dist/libs/equals",
+        "main": "libs/equals/src/index.ts",
+        "tsConfig": "libs/equals/tsconfig.lib.json",
+        "assets": ["libs/equals/*.md"],
+        "buildableProjectDepsInPackageJsonType": "dependencies"
+      }
+    },
+    "build:esm": {
+      "executor": "@nrwl/js:swc",
+      "dependsOn": [
+        {
+          "projects": "dependencies",
+          "target": "build:esm"
+        }
+      ],
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/equals/esm",
+        "main": "libs/equals/src/index.ts",
+        "tsConfig": "libs/equals/tsconfig.lib.json",
+        "assets": ["libs/equals/*.md"],
+        "swcrc": "libs/equals/.lib.esm.swcrc",
+        "buildableProjectDepsInPackageJsonType": "dependencies"
+      }
+    },
+    "build:cjs": {
+      "executor": "@nrwl/js:swc",
+      "dependsOn": [
+        {
+          "projects": "dependencies",
+          "target": "build:cjs"
+        }
+      ],
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/equals/cjs",
+        "main": "libs/equals/src/index.ts",
+        "tsConfig": "libs/equals/tsconfig.lib.json",
+        "assets": ["libs/equals/*.md"],
+        "swcrc": "libs/equals/.lib.cjs.swcrc",
+        "buildableProjectDepsInPackageJsonType": "dependencies"
+      }
+    },
+    "publish": {
+      "executor": "@almaclaine/publish:publish",
+      "dependsOn": ["build"]
+    },
+    "publish:upload": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node tools/scripts/publish.cjs equals {args.ver} {args.tag} {args.mfa}"
+      },
+      "dependsOn": ["build"]
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/equals/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/vite:test",
+      "outputs": ["coverage/libs/equals"],
+      "options": {
+        "passWithNoTests": true,
+        "reportsDirectory": "../../coverage/libs/equals"
+      }
+    }
+  },
+  "tags": []
+}
