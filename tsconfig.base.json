@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@almaclaine/array": ["libs/array/src/index.ts"],
       "@almaclaine/bundle-tracer": ["libs/bundle-tracer/src/index.ts"],
       "@almaclaine/cdk": ["libs/cdk/src/index.ts"],
       "@almaclaine/constants": ["libs/constants/src/index.ts"],

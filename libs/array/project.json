@@ -1,0 +1,91 @@
+{
+  "name": "array",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/array/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:swc",
+      "dependsOn": [
+        {
+          "projects": "dependencies",
+          "target": "build"
+        },
+        "build:esm",
+        "build:cjs"
+      ],
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "clean": false,
+        "outputPath": "dist/libs/array",
+        "main": "libs/array/src/index.ts",
+        "tsConfig": "libs/array/tsconfig.lib.json",
+        "assets": ["libs/array/*.md"],
+        "buildableProjectDepsInPackageJsonType": "dependencies"
+      }
+    },
+    "build:esm": {
+      "executor": "@nrwl/js:swc",
+      "outputs": ["{options.outputPath}"],
+      "dependsOn": [
+        {
+          "projects": "dependencies",
+          "target": "build:esm"
+        }
+      ],
+      "options": {
+        "outputPath": "dist/libs/array/esm",
+        "main": "libs/array/src/index.ts",
+        "tsConfig": "libs/array/tsconfig.lib.json",
+        "assets": ["libs/array/*.md"],
+        "swcrc": "libs/array/.lib.esm.swcrc",
+        "buildableProjectDepsInPackageJsonType": "dependencies"
+      }
+    },
+    "build:cjs": {
+      "executor": "@nrwl/js:swc",
+      "outputs": ["{options.outputPath}"],
+      "dependsOn": [
+        {
+          "projects": "dependencies",
+          "target": "build:cjs"
+        }
+      ],
+      "options": {
+        "outputPath": "dist/libs/array/cjs",
+        "main": "libs/array/src/index.ts",
+        "tsConfig": "libs/array/tsconfig.lib.json",
+        "assets": ["libs/array/*.md"],
+        "swcrc": "libs/array/.lib.cjs.swcrc",
+        "buildableProjectDepsInPackageJsonType": "dependencies"
+      }
+    },
+    "publish": {
+      "executor": "@almaclaine/publish:publish",
+      "dependsOn": ["build"]
+    },
+    "publish:upload": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node tools/scripts/publish.cjs array {args.ver} {args.tag} {args.mfa}"
+      },
+      "dependsOn": ["build"]
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/array/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/vite:test",
+      "outputs": ["coverage/libs/array"],
+      "options": {
+        "passWithNoTests": true,
+        "reportsDirectory": "../../coverage/libs/array"
+      }
+    }
+  },
+  "tags": []
+}
