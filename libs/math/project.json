@@ -6,13 +6,70 @@
   "targets": {
     "build": {
       "executor": "@nrwl/js:swc",
+      "dependsOn": [
+        {
+          "projects": "dependencies",
+          "target": "build"
+        },
+        "build:esm",
+        "build:cjs"
+      ],
       "outputs": ["{options.outputPath}"],
       "options": {
+        "clean": false,
         "outputPath": "dist/libs/math",
         "main": "libs/math/src/index.ts",
         "tsConfig": "libs/math/tsconfig.lib.json",
-        "assets": ["libs/math/*.md"]
+        "assets": ["libs/math/*.md"],
+        "buildableProjectDepsInPackageJsonType": "dependencies"
       }
+    },
+    "build:esm": {
+      "executor": "@nrwl/js:swc",
+      "outputs": ["{options.outputPath}"],
+      "dependsOn": [
+        {
+          "projects": "dependencies",
+          "target": "build:esm"
+        }
+      ],
+      "options": {
+        "outputPath": "dist/libs/math/esm",
+        "main": "libs/math/src/index.ts",
+        "tsConfig": "libs/math/tsconfig.lib.json",
+        "assets": ["libs/math/*.md"],
+        "swcrc": "libs/math/.lib.esm.swcrc",
+        "buildableProjectDepsInPackageJsonType": "dependencies"
+      }
+    },
+    "build:cjs": {
+      "executor": "@nrwl/js:swc",
+      "outputs": ["{options.outputPath}"],
+      "dependsOn": [
+        {
+          "projects": "dependencies",
+          "target": "build:cjs"
+        }
+      ],
+      "options": {
+        "outputPath": "dist/libs/math/cjs",
+        "main": "libs/math/src/index.ts",
+        "tsConfig": "libs/math/tsconfig.lib.json",
+        "assets": ["libs/math/*.md"],
+        "swcrc": "libs/math/.lib.cjs.swcrc",
+        "buildableProjectDepsInPackageJsonType": "dependencies"
+      }
+    },
+    "publish": {
+      "executor": "@almaclaine/publish:publish",
+      "dependsOn": ["build"]
+    },
+    "publish:upload": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node tools/scripts/publish.cjs math {args.ver} {args.tag} {args.mfa}"
+      },
+      "dependsOn": ["build"]
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",

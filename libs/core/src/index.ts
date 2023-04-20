@@ -14,3 +14,7 @@ export { sameSize } from './lib/same-size';
 export { toNumber } from './lib/to-number';
 export { toString } from './lib/to-string';
 export { unifyZero } from './lib/unify-zero';
+export { prop } from './lib/prop';
+export { identity } from './lib/identity';
+
+export { noOp } from '@almaclaine/no-op';
