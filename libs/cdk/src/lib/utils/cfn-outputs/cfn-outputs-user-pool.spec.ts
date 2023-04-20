@@ -1,30 +1,32 @@
 import {
-  generateUserPoolName,
-  generateUserPoolClientName,
+  generateCfnUserPoolName,
+  generateCfnUserPoolClientName,
 } from './cfn-outputs-user-pool';
 
 describe('cfn-outputs-user-pool', () => {
   describe('generateName function', () => {
     it('should concatenate prefix and "Name"', () => {
-      expect(generateUserPoolName('hello')).toBe('helloUserPoolName');
-      expect(generateUserPoolName('foo')).toBe('fooUserPoolName');
+      expect(generateCfnUserPoolName('hello')).toBe('helloUserPoolName');
+      expect(generateCfnUserPoolName('foo')).toBe('fooUserPoolName');
     });
 
     it('should handle empty prefix', () => {
-      expect(generateUserPoolName('')).toBe('UserPoolName');
+      expect(generateCfnUserPoolName('')).toBe('UserPoolName');
     });
   });
 
   describe('generateArn function', () => {
     it('should concatenate prefix and "Arn"', () => {
-      expect(generateUserPoolClientName('hello')).toBe(
+      expect(generateCfnUserPoolClientName('hello')).toBe(
         'helloUserPoolClientName'
       );
-      expect(generateUserPoolClientName('foo')).toBe('fooUserPoolClientName');
+      expect(generateCfnUserPoolClientName('foo')).toBe(
+        'fooUserPoolClientName'
+      );
     });
 
     it('should handle empty prefix', () => {
-      expect(generateUserPoolClientName('')).toBe('UserPoolClientName');
+      expect(generateCfnUserPoolClientName('')).toBe('UserPoolClientName');
     });
   });
 });

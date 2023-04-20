@@ -6,35 +6,35 @@ import {
   concatUrl,
 } from './cfn-outputs-utils';
 
-function generateQueueName(pre: string) {
+function generateCfnQueueName(pre: string) {
   return concatName(concatQueue(pre));
 }
 
-function generateQueueUrl(pre: string) {
+function generateCfnQueueUrl(pre: string) {
   return concatUrl(concatQueue(pre));
 }
 
-function generateQueueArn(pre: string) {
+function generateCfnQueueArn(pre: string) {
   return concatArn(concatQueue(pre));
 }
 
-function generateDeadQueueName(pre: string) {
+function generateCfnDeadQueueName(pre: string) {
   return concatName(concatDeadQueue(pre));
 }
 
-function generateDeadQueueArn(pre: string) {
+function generateCfnDeadQueueArn(pre: string) {
   return concatArn(concatDeadQueue(pre));
 }
 
-function generateDeadQueueUrl(pre: string) {
+function generateCfnDeadQueueUrl(pre: string) {
   return concatUrl(concatDeadQueue(pre));
 }
 
 export {
-  generateDeadQueueName,
-  generateQueueName,
-  generateQueueUrl,
-  generateQueueArn,
-  generateDeadQueueArn,
-  generateDeadQueueUrl,
+  generateCfnDeadQueueName,
+  generateCfnQueueName,
+  generateCfnQueueUrl,
+  generateCfnQueueArn,
+  generateCfnDeadQueueArn,
+  generateCfnDeadQueueUrl,
 };

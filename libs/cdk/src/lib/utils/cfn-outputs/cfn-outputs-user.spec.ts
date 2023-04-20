@@ -1,7 +1,7 @@
 import { describe } from 'vitest';
 import {
   generateCfnVercelServerUserName,
-  generateVercelServerUserArn,
+  generateCfnVercelServerUserArn,
 } from './cfn-outputs-user';
 
 describe('cfn-outputs-user', () => {
@@ -22,14 +22,16 @@ describe('cfn-outputs-user', () => {
 
   describe('generateVercelServerUserArn function', () => {
     it('should generate ARN with "VercelServerUser" suffix', () => {
-      expect(generateVercelServerUserArn('hello')).toBe(
+      expect(generateCfnVercelServerUserArn('hello')).toBe(
         'helloVercelServerUserArn'
       );
-      expect(generateVercelServerUserArn('foo')).toBe('fooVercelServerUserArn');
+      expect(generateCfnVercelServerUserArn('foo')).toBe(
+        'fooVercelServerUserArn'
+      );
     });
 
     it('should handle empty prefix', () => {
-      expect(generateVercelServerUserArn('')).toBe('VercelServerUserArn');
+      expect(generateCfnVercelServerUserArn('')).toBe('VercelServerUserArn');
     });
   });
 });

@@ -15,17 +15,17 @@ export {
 } from './lib/utils/get-stack-name';
 
 export {
-  generateUserPoolName,
-  generateUserPoolClientName,
+  generateCfnUserPoolName,
+  generateCfnUserPoolClientName,
 } from './lib/utils/cfn-outputs/cfn-outputs-user-pool';
 
 export {
-  generateDeadQueueName,
-  generateQueueName,
-  generateQueueUrl,
-  generateQueueArn,
-  generateDeadQueueArn,
-  generateDeadQueueUrl,
+  generateCfnDeadQueueName,
+  generateCfnQueueName,
+  generateCfnQueueUrl,
+  generateCfnQueueArn,
+  generateCfnDeadQueueArn,
+  generateCfnDeadQueueUrl,
 } from './lib/utils/cfn-outputs/cfn-outputs-queue';
 
 export {
@@ -43,7 +43,7 @@ export {
 
 export {
   generateCfnVercelServerUserName,
-  generateVercelServerUserArn,
+  generateCfnVercelServerUserArn,
 } from './lib/utils/cfn-outputs/cfn-outputs-user';
 
 export {

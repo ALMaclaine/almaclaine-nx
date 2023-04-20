@@ -1,11 +1,11 @@
 import { concat } from '@almaclaine/string';
 
-function generateUserPoolName(pre: string) {
+function generateCfnUserPoolName(pre: string) {
   return concat(pre, 'UserPoolName');
 }
 
-function generateUserPoolClientName(pre: string) {
+function generateCfnUserPoolClientName(pre: string) {
   return concat(pre, 'UserPoolClientName');
 }
 
-export { generateUserPoolName, generateUserPoolClientName };
+export { generateCfnUserPoolName, generateCfnUserPoolClientName };

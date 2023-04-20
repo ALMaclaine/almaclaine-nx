@@ -5,8 +5,8 @@ function generateCfnVercelServerUserName(pre: string) {
   return concatName(concatUser(concat(pre, 'VercelServer')));
 }
 
-function generateVercelServerUserArn(pre: string) {
+function generateCfnVercelServerUserArn(pre: string) {
   return concatArn(concatUser(concat(pre, 'VercelServer')));
 }
 
-export { generateCfnVercelServerUserName, generateVercelServerUserArn };
+export { generateCfnVercelServerUserName, generateCfnVercelServerUserArn };

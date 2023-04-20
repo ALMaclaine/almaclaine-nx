@@ -1,77 +1,77 @@
 import { describe } from 'vitest';
 import {
-  generateDeadQueueName,
-  generateQueueName,
-  generateQueueUrl,
-  generateQueueArn,
-  generateDeadQueueArn,
-  generateDeadQueueUrl,
+  generateCfnDeadQueueName,
+  generateCfnQueueName,
+  generateCfnQueueUrl,
+  generateCfnQueueArn,
+  generateCfnDeadQueueArn,
+  generateCfnDeadQueueUrl,
 } from './cfn-outputs-queue';
 
 describe('cfn-outputs-queue', () => {
-  describe('generateQueueName function', () => {
+  describe('generateCfnQueueName function', () => {
     it('should generate name with "Queue" suffix', () => {
-      expect(generateQueueName('hello')).toBe('helloQueueName');
-      expect(generateQueueName('foo')).toBe('fooQueueName');
+      expect(generateCfnQueueName('hello')).toBe('helloQueueName');
+      expect(generateCfnQueueName('foo')).toBe('fooQueueName');
     });
 
     it('should handle empty prefix', () => {
-      expect(generateQueueName('')).toBe('QueueName');
+      expect(generateCfnQueueName('')).toBe('QueueName');
     });
   });
 
-  describe('generateQueueArn function', () => {
+  describe('generateCfnQueueArn function', () => {
     it('should generate ARN with "Queue" suffix', () => {
-      expect(generateQueueArn('hello')).toBe('helloQueueArn');
-      expect(generateQueueArn('foo')).toBe('fooQueueArn');
+      expect(generateCfnQueueArn('hello')).toBe('helloQueueArn');
+      expect(generateCfnQueueArn('foo')).toBe('fooQueueArn');
     });
 
     it('should handle empty prefix', () => {
-      expect(generateQueueArn('')).toBe('QueueArn');
+      expect(generateCfnQueueArn('')).toBe('QueueArn');
     });
   });
 
-  describe('generateQueueUrl function', () => {
+  describe('generateCfnQueueUrl function', () => {
     it('should generate ARN with "Queue" suffix', () => {
-      expect(generateQueueUrl('hello')).toBe('helloQueueUrl');
-      expect(generateQueueUrl('foo')).toBe('fooQueueUrl');
+      expect(generateCfnQueueUrl('hello')).toBe('helloQueueUrl');
+      expect(generateCfnQueueUrl('foo')).toBe('fooQueueUrl');
     });
 
     it('should handle empty prefix', () => {
-      expect(generateQueueUrl('')).toBe('QueueUrl');
+      expect(generateCfnQueueUrl('')).toBe('QueueUrl');
     });
   });
 
-  describe('generateDeadQueueName function', () => {
+  describe('generateCfnDeadQueueName function', () => {
     it('should generate name with "DeadQueue" suffix', () => {
-      expect(generateDeadQueueName('hello')).toBe('helloDeadQueueName');
-      expect(generateDeadQueueName('foo')).toBe('fooDeadQueueName');
+      expect(generateCfnDeadQueueName('hello')).toBe('helloDeadQueueName');
+      expect(generateCfnDeadQueueName('foo')).toBe('fooDeadQueueName');
     });
 
     it('should handle empty prefix', () => {
-      expect(generateDeadQueueName('')).toBe('DeadQueueName');
+      expect(generateCfnDeadQueueName('')).toBe('DeadQueueName');
     });
   });
 
-  describe('generateDeadQueueArn function', () => {
+  describe('generateCfnDeadQueueArn function', () => {
     it('should generate ARN with "DeadQueue" suffix', () => {
-      expect(generateDeadQueueArn('hello')).toBe('helloDeadQueueArn');
-      expect(generateDeadQueueArn('foo')).toBe('fooDeadQueueArn');
+      expect(generateCfnDeadQueueArn('hello')).toBe('helloDeadQueueArn');
+      expect(generateCfnDeadQueueArn('foo')).toBe('fooDeadQueueArn');
     });
 
     it('should handle empty prefix', () => {
-      expect(generateDeadQueueArn('')).toBe('DeadQueueArn');
+      expect(generateCfnDeadQueueArn('')).toBe('DeadQueueArn');
     });
   });
 
-  describe('generateDeadQueueUrl function', () => {
+  describe('generateCfnDeadQueueUrl function', () => {
     it('should generate ARN with "DeadQueue" suffix', () => {
-      expect(generateDeadQueueUrl('hello')).toBe('helloDeadQueueUrl');
-      expect(generateDeadQueueUrl('foo')).toBe('fooDeadQueueUrl');
+      expect(generateCfnDeadQueueUrl('hello')).toBe('helloDeadQueueUrl');
+      expect(generateCfnDeadQueueUrl('foo')).toBe('fooDeadQueueUrl');
     });
 
     it('should handle empty prefix', () => {
-      expect(generateDeadQueueUrl('')).toBe('DeadQueueUrl');
+      expect(generateCfnDeadQueueUrl('')).toBe('DeadQueueUrl');
     });
   });
 });
