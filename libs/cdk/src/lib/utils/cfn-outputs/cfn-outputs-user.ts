@@ -1,11 +1,12 @@
-import { generateArn, generateName, prefix } from './cfn-outputs-utils';
+import { concatArn, concatName, concatUser } from './cfn-outputs-utils';
+import { concat } from '@almaclaine/string';
 
 function generateCfnVercelServerUserName(pre: string) {
-  return generateName(prefix(pre, 'VercelServerUser'));
+  return concatName(concatUser(concat(pre, 'VercelServer')));
 }
 
 function generateVercelServerUserArn(pre: string) {
-  return generateArn(prefix(pre, 'VercelServerUser'));
+  return concatArn(concatUser(concat(pre, 'VercelServer')));
 }
 
 export { generateCfnVercelServerUserName, generateVercelServerUserArn };

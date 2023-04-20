@@ -1,11 +1,11 @@
-import { generateArn, generateName, prefix } from './cfn-outputs-utils';
+import { concatArn, concatBucket, concatName } from './cfn-outputs-utils';
 
 function generateCfnS3BucketName(pre: string) {
-  return generateName(prefix(pre, 'Bucket'));
+  return concatName(concatBucket(pre));
 }
 
 function generateCfnS3BucketArn(pre: string) {
-  return generateArn(prefix(pre, 'Bucket'));
+  return concatArn(concatBucket(pre));
 }
 
 export { generateCfnS3BucketName, generateCfnS3BucketArn };

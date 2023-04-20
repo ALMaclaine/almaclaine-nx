@@ -1,11 +1,11 @@
-import { generateArn, generateName, prefix } from './cfn-outputs-utils';
+import { concatArn, concatName, concatTable } from './cfn-outputs-utils';
 
 function generateCfnTableName(pre: string) {
-  return generateName(prefix(pre, 'Table'));
+  return concatName(concatTable(pre));
 }
 
 function generateCfnTableArn(pre: string) {
-  return generateArn(prefix(pre, 'Table'));
+  return concatArn(concatTable(pre));
 }
 
 export { generateCfnTableName, generateCfnTableArn };

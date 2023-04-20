@@ -1,4 +1,3 @@
-import { describe, it, expect } from 'vitest';
 import { generateCfnTableArn, generateCfnTableName } from './cfn-outputs-table';
 
 describe('cfn-outputs-table', () => {

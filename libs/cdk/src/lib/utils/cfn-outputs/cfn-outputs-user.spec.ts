@@ -4,7 +4,7 @@ import {
   generateVercelServerUserArn,
 } from './cfn-outputs-user';
 
-describe('cfn-outputs-utils', () => {
+describe('cfn-outputs-user', () => {
   describe('generateCfnVercelServerUser function', () => {
     it('should generate name with "VercelServerUser" suffix', () => {
       expect(generateCfnVercelServerUserName('hello')).toBe(

@@ -14,6 +14,7 @@ export { includes } from './lib/includes';
 export { indexOf } from './lib/index-of';
 export { insert } from './lib/insert';
 export { interpolate } from './lib/interpolate';
+export { join } from './lib/join';
 export { lastIndexOf } from './lib/last-index-of';
 export { lowerCase } from './lib/lower-case';
 export { lpad } from './lib/lpad';

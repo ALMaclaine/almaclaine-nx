@@ -15,24 +15,26 @@ export {
 } from './lib/utils/get-stack-name';
 
 export {
-  generateCfnOutputName,
-  generateCfnUserPoolName,
-  generateCfnUserPoolClientName,
-  generateCfnDeadQueueName,
-  generateCfnQueueName,
-  generateCfnQueueUrl,
-  generateCfnQueueArn,
-  generateCfnDeadQueueArn,
-  generateCfnDeadQueueUrl,
-} from './lib/utils/cfn-outputs/cfn-outputs';
+  generateUserPoolName,
+  generateUserPoolClientName,
+} from './lib/utils/cfn-outputs/cfn-outputs-user-pool';
 
 export {
-  generateCfnTableStack,
-  generateCfnS3Stack,
-  generateCfnUserStack,
-  generateCfnAuthStack,
-  generateCfnQueueStack,
-} from './lib/utils/cfn-outputs/cfn-outputs-stack';
+  generateDeadQueueName,
+  generateQueueName,
+  generateQueueUrl,
+  generateQueueArn,
+  generateDeadQueueArn,
+  generateDeadQueueUrl,
+} from './lib/utils/cfn-outputs/cfn-outputs-queue';
+
+export {
+  generateTableStackName,
+  generateS3StackName,
+  generateUserStackName,
+  generateAuthStackName,
+  generateQueueStackName,
+} from './lib/utils/generate-stack-names';
 
 export {
   generateCfnTableName,
