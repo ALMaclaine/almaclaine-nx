@@ -1,11 +1,12 @@
 import { join, lowerCase } from '@almaclaine/string';
+import { map } from '@almaclaine/array';
 
 function generateConstructPrefix(prefix: string) {
   return lowerCase(prefix);
 }
 
 function generateConstructName(prefix: string, ...args: string[]) {
-  return join('-', generateConstructPrefix(prefix), ...args);
+  return join('-', generateConstructPrefix(prefix), ...map(args, lowerCase));
 }
 
 function generateQueueStackName(prefix: string) {
