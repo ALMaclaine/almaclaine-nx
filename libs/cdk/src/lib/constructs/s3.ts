@@ -2,14 +2,14 @@ import { Construct } from 'constructs';
 import type { ConstructDefaultTypes } from '../types';
 import { BlockPublicAccess, Bucket } from 'aws-cdk-lib/aws-s3';
 import { RemovalPolicy } from 'aws-cdk-lib';
+import { generateConstructName } from '../utils/generate-construct-names';
 
 type S3ConstructOptions = ConstructDefaultTypes & {
-  name: string;
   versioned?: boolean;
 };
 
 function generateS3Name(name: string): string {
-  return `${name}-bucket`;
+  return generateConstructName(name, 'bucket');
 }
 
 class S3Construct extends Construct {

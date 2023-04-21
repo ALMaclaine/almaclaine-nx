@@ -3,11 +3,12 @@ import { Construct } from 'constructs';
 import { AttributeType, BillingMode, Table } from 'aws-cdk-lib/aws-dynamodb';
 import { DYNAMO_PRIMARY_KEY_NAME, DYNAMO_SORT_KEY_NAME } from '../constants';
 import type { ConstructDefaultTypes } from '../types';
+import { generateConstructName } from '../utils/generate-construct-names';
 
 type TableConstructOptions = ConstructDefaultTypes;
 
 function generateTableName(name: string): string {
-  return `${name}-dynamodb`;
+  return generateConstructName(name, 'dynamodb');
 }
 
 class TableConstruct extends Construct {
@@ -26,9 +27,9 @@ class TableConstruct extends Construct {
     return this._table;
   }
 
-  constructor(scope: Construct, name: string, options?: TableConstructOptions) {
+  constructor(scope: Construct, { name, prod }: TableConstructOptions) {
     super(scope, name);
-    this.prod = options?.prod ?? false;
+    this.prod = prod ?? false;
     this.scope = scope;
     this.name = generateTableName(name);
     this.initialize();

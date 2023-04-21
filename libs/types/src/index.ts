@@ -8,3 +8,4 @@ export type { Spread } from './lib/spread';
 export type { Transform } from './lib/transform';
 export type { TypeOrArray } from './lib/type-or-array';
 export type { Whitespace } from './lib/whitespace';
+export type { ObjectValues } from './lib/object-values';

@@ -6,7 +6,6 @@ import type { Duration } from 'aws-cdk-lib';
 import { RemovalPolicy } from 'aws-cdk-lib';
 
 type QueueConstructOptions = ConstructDefaultTypes & {
-  name: string;
   deadQueue?: DeadLetterQueue;
   retentionPeriod?: Duration;
   visibilityTimeout?: Duration;

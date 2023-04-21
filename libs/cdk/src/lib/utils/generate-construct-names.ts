@@ -4,8 +4,8 @@ function generateConstructPrefix(prefix: string) {
   return lowerCase(prefix);
 }
 
-function generateConstructName(prefix: string, name: string) {
-  return join('-', generateConstructPrefix(prefix), name);
+function generateConstructName(prefix: string, ...args: string[]) {
+  return join('-', generateConstructPrefix(prefix), ...args);
 }
 
 function generateQueueStackName(prefix: string) {

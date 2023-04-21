@@ -7,8 +7,13 @@ import {
 import { RemovalPolicy } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import type { ConstructDefaultTypes } from '../types';
+import { generateConstructName } from '../utils/generate-construct-names';
 
 type CognitoConstructOptions = ConstructDefaultTypes;
+
+function generateCognitoCName(name: string): string {
+  return generateConstructName(name, 'cognito-pool');
+}
 
 class CognitoConstruct extends Construct {
   private readonly scope: Construct;
@@ -34,15 +39,11 @@ class CognitoConstruct extends Construct {
     return this._userPool;
   }
 
-  constructor(
-    scope: Construct,
-    name: string,
-    options?: CognitoConstructOptions
-  ) {
+  constructor(scope: Construct, { name, prod }: CognitoConstructOptions) {
     super(scope, name);
-    this.prod = options?.prod ?? false;
+    this.prod = prod ?? false;
     this.scope = scope;
-    this.name = `${name}-cognito-pool`;
+    this.name = generateCognitoCName(name);
     this.initialize();
   }
 
@@ -75,8 +76,9 @@ class CognitoConstruct extends Construct {
   }
 
   private createUserPoolClient() {
-    this._userPoolClient = this.userPool.addClient(`${this.name}-client`, {
-      userPoolClientName: `${this.name}-client`,
+    const userPoolClientName = generateConstructName(this.name, 'client');
+    this._userPoolClient = this.userPool.addClient(userPoolClientName, {
+      userPoolClientName,
       authFlows: {
         userPassword: true,
         userSrp: true,

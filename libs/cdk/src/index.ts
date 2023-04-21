@@ -29,12 +29,14 @@ export {
 } from './lib/utils/cfn-outputs/cfn-outputs-queue';
 
 export {
-  generateTableStackName,
+  generateConstructPrefix,
+  generateConstructName,
+  generateQueueStackName,
   generateS3StackName,
+  generateTableStackName,
   generateUserStackName,
   generateAuthStackName,
-  generateQueueStackName,
-} from './lib/utils/generate-stack-names';
+} from './lib/utils/generate-construct-names';
 
 export {
   generateCfnTableName,
