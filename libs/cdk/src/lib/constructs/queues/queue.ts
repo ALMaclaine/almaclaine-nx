@@ -5,13 +5,17 @@ import { Queue } from 'aws-cdk-lib/aws-sqs';
 import type { Duration } from 'aws-cdk-lib';
 import { RemovalPolicy } from 'aws-cdk-lib';
 
-type QueueConstructOptions = ConstructDefaultTypes & {
-  deadQueue?: DeadLetterQueue;
-  retentionPeriod?: Duration;
+type QueueBaseProps = {
+  retentionPeriod: Duration;
   visibilityTimeout?: Duration;
   receiveMessageWaitTime?: Duration;
-  fifo?: boolean;
 };
+
+type QueueConstructOptions = ConstructDefaultTypes &
+  QueueBaseProps & {
+    deadQueue?: DeadLetterQueue;
+    fifo?: boolean;
+  };
 
 function generateQueueName(name: string): string {
   return `${name}-queue`;
@@ -20,12 +24,12 @@ function generateQueueName(name: string): string {
 class QueueConstruct extends Construct {
   private readonly scope: Construct;
 
-  private _queue?: Queue;
-
-  private readonly name: string;
   private readonly prod: boolean;
+
+  private _queue?: Queue;
+  private readonly name: string;
   private readonly deadQueue?: DeadLetterQueue;
-  private readonly retentionPeriod?: Duration;
+  private readonly retentionPeriod: Duration;
   private readonly visibilityTimeout?: Duration;
   private readonly receiveMessageWaitTime?: Duration;
   private readonly fifo?: boolean;
@@ -80,4 +84,4 @@ class QueueConstruct extends Construct {
 }
 
 export { QueueConstruct, generateQueueName };
-export type { QueueConstructOptions };
+export type { QueueConstructOptions, QueueBaseProps };

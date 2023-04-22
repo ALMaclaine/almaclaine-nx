@@ -65,6 +65,9 @@ export type { UserConstructOptions } from './lib/constructs/user';
 export { QueueConstruct } from './lib/constructs/queues/queue';
 export type { QueueConstructOptions } from './lib/constructs/queues/queue';
 
+export { QueuePairConstruct } from './lib/constructs/queues/queue-pair';
+export type { QueuePairConstructOptions } from './lib/constructs/queues/queue-pair';
+
 export { DeadQueueConstruct } from './lib/constructs/queues/dead-queue';
 export type { DeadQueueConstructOptions } from './lib/constructs/queues/dead-queue';
 
