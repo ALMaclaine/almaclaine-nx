@@ -1,1 +1,1 @@
-export * from './lib/scheduler';
+export { scheduler, Scheduler } from './lib/scheduler';

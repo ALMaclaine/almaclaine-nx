@@ -1,1 +1,1 @@
-export { setEnv, getEnv } from './lib/env';
+export { setEnv, getEnv, envEquals } from './lib/env';

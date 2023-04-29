@@ -20,6 +20,7 @@
       "@almaclaine/cdk": ["libs/cdk/src/index.ts"],
       "@almaclaine/constants": ["libs/constants/src/index.ts"],
       "@almaclaine/core": ["libs/core/src/index.ts"],
+      "@almaclaine/discord": ["libs/discord/src/index.ts"],
       "@almaclaine/double-linked-list": [
         "libs/double-linked-list/src/index.ts"
       ],
@@ -27,6 +28,7 @@
       "@almaclaine/equals": ["libs/equals/src/index.ts"],
       "@almaclaine/ical": ["libs/ical/src/index.ts"],
       "@almaclaine/is": ["libs/is/src/index.ts"],
+      "@almaclaine/log": ["libs/log/src/index.ts"],
       "@almaclaine/mantine-color-scheme-provider": [
         "libs/mantine-color-scheme-provider/src/index.ts"
       ],
@@ -42,6 +44,7 @@
       "@almaclaine/scheduler": ["libs/scheduler/src/index.ts"],
       "@almaclaine/sqs": ["libs/sqs/src/index.ts"],
       "@almaclaine/string": ["libs/string/src/index.ts"],
+      "@almaclaine/trpc": ["libs/trpc/src/index.ts"],
       "@almaclaine/types": ["libs/types/src/index.ts"],
       "@almaclaine/use-mantine-color-scheme-provider": [
         "libs/use-mantine-color-scheme-provider/src/index.ts"

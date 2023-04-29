@@ -1,28 +1,16 @@
 import type { Option } from '@almaclaine/option';
-import { none, some } from '@almaclaine/option';
+import { equalsValue, option } from '@almaclaine/option';
 
-const getEnv = (envVar: string): Option<string> => {
-  // if no process.env return none, could be in browser
-  if (!process?.env) {
-    return none();
-  }
+function getEnv(envVar: string): Option<string> {
+  return option<string>(process.env[envVar]);
+}
 
-  const val = process.env[envVar];
-  // if val is falsy return none
-  if (!val) {
-    return none();
-  }
+function envEquals(envVar: string, val: string): boolean {
+  return equalsValue(getEnv(envVar), val);
+}
 
-  return some(val);
-};
-
-const setEnv = (envVar: string, value?: string): void => {
-  // if no process.env return none, could be in browser
-  if (!process?.env) {
-    return;
-  }
-
+function setEnv(envVar: string, value?: string): void {
   process.env[envVar] = value;
-};
+}
 
-export { getEnv, setEnv };
+export { getEnv, setEnv, envEquals };
