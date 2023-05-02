@@ -6,13 +6,70 @@
   "targets": {
     "build": {
       "executor": "@nx/js:swc",
+      "dependsOn": [
+        {
+          "target": "build",
+          "dependencies": true
+        },
+        "build:esm",
+        "build:cjs"
+      ],
       "outputs": ["{options.outputPath}"],
       "options": {
+        "clean": false,
         "outputPath": "dist/libs/vercel",
         "main": "libs/vercel/src/index.ts",
         "tsConfig": "libs/vercel/tsconfig.lib.json",
-        "assets": ["libs/vercel/*.md"]
+        "assets": ["libs/vercel/*.md"],
+        "buildableProjectDepsInPackageJsonType": "dependencies"
       }
+    },
+    "build:esm": {
+      "executor": "@nx/js:swc",
+      "dependsOn": [
+        {
+          "target": "build",
+          "dependencies": true
+        }
+      ],
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/vercel/esm",
+        "main": "libs/vercel/src/index.ts",
+        "tsConfig": "libs/vercel/tsconfig.lib.json",
+        "assets": ["libs/vercel/*.md"],
+        "swcrc": "libs/vercel/.lib.esm.swcrc",
+        "buildableProjectDepsInPackageJsonType": "dependencies"
+      }
+    },
+    "build:cjs": {
+      "executor": "@nx/js:swc",
+      "dependsOn": [
+        {
+          "target": "build",
+          "dependencies": true
+        }
+      ],
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/vercel/cjs",
+        "main": "libs/vercel/src/index.ts",
+        "tsConfig": "libs/vercel/tsconfig.lib.json",
+        "assets": ["libs/vercel/*.md"],
+        "swcrc": "libs/vercel/.lib.cjs.swcrc",
+        "buildableProjectDepsInPackageJsonType": "dependencies"
+      }
+    },
+    "publish": {
+      "executor": "@almaclaine/publish:publish",
+      "dependsOn": ["build"]
+    },
+    "publish:upload": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node tools/scripts/publish.cjs vercel {args.ver} {args.tag} {args.mfa}"
+      },
+      "dependsOn": ["build"]
     },
     "lint": {
       "executor": "@nx/linter:eslint",

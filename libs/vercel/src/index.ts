@@ -1,1 +1,1 @@
-export * from './lib/vercel';
+export { getBaseUrl } from './lib/vercel';
