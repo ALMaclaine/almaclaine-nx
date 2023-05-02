@@ -1,0 +1,91 @@
+{
+  "name": "nx",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/nx/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:swc",
+      "dependsOn": [
+        {
+          "target": "build",
+          "dependencies": true
+        },
+        "build:esm",
+        "build:cjs"
+      ],
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "clean": false,
+        "outputPath": "dist/libs/nx",
+        "main": "libs/nx/src/index.ts",
+        "tsConfig": "libs/nx/tsconfig.lib.json",
+        "assets": ["libs/nx/*.md"],
+        "buildableProjectDepsInPackageJsonType": "dependencies"
+      }
+    },
+    "build:esm": {
+      "executor": "@nx/js:swc",
+      "outputs": ["{options.outputPath}"],
+      "dependsOn": [
+        {
+          "target": "build:esm",
+          "dependencies": true
+        }
+      ],
+      "options": {
+        "outputPath": "dist/libs/nx/esm",
+        "main": "libs/nx/src/index.ts",
+        "tsConfig": "libs/nx/tsconfig.lib.json",
+        "assets": ["libs/nx/*.md"],
+        "swcrc": "libs/nx/.lib.esm.swcrc",
+        "buildableProjectDepsInPackageJsonType": "dependencies"
+      }
+    },
+    "build:cjs": {
+      "executor": "@nx/js:swc",
+      "outputs": ["{options.outputPath}"],
+      "dependsOn": [
+        {
+          "target": "build:cjs",
+          "dependencies": true
+        }
+      ],
+      "options": {
+        "outputPath": "dist/libs/nx/cjs",
+        "main": "libs/nx/src/index.ts",
+        "tsConfig": "libs/nx/tsconfig.lib.json",
+        "assets": ["libs/nx/*.md"],
+        "swcrc": "libs/nx/.lib.cjs.swcrc",
+        "buildableProjectDepsInPackageJsonType": "dependencies"
+      }
+    },
+    "publish": {
+      "executor": "@almaclaine/publish:publish",
+      "dependsOn": ["build"]
+    },
+    "publish:upload": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node tools/scripts/publish.cjs nx {args.ver} {args.tag} {args.mfa}"
+      },
+      "dependsOn": ["build"]
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/nx/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nx/vite:test",
+      "outputs": ["coverage/libs/nx"],
+      "options": {
+        "passWithNoTests": true,
+        "reportsDirectory": "../../coverage/libs/nx"
+      }
+    }
+  },
+  "tags": []
+}

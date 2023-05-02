@@ -1,5 +1,5 @@
-import type { ExecutorContext } from '@nrwl/devkit';
-import { logger, readJsonFile, runExecutor, writeJsonFile } from '@nrwl/devkit';
+import type { ExecutorContext } from '@nx/devkit';
+import { logger, readJsonFile, runExecutor, writeJsonFile } from '@nx/devkit';
 import * as semver from 'semver';
 
 export default async function publishExecutor(

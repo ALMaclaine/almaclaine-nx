@@ -5,11 +5,11 @@
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/js:swc",
+      "executor": "@nx/js:swc",
       "dependsOn": [
         {
-          "projects": "dependencies",
-          "target": "build"
+          "target": "build",
+          "dependencies": true
         },
         "build:esm",
         "build:cjs"
@@ -25,12 +25,12 @@
       }
     },
     "build:esm": {
-      "executor": "@nrwl/js:swc",
+      "executor": "@nx/js:swc",
       "outputs": ["{options.outputPath}"],
       "dependsOn": [
         {
-          "projects": "dependencies",
-          "target": "build:esm"
+          "target": "build:esm",
+          "dependencies": true
         }
       ],
       "options": {
@@ -43,12 +43,12 @@
       }
     },
     "build:cjs": {
-      "executor": "@nrwl/js:swc",
+      "executor": "@nx/js:swc",
       "outputs": ["{options.outputPath}"],
       "dependsOn": [
         {
-          "projects": "dependencies",
-          "target": "build:cjs"
+          "target": "build:cjs",
+          "dependencies": true
         }
       ],
       "options": {
@@ -72,14 +72,14 @@
       "dependsOn": ["build"]
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint",
+      "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["libs/rest/**/*.ts"]
       }
     },
     "test": {
-      "executor": "@nrwl/vite:test",
+      "executor": "@nx/vite:test",
       "outputs": ["coverage/libs/rest"],
       "options": {
         "passWithNoTests": true,

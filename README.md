@@ -1,9 +1,11 @@
 # Almaclaine
 
 ## generate package
-pnpm nx g @nrwl/js:lib random --publishable --importPath=@almaclaine/random --buildable --compiler=swc
+
+pnpm nx g @nx/js:lib random --publishable --importPath=@almaclaine/random --buildable --compiler=swc
 
 ## publishing
+
 `node tools/scripts/publish.mjs "double-linked-list" "0.0.6" next ######`
 
 <a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>

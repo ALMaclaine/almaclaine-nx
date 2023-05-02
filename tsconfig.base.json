@@ -35,6 +35,7 @@
       "@almaclaine/mantine-provider": ["libs/mantine-provider/src/index.ts"],
       "@almaclaine/math": ["libs/math/src/index.ts"],
       "@almaclaine/no-op": ["libs/no-op/src/index.ts"],
+      "@almaclaine/nx": ["libs/nx/src/index.ts"],
       "@almaclaine/option": ["libs/option/src/index.ts"],
       "@almaclaine/priority-queue": ["libs/priority-queue/src/index.ts"],
       "@almaclaine/publish": ["libs/nx-plugins/publish/src/index.ts"],
@@ -52,7 +53,8 @@
       "@almaclaine/use-setup-mantine-color-scheme-provider": [
         "libs/use-setup-mantine-color-scheme-provider/src/index.ts"
       ],
-      "@almaclaine/uuid": ["libs/uuid/src/index.ts"]
+      "@almaclaine/uuid": ["libs/uuid/src/index.ts"],
+      "@almaclaine/vercel": ["libs/vercel/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

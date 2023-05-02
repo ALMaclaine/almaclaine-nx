@@ -1,6 +1,6 @@
-import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
-import type { Tree} from '@nrwl/devkit';
-import { readProjectConfiguration } from '@nrwl/devkit';
+import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
+import type { Tree } from '@nx/devkit';
+import { readProjectConfiguration } from '@nx/devkit';
 
 import generator from './generator';
 import type { NxPluginsPublishGeneratorSchema } from './schema';

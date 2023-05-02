@@ -1,4 +1,4 @@
-import type { Tree } from '@nrwl/devkit';
+import type { Tree } from '@nx/devkit';
 import {
   addProjectConfiguration,
   formatFiles,
@@ -6,7 +6,7 @@ import {
   getWorkspaceLayout,
   names,
   offsetFromRoot,
-} from '@nrwl/devkit';
+} from '@nx/devkit';
 import * as path from 'path';
 import type { NxPluginsPublishGeneratorSchema } from './schema';
 

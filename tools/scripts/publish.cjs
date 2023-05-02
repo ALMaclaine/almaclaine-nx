@@ -7,7 +7,7 @@
  * You might need to authenticate with NPM before running this script.
  */
 
-const { readCachedProjectGraph } = require('@nrwl/devkit');
+const { readCachedProjectGraph } = require('@nx/devkit');
 const { execSync } = require('child_process');
 const { readFileSync, writeFileSync } = require('fs');
 
@@ -51,9 +51,7 @@ try {
   json.version = version;
   writeFileSync(`package.json`, JSON.stringify(json, null, 2));
 } catch (e) {
-  console.error(
-    `Error reading package.json file from library build output.`
-  );
+  console.error(`Error reading package.json file from library build output.`);
 }
 
 // Execute "npm publish" to publish
