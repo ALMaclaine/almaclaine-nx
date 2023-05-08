@@ -34,6 +34,7 @@
       ],
       "@almaclaine/mantine-provider": ["libs/mantine-provider/src/index.ts"],
       "@almaclaine/math": ["libs/math/src/index.ts"],
+      "@almaclaine/next": ["libs/next/src/index.ts"],
       "@almaclaine/no-op": ["libs/no-op/src/index.ts"],
       "@almaclaine/nx": ["libs/nx/src/index.ts"],
       "@almaclaine/option": ["libs/option/src/index.ts"],

@@ -1,0 +1,91 @@
+{
+  "name": "next",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/next/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:swc",
+      "dependsOn": [
+        {
+          "target": "build",
+          "dependencies": true
+        },
+        "build:esm",
+        "build:cjs"
+      ],
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "clean": false,
+        "outputPath": "dist/libs/next",
+        "main": "libs/next/src/index.ts",
+        "tsConfig": "libs/next/tsconfig.lib.json",
+        "assets": ["libs/next/*.md"],
+        "buildableProjectDepsInPackageJsonType": "dependencies"
+      }
+    },
+    "build:esm": {
+      "executor": "@nx/js:swc",
+      "outputs": ["{options.outputPath}"],
+      "dependsOn": [
+        {
+          "target": "build:esm",
+          "dependencies": true
+        }
+      ],
+      "options": {
+        "outputPath": "dist/libs/next/esm",
+        "main": "libs/next/src/index.ts",
+        "tsConfig": "libs/next/tsconfig.lib.json",
+        "assets": ["libs/next/*.md"],
+        "swcrc": "libs/next/.lib.esm.swcrc",
+        "buildableProjectDepsInPackageJsonType": "dependencies"
+      }
+    },
+    "build:cjs": {
+      "executor": "@nx/js:swc",
+      "outputs": ["{options.outputPath}"],
+      "dependsOn": [
+        {
+          "target": "build:cjs",
+          "dependencies": true
+        }
+      ],
+      "options": {
+        "outputPath": "dist/libs/next/cjs",
+        "main": "libs/next/src/index.ts",
+        "tsConfig": "libs/next/tsconfig.lib.json",
+        "assets": ["libs/next/*.md"],
+        "swcrc": "libs/next/.lib.cjs.swcrc",
+        "buildableProjectDepsInPackageJsonType": "dependencies"
+      }
+    },
+    "publish": {
+      "executor": "@almaclaine/publish:publish",
+      "dependsOn": ["build"]
+    },
+    "publish:upload": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node tools/scripts/publish.cjs next {args.ver} {args.tag} {args.mfa}"
+      },
+      "dependsOn": ["build"]
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/next/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nx/vite:test",
+      "outputs": ["coverage/libs/next"],
+      "options": {
+        "passWithNoTests": true,
+        "reportsDirectory": "../../coverage/libs/next"
+      }
+    }
+  },
+  "tags": []
+}
