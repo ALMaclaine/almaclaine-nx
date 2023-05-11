@@ -1,0 +1,34 @@
+{
+  "name": "chatgpt",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/chatgpt/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:swc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/chatgpt",
+        "main": "libs/chatgpt/src/index.ts",
+        "tsConfig": "libs/chatgpt/tsconfig.lib.json",
+        "assets": ["libs/chatgpt/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/chatgpt/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nx/vite:test",
+      "outputs": ["coverage/libs/chatgpt"],
+      "options": {
+        "passWithNoTests": true,
+        "reportsDirectory": "../../coverage/libs/chatgpt"
+      }
+    }
+  },
+  "tags": []
+}

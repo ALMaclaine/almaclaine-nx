@@ -86,6 +86,7 @@
     "cookies-next": "^2.1.1",
     "date-fns": "^2.29.3",
     "fp-ts": "^2.13.1",
+    "gpt-3-encoder": "^1.1.4",
     "next": "^13.3.0",
     "node-fetch": "^3.3.1",
     "pino": "^8.11.0",
