@@ -1,8 +1,8 @@
 {
   "name": "@almaclaine/cdk",
-  "version": "0.0.26",
+  "version": "0.0.29",
   "type": "commonjs",
-  "exports": {
-    "./constructs": "./lib/constructs/index.js"
-  }
+  "main": "cjs/src/index.js",
+  "module": "esm/src/index.js",
+  "types": "src/index.d.ts"
 }

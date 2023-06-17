@@ -1,10 +1,13 @@
 import { Construct } from 'constructs';
-import type { ConstructDefaultTypes } from '../types';
+import type { ConstructDefaultTypes, DashJoined } from '../types';
 import { BlockPublicAccess, Bucket } from 'aws-cdk-lib/aws-s3';
 import { RemovalPolicy } from 'aws-cdk-lib';
-import { generateConstructName } from '../utils/generate-construct-names';
+import {
+  generateConstructName,
+  generateConstructNameLiteral,
+} from '../utils/generate-construct-names';
 
-type S3ConstructOptions = ConstructDefaultTypes & {
+type S3ConstructOptions<T extends string> = ConstructDefaultTypes<T> & {
   versioned?: boolean;
 };
 
@@ -12,12 +15,18 @@ function generateS3Name(name: string): string {
   return generateConstructName(name, 'bucket');
 }
 
-class S3Construct extends Construct {
+function generateS3NameLiteral<T extends string>(
+  stackName: T
+): Lowercase<DashJoined<T, 'bucket'>> {
+  return generateConstructNameLiteral(stackName, 'bucket');
+}
+
+class S3Construct<T extends string> extends Construct {
   private readonly scope: Construct;
 
   private _bucket?: Bucket;
 
-  private readonly name: string;
+  private readonly name: Lowercase<DashJoined<T, 'bucket'>>;
   private readonly prod: boolean;
   private readonly versioned?: boolean;
 
@@ -29,11 +38,14 @@ class S3Construct extends Construct {
     return this._bucket;
   }
 
-  constructor(scope: Construct, { name, prod, versioned }: S3ConstructOptions) {
+  constructor(
+    scope: Construct,
+    { name, prod, versioned }: S3ConstructOptions<T>
+  ) {
     super(scope, name);
     this.prod = prod ?? false;
     this.scope = scope;
-    this.name = generateS3Name(name);
+    this.name = generateS3NameLiteral(name);
     this.versioned = versioned;
     this.initialize();
   }
@@ -53,5 +65,5 @@ class S3Construct extends Construct {
   }
 }
 
-export { S3Construct, generateS3Name };
+export { S3Construct, generateS3Name, generateS3NameLiteral };
 export type { S3ConstructOptions };

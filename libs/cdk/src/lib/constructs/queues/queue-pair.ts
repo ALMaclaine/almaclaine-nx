@@ -2,27 +2,29 @@ import { Construct } from 'constructs';
 import type { QueueConstructOptions } from './queue';
 import { Duration } from 'aws-cdk-lib';
 import { DeadQueueConstruct } from './dead-queue';
-import { generateConstructName } from '../../utils/generate-construct-names';
+import { generateConstructNameLiteral } from '../../utils/generate-construct-names';
 import { QueueConstruct } from './queue';
-import type { Queue } from 'aws-cdk-lib/aws-sqs';
 
-type QueuePairConstructOptions = Omit<QueueConstructOptions, 'deadQueue'> & {
-  stackName: string;
+type QueuePairConstructOptions<T extends string, K extends string> = Omit<
+  QueueConstructOptions<K>,
+  'deadQueue'
+> & {
+  stackName: T;
 };
 
-class QueuePairConstruct extends Construct {
+class QueuePairConstruct<T extends string, K extends string> extends Construct {
   private readonly scope: Construct;
   private readonly retentionPeriod: Duration;
   private readonly visibilityTimeout?: Duration;
   private readonly receiveMessageWaitTime?: Duration;
   private readonly fifo?: boolean;
   private readonly prod: boolean;
-  private readonly name: string;
-  private readonly stackName: string;
-  private _deadQueue?: DeadQueueConstruct;
-  private _queue?: QueueConstruct;
+  private readonly name: K;
+  private readonly stackName: T;
+  private _deadQueue?: DeadQueueConstruct<`${Lowercase<T>}-${Lowercase<K>}`>;
+  private _queue?: QueueConstruct<`${Lowercase<T>}-${Lowercase<K>}`>;
 
-  get queue(): QueueConstruct {
+  get queue() {
     if (!this._queue) {
       throw Error('Queue not initialized');
     }
@@ -30,7 +32,7 @@ class QueuePairConstruct extends Construct {
     return this._queue;
   }
 
-  get deadQueue(): DeadQueueConstruct {
+  get deadQueue() {
     if (!this._deadQueue) {
       throw Error('Dead Queue not initialized');
     }
@@ -48,9 +50,10 @@ class QueuePairConstruct extends Construct {
       visibilityTimeout,
       receiveMessageWaitTime,
       fifo,
-    }: QueuePairConstructOptions
+    }: QueuePairConstructOptions<T, K>
   ) {
-    super(scope, stackName);
+    const a = generateConstructNameLiteral(stackName, 'queue-pair');
+    super(scope, generateConstructNameLiteral(a, name));
     this.prod = prod ?? false;
     this.scope = scope;
     this.name = name;
@@ -59,6 +62,7 @@ class QueuePairConstruct extends Construct {
     this.visibilityTimeout = visibilityTimeout;
     this.receiveMessageWaitTime = receiveMessageWaitTime;
     this.fifo = fifo;
+    this.initialize();
   }
 
   private initialize() {
@@ -69,7 +73,7 @@ class QueuePairConstruct extends Construct {
   private createDeadQueue() {
     this._deadQueue = new DeadQueueConstruct(this, {
       prod: this.prod,
-      name: generateConstructName(this.stackName, this.name),
+      name: generateConstructNameLiteral<T, K>(this.stackName, this.name),
       receiveMessageWaitTime: Duration.seconds(20),
       visibilityTimeout: Duration.minutes(10),
     });
@@ -82,7 +86,7 @@ class QueuePairConstruct extends Construct {
 
     this._queue = new QueueConstruct(this, {
       prod: this.prod,
-      name: generateConstructName(this.stackName, this.name),
+      name: generateConstructNameLiteral(this.stackName, this.name),
       receiveMessageWaitTime: Duration.seconds(20),
       retentionPeriod: this.retentionPeriod,
       visibilityTimeout: Duration.minutes(10),

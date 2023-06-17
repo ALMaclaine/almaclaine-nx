@@ -1,9 +1,10 @@
 import { Construct } from 'constructs';
-import type { ConstructDefaultTypes } from '../../types';
+import type { ConstructDefaultTypes, DashJoined } from '../../types';
 import type { DeadLetterQueue } from 'aws-cdk-lib/aws-sqs';
 import { Queue } from 'aws-cdk-lib/aws-sqs';
 import type { Duration } from 'aws-cdk-lib';
 import { RemovalPolicy } from 'aws-cdk-lib';
+import { generateConstructNameLiteral } from '../../utils/generate-construct-names';
 
 type QueueBaseProps = {
   retentionPeriod: Duration;
@@ -11,7 +12,7 @@ type QueueBaseProps = {
   receiveMessageWaitTime?: Duration;
 };
 
-type QueueConstructOptions = ConstructDefaultTypes &
+type QueueConstructOptions<T extends string> = ConstructDefaultTypes<T> &
   QueueBaseProps & {
     deadQueue?: DeadLetterQueue;
     fifo?: boolean;
@@ -21,13 +22,19 @@ function generateQueueName(name: string): string {
   return `${name}-queue`;
 }
 
-class QueueConstruct extends Construct {
+function generateQueueNameLiteral<T extends string>(
+  stackName: T
+): Lowercase<DashJoined<T, 'queue'>> {
+  return generateConstructNameLiteral(stackName, 'queue');
+}
+
+class QueueConstruct<T extends string> extends Construct {
   private readonly scope: Construct;
 
   private readonly prod: boolean;
 
   private _queue?: Queue;
-  private readonly name: string;
+  readonly name: Lowercase<DashJoined<T, 'queue'>>;
   private readonly deadQueue?: DeadLetterQueue;
   private readonly retentionPeriod: Duration;
   private readonly visibilityTimeout?: Duration;
@@ -52,9 +59,10 @@ class QueueConstruct extends Construct {
       visibilityTimeout,
       receiveMessageWaitTime,
       fifo,
-    }: QueueConstructOptions
+    }: QueueConstructOptions<T>
   ) {
-    super(scope, name);
+    const _name = generateQueueNameLiteral(name);
+    super(scope, _name);
     this.prod = prod ?? false;
     this.scope = scope;
     this.deadQueue = deadQueue;
@@ -62,7 +70,7 @@ class QueueConstruct extends Construct {
     this.visibilityTimeout = visibilityTimeout;
     this.fifo = fifo;
     this.receiveMessageWaitTime = receiveMessageWaitTime;
-    this.name = generateQueueName(name);
+    this.name = _name;
     this.initialize();
   }
 

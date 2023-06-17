@@ -6,21 +6,30 @@ import {
 } from 'aws-cdk-lib/aws-cognito';
 import { RemovalPolicy } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
-import type { ConstructDefaultTypes } from '../types';
-import { generateConstructName } from '../utils/generate-construct-names';
+import type { ConstructDefaultTypes, DashJoined } from '../types';
+import {
+  generateConstructName,
+  generateConstructNameLiteral,
+} from '../utils/generate-construct-names';
 
-type CognitoConstructOptions = ConstructDefaultTypes;
+type CognitoConstructOptions<T extends string> = ConstructDefaultTypes<T>;
 
 function generateCognitoCName(name: string): string {
   return generateConstructName(name, 'cognito-pool');
 }
 
-class CognitoConstruct extends Construct {
+function generateCognitoCNameLiteral<T extends string>(
+  stackName: T
+): Lowercase<DashJoined<T, 'cognito-pool'>> {
+  return generateConstructNameLiteral(stackName, 'cognito-pool');
+}
+
+class CognitoConstruct<T extends string> extends Construct {
   private readonly scope: Construct;
 
   private _userPool?: UserPool;
   private _userPoolClient?: UserPoolClient;
-  private readonly name: string;
+  private readonly name: Lowercase<DashJoined<T, 'cognito-pool'>>;
   private readonly prod: boolean;
 
   get userPoolClient(): UserPoolClient {
@@ -39,11 +48,11 @@ class CognitoConstruct extends Construct {
     return this._userPool;
   }
 
-  constructor(scope: Construct, { name, prod }: CognitoConstructOptions) {
+  constructor(scope: Construct, { name, prod }: CognitoConstructOptions<T>) {
     super(scope, name);
     this.prod = prod ?? false;
     this.scope = scope;
-    this.name = generateCognitoCName(name);
+    this.name = generateCognitoCNameLiteral(name);
     this.initialize();
   }
 

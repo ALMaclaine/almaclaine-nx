@@ -1,5 +1,8 @@
 {
   "name": "@almaclaine/s3",
   "version": "0.0.4",
-  "type": "commonjs"
+  "type": "commonjs",
+  "main": "cjs/src/index.js",
+  "module": "esm/src/index.js",
+  "types": "src/index.d.ts"
 }

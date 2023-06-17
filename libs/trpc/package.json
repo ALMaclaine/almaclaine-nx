@@ -1,5 +1,8 @@
 {
   "name": "@almaclaine/trpc",
-  "version": "0.0.1",
-  "type": "commonjs"
+  "version": "0.0.2",
+  "type": "commonjs",
+  "main": "cjs/src/index.js",
+  "module": "esm/src/index.js",
+  "types": "src/index.d.ts"
 }

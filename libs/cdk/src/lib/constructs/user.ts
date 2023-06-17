@@ -1,22 +1,36 @@
 import { Construct } from 'constructs';
-import type { ConstructDefaultTypes } from '../types';
+import type { ConstructDefaultTypes, DashJoined } from '../types';
 import { User } from 'aws-cdk-lib/aws-iam';
-import { generateConstructName } from '../utils/generate-construct-names';
+import {
+  generateConstructName,
+  generateConstructNameLiteral,
+} from '../utils/generate-construct-names';
 
-type UserConstructOptions = ConstructDefaultTypes & {
-  userName: string;
+type UserConstructOptions<
+  T extends string,
+  K extends string
+> = ConstructDefaultTypes<T> & {
+  userName: K;
 };
 
 function generateUserName(stackName: string, userName: string): string {
   return generateConstructName(stackName, 'user', userName);
 }
 
-class UserConstruct extends Construct {
+function generateUserNameLiteral<T extends string, K extends string>(
+  stackName: T,
+  userName: K
+): Lowercase<DashJoined<T, `user-${K}`>> {
+  const a = generateConstructNameLiteral(stackName, 'user');
+  return generateConstructNameLiteral(a, userName);
+}
+
+class UserConstruct<T extends string, K extends string> extends Construct {
   private readonly scope: Construct;
 
   private _user?: User;
 
-  private readonly name: string;
+  private readonly name: Lowercase<DashJoined<T, `user-${K}`>>;
   private readonly prod: boolean;
 
   get user(): User {
@@ -27,12 +41,12 @@ class UserConstruct extends Construct {
     return this._user;
   }
 
-  constructor(scope: Construct, options: UserConstructOptions) {
+  constructor(scope: Construct, options: UserConstructOptions<T, K>) {
     const { name, userName } = options || {};
     super(scope, name);
     this.prod = options?.prod ?? false;
     this.scope = scope;
-    this.name = generateUserName(name, userName);
+    this.name = generateUserNameLiteral(name, userName);
     this.initialize();
   }
 
@@ -45,5 +59,5 @@ class UserConstruct extends Construct {
   }
 }
 
-export { UserConstruct, generateUserName };
+export { UserConstruct, generateUserName, generateUserNameLiteral };
 export type { UserConstructOptions };

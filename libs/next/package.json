@@ -1,5 +1,8 @@
 {
   "name": "@almaclaine/next",
   "version": "0.0.2",
-  "type": "commonjs"
+  "type": "commonjs",
+  "main": "cjs/src/index.js",
+  "module": "esm/src/index.js",
+  "types": "src/index.d.ts"
 }

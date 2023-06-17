@@ -1,38 +1,48 @@
-import { concat } from '@almaclaine/string';
+import type { JoinedString } from '../../types';
 
-function concatName(pre: string) {
+function concat<T extends string, K extends string>(
+  valT: T,
+  valK: K
+): JoinedString<T, K> {
+  return `${valT}${valK}`;
+}
+
+function concatName<T extends string>(pre: T): JoinedString<T, 'Name'> {
   return concat(pre, 'Name');
 }
 
-function concatArn(pre: string) {
+function concatArn<T extends string>(pre: T): JoinedString<T, 'Arn'> {
   return concat(pre, 'Arn');
 }
 
-function concatBucket(pre: string) {
+function concatBucket<T extends string>(pre: T): JoinedString<T, 'Bucket'> {
   return concat(pre, 'Bucket');
 }
 
-function concatUrl(pre: string) {
+function concatUrl<T extends string>(pre: T): JoinedString<T, 'Url'> {
   return concat(pre, 'Url');
 }
 
-function concatTable(pre: string) {
+function concatTable<T extends string>(pre: T): JoinedString<T, 'Table'> {
   return concat(pre, 'Table');
 }
 
-function concatQueue(pre: string) {
+function concatQueue<T extends string>(pre: T): JoinedString<T, 'Queue'> {
   return concat(pre, 'Queue');
 }
 
-function concatUser(pre: string) {
+function concatUser<T extends string>(pre: T): JoinedString<T, 'User'> {
   return concat(pre, 'User');
 }
 
-function concatDeadQueue(pre: string) {
+function concatDeadQueue<T extends string>(
+  pre: T
+): JoinedString<JoinedString<T, 'Dead'>, 'Queue'> {
   return concat(pre, concatQueue('Dead'));
 }
 
 export {
+  concat,
   concatArn,
   concatName,
   concatBucket,

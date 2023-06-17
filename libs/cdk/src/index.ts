@@ -6,7 +6,7 @@ export {
 } from './lib/constants';
 export type { Stages } from './lib/constants';
 
-export type { ConstructDefaultTypes } from './lib/types';
+export type { ConstructDefaultTypes, DashJoined } from './lib/types';
 
 export { Tags } from './lib/utils/tags';
 export {
@@ -29,6 +29,7 @@ export {
 } from './lib/utils/cfn-outputs/cfn-outputs-queue';
 
 export {
+  generateConstructNameLiteral,
   generateConstructPrefix,
   generateConstructName,
   generateQueueStackName,
@@ -53,13 +54,21 @@ export {
   generateCfnS3BucketArn,
 } from './lib/utils/cfn-outputs/cfn-outputs-s3';
 
-export { TableConstruct, generateTableName } from './lib/constructs/table';
+export {
+  TableConstruct,
+  generateTableName,
+  generateTableNameLiteral,
+} from './lib/constructs/table';
 export type { TableConstructOptions } from './lib/constructs/table';
 
 export { CognitoConstruct } from './lib/constructs/cognito';
 export type { CognitoConstructOptions } from './lib/constructs/cognito';
 
-export { UserConstruct, generateUserName } from './lib/constructs/user';
+export {
+  UserConstruct,
+  generateUserName,
+  generateUserNameLiteral,
+} from './lib/constructs/user';
 export type { UserConstructOptions } from './lib/constructs/user';
 
 export { QueueConstruct } from './lib/constructs/queues/queue';
@@ -71,7 +80,13 @@ export type { QueuePairConstructOptions } from './lib/constructs/queues/queue-pa
 export { DeadQueueConstruct } from './lib/constructs/queues/dead-queue';
 export type { DeadQueueConstructOptions } from './lib/constructs/queues/dead-queue';
 
-export { S3Construct } from './lib/constructs/s3';
+export {
+  S3Construct,
+  generateS3NameLiteral,
+  generateS3Name,
+} from './lib/constructs/s3';
 export type { S3ConstructOptions } from './lib/constructs/s3';
 
 export { createApp } from './lib/utils/create-app';
+
+export { lowerCaseLiteral } from './lib/utils/utils';

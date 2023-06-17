@@ -14,37 +14,25 @@
         "build:esm",
         "build:cjs"
       ],
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "clean": false,
         "outputPath": "dist/libs/random",
         "main": "libs/random/src/index.ts",
         "tsConfig": "libs/random/tsconfig.lib.json",
-        "assets": ["libs/random/*.md"],
-        "buildableProjectDepsInPackageJsonType": "dependencies"
-      }
-    },
-    "build:esm": {
-      "executor": "@nx/js:swc",
-      "outputs": ["{options.outputPath}"],
-      "dependsOn": [
-        {
-          "target": "build:esm",
-          "dependencies": true
-        }
-      ],
-      "options": {
-        "outputPath": "dist/libs/random/esm",
-        "main": "libs/random/src/index.ts",
-        "tsConfig": "libs/random/tsconfig.lib.json",
-        "assets": ["libs/random/*.md"],
-        "swcrc": "libs/random/.lib.esm.swcrc",
+        "assets": [
+          "libs/random/*.md"
+        ],
         "buildableProjectDepsInPackageJsonType": "dependencies"
       }
     },
     "build:cjs": {
       "executor": "@nx/js:swc",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "dependsOn": [
         {
           "target": "build:cjs",
@@ -55,9 +43,44 @@
         "outputPath": "dist/libs/random/cjs",
         "main": "libs/random/src/index.ts",
         "tsConfig": "libs/random/tsconfig.lib.json",
-        "assets": ["libs/random/*.md"],
+        "assets": [
+          "libs/random/*.md"
+        ],
         "swcrc": "libs/random/.lib.cjs.swcrc",
         "buildableProjectDepsInPackageJsonType": "dependencies"
+      }
+    },
+    "build:esm": {
+      "executor": "@nx/js:swc",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "dependsOn": [
+        {
+          "target": "build:esm",
+          "dependencies": true
+        }
+      ],
+      "options": {
+        "outputPath": "dist/libs/random/esm",
+        "main": "libs/random/src/index.ts",
+        "tsConfig": "libs/random/tsconfig.lib.json",
+        "assets": [
+          "libs/random/*.md"
+        ],
+        "swcrc": "libs/random/.lib.esm.swcrc",
+        "buildableProjectDepsInPackageJsonType": "dependencies"
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": [
+        "{options.outputFile}"
+      ],
+      "options": {
+        "lintFilePatterns": [
+          "libs/random/**/*.ts"
+        ]
       }
     },
     "publish": {
@@ -65,18 +88,15 @@
       "options": {
         "command": "node tools/scripts/publish.cjs random {args.ver} {args.tag}"
       },
-      "dependsOn": ["build"]
-    },
-    "lint": {
-      "executor": "@nx/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["libs/random/**/*.ts"]
-      }
+      "dependsOn": [
+        "build"
+      ]
     },
     "test": {
       "executor": "@nx/vite:test",
-      "outputs": ["coverage/libs/random"],
+      "outputs": [
+        "coverage/libs/random"
+      ],
       "options": {
         "passWithNoTests": true,
         "reportsDirectory": "../../coverage/libs/random"

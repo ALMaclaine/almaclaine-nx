@@ -2,21 +2,30 @@ import { RemovalPolicy } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import { AttributeType, BillingMode, Table } from 'aws-cdk-lib/aws-dynamodb';
 import { DYNAMO_PRIMARY_KEY_NAME, DYNAMO_SORT_KEY_NAME } from '../constants';
-import type { ConstructDefaultTypes } from '../types';
-import { generateConstructName } from '../utils/generate-construct-names';
+import type { ConstructDefaultTypes, DashJoined } from '../types';
+import {
+  generateConstructName,
+  generateConstructNameLiteral,
+} from '../utils/generate-construct-names';
 
-type TableConstructOptions = ConstructDefaultTypes;
+type TableConstructOptions<T extends string> = ConstructDefaultTypes<T>;
 
 function generateTableName(name: string): string {
   return generateConstructName(name, 'dynamodb');
 }
 
-class TableConstruct extends Construct {
+function generateTableNameLiteral<T extends string>(
+  stackName: T
+): Lowercase<DashJoined<T, 'dynamodb'>> {
+  return generateConstructNameLiteral(stackName, 'dynamodb');
+}
+
+class TableConstruct<T extends string> extends Construct {
   private readonly scope: Construct;
 
   private _table?: Table;
 
-  private readonly name: string;
+  private readonly name: Lowercase<DashJoined<T, 'dynamodb'>>;
   private readonly prod: boolean;
 
   get table(): Table {
@@ -27,11 +36,11 @@ class TableConstruct extends Construct {
     return this._table;
   }
 
-  constructor(scope: Construct, { name, prod }: TableConstructOptions) {
+  constructor(scope: Construct, { name, prod }: TableConstructOptions<T>) {
     super(scope, name);
     this.prod = prod ?? false;
     this.scope = scope;
-    this.name = generateTableName(name);
+    this.name = generateTableNameLiteral(name);
     this.initialize();
   }
 
@@ -53,5 +62,5 @@ class TableConstruct extends Construct {
   }
 }
 
-export { TableConstruct, generateTableName };
+export { TableConstruct, generateTableName, generateTableNameLiteral };
 export type { TableConstructOptions };
