@@ -3,10 +3,11 @@ import type { StackProps } from 'aws-cdk-lib';
 import type { DashJoined } from '../types';
 import { generateConstructNameLiteral } from './generate-construct-names';
 
-function getStackName<T extends string>(
-  id: T,
-  stage: Stages
-): Lowercase<DashJoined<DashJoined<T, 'stack'>, Stages>> {
+type StackName<T extends string> = Lowercase<
+  DashJoined<DashJoined<T, 'stack'>, Stages>
+>;
+
+function getStackName<T extends string>(id: T, stage: Stages): StackName<T> {
   const a = generateConstructNameLiteral(id, 'stack');
   return generateConstructNameLiteral(a, stage);
 }
@@ -14,7 +15,7 @@ function getStackName<T extends string>(
 function getStackNameFromProps<T extends string>(
   id: T,
   props: StackProps
-): Lowercase<DashJoined<DashJoined<T, 'stack'>, Stages>> {
+): StackName<T> {
   const val = props.tags?.['stage'];
   if (!val) throw new Error('No stage tag found in props');
 
@@ -22,3 +23,4 @@ function getStackNameFromProps<T extends string>(
 }
 
 export { getStackName, getStackNameFromProps };
+export type { StackName };

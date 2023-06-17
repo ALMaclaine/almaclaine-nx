@@ -13,6 +13,7 @@ export {
   getStackName,
   getStackNameFromProps,
 } from './lib/utils/get-stack-name';
+export type { StackName } from './lib/utils/get-stack-name';
 
 export {
   generateCfnUserPoolName,
@@ -89,4 +90,4 @@ export type { S3ConstructOptions } from './lib/constructs/s3';
 
 export { createApp } from './lib/utils/create-app';
 
-export { lowerCaseLiteral } from './lib/utils/utils';
+export { lowerCaseLiteral, concatLiteral } from './lib/utils/utils';
