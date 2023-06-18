@@ -5,39 +5,28 @@ import type { Construct } from 'constructs';
 import type { DashJoined } from '../../types';
 import { generateConstructNameLiteral } from '../../utils/generate-construct-names';
 
-function generateDeadQueueName(name: string): string {
-  return `${name}-dead`;
-}
-
-function generateDeadQueueNameLiteral<ConstructName extends string>(
-  name: ConstructName
-): Lowercase<DashJoined<ConstructName, 'dead'>> {
+function generateDeadQueueNameLiteral<StackName extends string>(
+  name: StackName
+): Lowercase<DashJoined<StackName, 'dead'>> {
   return generateConstructNameLiteral(name, 'dead');
 }
 
-type DeadQueueConstructOptions<ConstructName extends string> = Omit<
-  QueueConstructOptions<ConstructName>,
+type DeadQueueConstructOptions<StackName extends string> = Omit<
+  QueueConstructOptions<StackName>,
   'retentionPeriod'
 >;
 
-class DeadQueueConstruct<ConstructName extends string> extends QueueConstruct<
-  Lowercase<DashJoined<ConstructName, 'dead'>>
+class DeadQueueConstruct<StackName extends string> extends QueueConstruct<
+  Lowercase<DashJoined<StackName, 'dead'>>
 > {
-  constructor(
-    scope: Construct,
-    options: DeadQueueConstructOptions<ConstructName>
-  ) {
+  constructor(scope: Construct, options: DeadQueueConstructOptions<StackName>) {
     super(scope, {
       ...options,
-      name: generateDeadQueueNameLiteral(options.name),
+      stackName: generateDeadQueueNameLiteral(options.stackName),
       retentionPeriod: Duration.days(14),
     });
   }
 }
 
-export {
-  DeadQueueConstruct,
-  generateDeadQueueName,
-  generateDeadQueueNameLiteral,
-};
+export { DeadQueueConstruct, generateDeadQueueNameLiteral };
 export type { DeadQueueConstructOptions };

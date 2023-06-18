@@ -7,29 +7,22 @@ import {
 import { RemovalPolicy } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import type { ConstructDefaultTypes, DashJoined } from '../types';
-import {
-  generateConstructName,
-  generateConstructNameLiteral,
-} from '../utils/generate-construct-names';
+import { generateConstructNameLiteral } from '../utils/generate-construct-names';
 
 type CognitoConstructOptions<T extends string> = ConstructDefaultTypes<T>;
 
-function generateCognitoCName(name: string): string {
-  return generateConstructName(name, 'cognito-pool');
+function generateCognitoCNameLiteral<StackName extends string>(
+  stackName: StackName
+): Lowercase<DashJoined<StackName, 'cognito-pool'>> {
+  return generateConstructNameLiteral(stackName, 'cognito-pool');
 }
 
-function generateCognitoCNameLiteral<ConstructName extends string>(
-  constructName: ConstructName
-): Lowercase<DashJoined<ConstructName, 'cognito-pool'>> {
-  return generateConstructNameLiteral(constructName, 'cognito-pool');
-}
-
-class CognitoConstruct<ConstructName extends string> extends Construct {
+class CognitoConstruct<StackName extends string> extends Construct {
   private readonly scope: Construct;
 
   private _userPool?: UserPool;
   private _userPoolClient?: UserPoolClient;
-  private readonly name: Lowercase<DashJoined<ConstructName, 'cognito-pool'>>;
+  private readonly name: Lowercase<DashJoined<StackName, 'cognito-pool'>>;
   private readonly prod: boolean;
 
   get userPoolClient(): UserPoolClient {
@@ -50,12 +43,12 @@ class CognitoConstruct<ConstructName extends string> extends Construct {
 
   constructor(
     scope: Construct,
-    { name, prod }: CognitoConstructOptions<ConstructName>
+    { stackName, prod }: CognitoConstructOptions<StackName>
   ) {
-    super(scope, name);
+    super(scope, stackName);
     this.prod = prod ?? false;
     this.scope = scope;
-    this.name = generateCognitoCNameLiteral(name);
+    this.name = generateCognitoCNameLiteral(stackName);
     this.initialize();
   }
 
@@ -102,5 +95,5 @@ class CognitoConstruct<ConstructName extends string> extends Construct {
   }
 }
 
-export { CognitoConstruct, generateCognitoCName, generateCognitoCNameLiteral };
+export { CognitoConstruct, generateCognitoCNameLiteral };
 export type { CognitoConstructOptions };

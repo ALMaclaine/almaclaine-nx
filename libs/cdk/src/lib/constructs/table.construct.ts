@@ -8,25 +8,25 @@ import {
   generateConstructNameLiteral,
 } from '../utils/generate-construct-names';
 
-type TableConstructProps<ConstructName extends string> =
-  ConstructDefaultTypes<ConstructName>;
+type TableConstructProps<StackName extends string> =
+  ConstructDefaultTypes<StackName>;
 
 function generateTableName(name: string): string {
   return generateConstructName(name, 'dynamodb');
 }
 
-function generateTableNameLiteral<ConstructName extends string>(
-  constructName: ConstructName
-): Lowercase<DashJoined<ConstructName, 'dynamodb'>> {
-  return generateConstructNameLiteral(constructName, 'dynamodb');
+function generateTableNameLiteral<StackName extends string>(
+  stackName: StackName
+): Lowercase<DashJoined<StackName, 'dynamodb'>> {
+  return generateConstructNameLiteral(stackName, 'dynamodb');
 }
 
-class TableConstruct<ConstructName extends string> extends Construct {
+class TableConstruct<StackName extends string> extends Construct {
   private readonly scope: Construct;
 
   private _table?: Table;
 
-  private readonly name: Lowercase<DashJoined<ConstructName, 'dynamodb'>>;
+  private readonly name: Lowercase<DashJoined<StackName, 'dynamodb'>>;
   private readonly prod: boolean;
 
   get table(): Table {
@@ -39,12 +39,12 @@ class TableConstruct<ConstructName extends string> extends Construct {
 
   constructor(
     scope: Construct,
-    { name, prod }: TableConstructProps<ConstructName>
+    { stackName, prod }: TableConstructProps<StackName>
   ) {
-    super(scope, name);
+    super(scope, stackName);
     this.prod = prod ?? false;
     this.scope = scope;
-    this.name = generateTableNameLiteral(name);
+    this.name = generateTableNameLiteral(stackName);
     this.initialize();
   }
 

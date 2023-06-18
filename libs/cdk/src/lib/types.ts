@@ -1,6 +1,6 @@
-type ConstructDefaultTypes<ConstructName extends string> = {
+type ConstructDefaultTypes<StackName extends string> = {
   prod: boolean;
-  name: ConstructName;
+  stackName: StackName;
 };
 
 type DashJoined<

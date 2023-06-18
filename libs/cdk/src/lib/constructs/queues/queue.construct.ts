@@ -12,30 +12,26 @@ type QueueBaseProps = {
   receiveMessageWaitTime?: Duration;
 };
 
-type QueueConstructOptions<ConstructName extends string> =
-  ConstructDefaultTypes<ConstructName> &
+type QueueConstructOptions<StackName extends string> =
+  ConstructDefaultTypes<StackName> &
     QueueBaseProps & {
       deadQueue?: DeadLetterQueue;
       fifo?: boolean;
     };
 
-function generateQueueName(name: string): string {
-  return `${name}-queue`;
-}
-
-function generateQueueNameLiteral<T extends string>(
-  stackName: T
-): Lowercase<DashJoined<T, 'queue'>> {
+function generateQueueNameLiteral<StackName extends string>(
+  stackName: StackName
+): Lowercase<DashJoined<StackName, 'queue'>> {
   return generateConstructNameLiteral(stackName, 'queue');
 }
 
-class QueueConstruct<T extends string> extends Construct {
+class QueueConstruct<StackName extends string> extends Construct {
   private readonly scope: Construct;
 
   private readonly prod: boolean;
 
   private _queue?: Queue;
-  readonly name: Lowercase<DashJoined<T, 'queue'>>;
+  readonly name: Lowercase<DashJoined<StackName, 'queue'>>;
   private readonly deadQueue?: DeadLetterQueue;
   private readonly retentionPeriod: Duration;
   private readonly visibilityTimeout?: Duration;
@@ -53,16 +49,16 @@ class QueueConstruct<T extends string> extends Construct {
   constructor(
     scope: Construct,
     {
-      name,
+      stackName,
       prod,
       deadQueue,
       retentionPeriod,
       visibilityTimeout,
       receiveMessageWaitTime,
       fifo,
-    }: QueueConstructOptions<T>
+    }: QueueConstructOptions<StackName>
   ) {
-    const _name = generateQueueNameLiteral(name);
+    const _name = generateQueueNameLiteral(stackName);
     super(scope, _name);
     this.prod = prod ?? false;
     this.scope = scope;
@@ -92,5 +88,5 @@ class QueueConstruct<T extends string> extends Construct {
   }
 }
 
-export { QueueConstruct, generateQueueName, generateQueueNameLiteral };
+export { QueueConstruct, generateQueueNameLiteral };
 export type { QueueConstructOptions, QueueBaseProps };

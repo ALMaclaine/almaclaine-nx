@@ -2,32 +2,25 @@ import { Construct } from 'constructs';
 import type { ConstructDefaultTypes, DashJoined } from '../types';
 import { BlockPublicAccess, Bucket } from 'aws-cdk-lib/aws-s3';
 import { RemovalPolicy } from 'aws-cdk-lib';
-import {
-  generateConstructName,
-  generateConstructNameLiteral,
-} from '../utils/generate-construct-names';
+import { generateConstructNameLiteral } from '../utils/generate-construct-names';
 
-type S3ConstructOptions<ConstructName extends string> =
-  ConstructDefaultTypes<ConstructName> & {
+type S3ConstructOptions<StackName extends string> =
+  ConstructDefaultTypes<StackName> & {
     versioned?: boolean;
   };
 
-function generateS3Name(name: string): string {
-  return generateConstructName(name, 'bucket');
+function generateS3NameLiteral<StackName extends string>(
+  stackName: StackName
+): Lowercase<DashJoined<StackName, 'bucket'>> {
+  return generateConstructNameLiteral(stackName, 'bucket');
 }
 
-function generateS3NameLiteral<ConstructName extends string>(
-  constructName: ConstructName
-): Lowercase<DashJoined<ConstructName, 'bucket'>> {
-  return generateConstructNameLiteral(constructName, 'bucket');
-}
-
-class S3Construct<ConstructName extends string> extends Construct {
+class S3Construct<StackName extends string> extends Construct {
   private readonly scope: Construct;
 
   private _bucket?: Bucket;
 
-  private readonly name: Lowercase<DashJoined<ConstructName, 'bucket'>>;
+  private readonly name: Lowercase<DashJoined<StackName, 'bucket'>>;
   private readonly prod: boolean;
   private readonly versioned?: boolean;
 
@@ -41,12 +34,12 @@ class S3Construct<ConstructName extends string> extends Construct {
 
   constructor(
     scope: Construct,
-    { name, prod, versioned }: S3ConstructOptions<ConstructName>
+    { stackName, prod, versioned }: S3ConstructOptions<StackName>
   ) {
-    super(scope, name);
+    super(scope, stackName);
     this.prod = prod ?? false;
     this.scope = scope;
-    this.name = generateS3NameLiteral(name);
+    this.name = generateS3NameLiteral(stackName);
     this.versioned = versioned;
     this.initialize();
   }
@@ -66,5 +59,5 @@ class S3Construct<ConstructName extends string> extends Construct {
   }
 }
 
-export { S3Construct, generateS3Name, generateS3NameLiteral };
+export { S3Construct, generateS3NameLiteral };
 export type { S3ConstructOptions };
