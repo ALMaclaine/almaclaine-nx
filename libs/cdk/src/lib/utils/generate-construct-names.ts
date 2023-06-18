@@ -1,10 +1,6 @@
 import type { ConstructNameLiteral } from '../types';
 import { lowerCaseLiteral } from './utils';
 
-function generateConstructPrefix<T extends string>(prefix: T): Lowercase<T> {
-  return lowerCaseLiteral(prefix);
-}
-
 function generateConstructNameLiteral<
   StackName extends string,
   ConstructName extends string,
@@ -73,7 +69,6 @@ function generateAuthName<
 export {
   lowerCaseLiteral,
   generateConstructNameLiteral,
-  generateConstructPrefix,
   generateQueueName,
   generateS3Name,
   generateTableName,

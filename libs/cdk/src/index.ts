@@ -16,8 +16,8 @@ export { Tags } from './lib/utils/tags';
 export {
   getStackName,
   getStackNameFromProps,
-} from './lib/utils/get-stack-name';
-export type { StackName } from './lib/utils/get-stack-name';
+} from './lib/utils/get-stack-names';
+export type { StackName } from './lib/utils/get-stack-names';
 
 export {
   generateCfnUserPoolName,
@@ -35,7 +35,6 @@ export {
 
 export {
   generateConstructNameLiteral,
-  generateConstructPrefix,
   generateQueueName,
   generateS3Name,
   generateTableName,
@@ -94,3 +93,10 @@ export {
   concatDeadQueue,
   concatStage,
 } from './lib/utils/cfn-outputs/cfn-outputs-utils';
+
+export {
+  generateQueueStackName,
+  generateUserStackName,
+  generateS3StackName,
+  generateTableStackName,
+} from './lib/utils/generate-stack-names';
