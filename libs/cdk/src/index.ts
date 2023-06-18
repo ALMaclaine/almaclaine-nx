@@ -6,7 +6,11 @@ export {
 } from './lib/constants';
 export type { Stages } from './lib/constants';
 
-export type { ConstructDefaultTypes, DashJoined } from './lib/types';
+export type {
+  ConstructDefaultTypes,
+  DashJoined,
+  JoinedString,
+} from './lib/types';
 
 export { Tags } from './lib/utils/tags';
 export {
@@ -59,34 +63,42 @@ export {
   TableConstruct,
   generateTableName,
   generateTableNameLiteral,
-} from './lib/constructs/table';
-export type { TableConstructOptions } from './lib/constructs/table';
+} from './lib/constructs/table.construct';
+export type { TableConstructProps } from './lib/constructs/table.construct';
 
-export { CognitoConstruct } from './lib/constructs/cognito';
-export type { CognitoConstructOptions } from './lib/constructs/cognito';
+export {
+  CognitoConstruct,
+  generateCognitoCName,
+  generateCognitoCNameLiteral,
+} from './lib/constructs/cognito.construct';
+export type { CognitoConstructOptions } from './lib/constructs/cognito.construct';
 
 export {
   UserConstruct,
   generateUserName,
   generateUserNameLiteral,
-} from './lib/constructs/user';
-export type { UserConstructOptions } from './lib/constructs/user';
+} from './lib/constructs/user.construct';
+export type { UserConstructOptions } from './lib/constructs/user.construct';
 
-export { QueueConstruct } from './lib/constructs/queues/queue';
-export type { QueueConstructOptions } from './lib/constructs/queues/queue';
+export {
+  QueueConstruct,
+  generateQueueName,
+  generateQueueNameLiteral,
+} from './lib/constructs/queues/queue.construct';
+export type { QueueConstructOptions } from './lib/constructs/queues/queue.construct';
 
-export { QueuePairConstruct } from './lib/constructs/queues/queue-pair';
-export type { QueuePairConstructOptions } from './lib/constructs/queues/queue-pair';
+export { QueuePairConstruct } from './lib/constructs/queues/queue-pair.construct';
+export type { QueuePairConstructOptions } from './lib/constructs/queues/queue-pair.construct';
 
-export { DeadQueueConstruct } from './lib/constructs/queues/dead-queue';
-export type { DeadQueueConstructOptions } from './lib/constructs/queues/dead-queue';
+export { DeadQueueConstruct } from './lib/constructs/queues/dead-queue.construct';
+export type { DeadQueueConstructOptions } from './lib/constructs/queues/dead-queue.construct';
 
 export {
   S3Construct,
   generateS3NameLiteral,
   generateS3Name,
-} from './lib/constructs/s3';
-export type { S3ConstructOptions } from './lib/constructs/s3';
+} from './lib/constructs/s3.construct';
+export type { S3ConstructOptions } from './lib/constructs/s3.construct';
 
 export { createApp } from './lib/utils/create-app';
 

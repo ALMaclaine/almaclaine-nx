@@ -12,11 +12,12 @@ type QueueBaseProps = {
   receiveMessageWaitTime?: Duration;
 };
 
-type QueueConstructOptions<T extends string> = ConstructDefaultTypes<T> &
-  QueueBaseProps & {
-    deadQueue?: DeadLetterQueue;
-    fifo?: boolean;
-  };
+type QueueConstructOptions<ConstructName extends string> =
+  ConstructDefaultTypes<ConstructName> &
+    QueueBaseProps & {
+      deadQueue?: DeadLetterQueue;
+      fifo?: boolean;
+    };
 
 function generateQueueName(name: string): string {
   return `${name}-queue`;
@@ -91,5 +92,5 @@ class QueueConstruct<T extends string> extends Construct {
   }
 }
 
-export { QueueConstruct, generateQueueName };
+export { QueueConstruct, generateQueueName, generateQueueNameLiteral };
 export type { QueueConstructOptions, QueueBaseProps };

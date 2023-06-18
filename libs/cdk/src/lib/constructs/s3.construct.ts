@@ -7,26 +7,27 @@ import {
   generateConstructNameLiteral,
 } from '../utils/generate-construct-names';
 
-type S3ConstructOptions<T extends string> = ConstructDefaultTypes<T> & {
-  versioned?: boolean;
-};
+type S3ConstructOptions<ConstructName extends string> =
+  ConstructDefaultTypes<ConstructName> & {
+    versioned?: boolean;
+  };
 
 function generateS3Name(name: string): string {
   return generateConstructName(name, 'bucket');
 }
 
-function generateS3NameLiteral<T extends string>(
-  stackName: T
-): Lowercase<DashJoined<T, 'bucket'>> {
-  return generateConstructNameLiteral(stackName, 'bucket');
+function generateS3NameLiteral<ConstructName extends string>(
+  constructName: ConstructName
+): Lowercase<DashJoined<ConstructName, 'bucket'>> {
+  return generateConstructNameLiteral(constructName, 'bucket');
 }
 
-class S3Construct<T extends string> extends Construct {
+class S3Construct<ConstructName extends string> extends Construct {
   private readonly scope: Construct;
 
   private _bucket?: Bucket;
 
-  private readonly name: Lowercase<DashJoined<T, 'bucket'>>;
+  private readonly name: Lowercase<DashJoined<ConstructName, 'bucket'>>;
   private readonly prod: boolean;
   private readonly versioned?: boolean;
 
@@ -40,7 +41,7 @@ class S3Construct<T extends string> extends Construct {
 
   constructor(
     scope: Construct,
-    { name, prod, versioned }: S3ConstructOptions<T>
+    { name, prod, versioned }: S3ConstructOptions<ConstructName>
   ) {
     super(scope, name);
     this.prod = prod ?? false;

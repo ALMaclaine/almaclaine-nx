@@ -18,18 +18,18 @@ function generateCognitoCName(name: string): string {
   return generateConstructName(name, 'cognito-pool');
 }
 
-function generateCognitoCNameLiteral<T extends string>(
-  stackName: T
-): Lowercase<DashJoined<T, 'cognito-pool'>> {
-  return generateConstructNameLiteral(stackName, 'cognito-pool');
+function generateCognitoCNameLiteral<ConstructName extends string>(
+  constructName: ConstructName
+): Lowercase<DashJoined<ConstructName, 'cognito-pool'>> {
+  return generateConstructNameLiteral(constructName, 'cognito-pool');
 }
 
-class CognitoConstruct<T extends string> extends Construct {
+class CognitoConstruct<ConstructName extends string> extends Construct {
   private readonly scope: Construct;
 
   private _userPool?: UserPool;
   private _userPoolClient?: UserPoolClient;
-  private readonly name: Lowercase<DashJoined<T, 'cognito-pool'>>;
+  private readonly name: Lowercase<DashJoined<ConstructName, 'cognito-pool'>>;
   private readonly prod: boolean;
 
   get userPoolClient(): UserPoolClient {
@@ -48,7 +48,10 @@ class CognitoConstruct<T extends string> extends Construct {
     return this._userPool;
   }
 
-  constructor(scope: Construct, { name, prod }: CognitoConstructOptions<T>) {
+  constructor(
+    scope: Construct,
+    { name, prod }: CognitoConstructOptions<ConstructName>
+  ) {
     super(scope, name);
     this.prod = prod ?? false;
     this.scope = scope;
@@ -85,7 +88,10 @@ class CognitoConstruct<T extends string> extends Construct {
   }
 
   private createUserPoolClient() {
-    const userPoolClientName = generateConstructName(this.name, 'client');
+    const userPoolClientName = generateConstructNameLiteral(
+      this.name,
+      'client'
+    );
     this._userPoolClient = this.userPool.addClient(userPoolClientName, {
       userPoolClientName,
       authFlows: {
@@ -96,5 +102,5 @@ class CognitoConstruct<T extends string> extends Construct {
   }
 }
 
-export { CognitoConstruct };
+export { CognitoConstruct, generateCognitoCName, generateCognitoCNameLiteral };
 export type { CognitoConstructOptions };

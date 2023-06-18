@@ -7,30 +7,38 @@ import {
 } from '../utils/generate-construct-names';
 
 type UserConstructOptions<
-  T extends string,
-  K extends string
-> = ConstructDefaultTypes<T> & {
-  userName: K;
+  ConstructName extends string,
+  UserName extends string
+> = ConstructDefaultTypes<ConstructName> & {
+  userName: UserName;
 };
 
 function generateUserName(stackName: string, userName: string): string {
   return generateConstructName(stackName, 'user', userName);
 }
 
-function generateUserNameLiteral<T extends string, K extends string>(
-  stackName: T,
-  userName: K
-): Lowercase<DashJoined<T, `user-${K}`>> {
-  const a = generateConstructNameLiteral(stackName, 'user');
+function generateUserNameLiteral<
+  ConstructName extends string,
+  UserName extends string
+>(
+  constructName: ConstructName,
+  userName: UserName
+): Lowercase<DashJoined<ConstructName, `user-${UserName}`>> {
+  const a = generateConstructNameLiteral(constructName, 'user');
   return generateConstructNameLiteral(a, userName);
 }
 
-class UserConstruct<T extends string, K extends string> extends Construct {
+class UserConstruct<
+  ConstructName extends string,
+  UserName extends string
+> extends Construct {
   private readonly scope: Construct;
 
   private _user?: User;
 
-  private readonly name: Lowercase<DashJoined<T, `user-${K}`>>;
+  private readonly name: Lowercase<
+    DashJoined<ConstructName, `user-${UserName}`>
+  >;
   private readonly prod: boolean;
 
   get user(): User {
@@ -41,7 +49,10 @@ class UserConstruct<T extends string, K extends string> extends Construct {
     return this._user;
   }
 
-  constructor(scope: Construct, options: UserConstructOptions<T, K>) {
+  constructor(
+    scope: Construct,
+    options: UserConstructOptions<ConstructName, UserName>
+  ) {
     const { name, userName } = options || {};
     super(scope, name);
     this.prod = options?.prod ?? false;
