@@ -1,38 +1,56 @@
 import type { JoinedString } from '../../types';
 import { concatLiteral } from '../utils';
+import type { Stages } from '../../constants';
 
-function concatName<T extends string>(pre: T): JoinedString<T, 'Name'> {
+function concatName<Name extends string>(
+  pre: Name
+): JoinedString<Name, 'Name'> {
   return concatLiteral(pre, 'Name');
 }
 
-function concatArn<T extends string>(pre: T): JoinedString<T, 'Arn'> {
+function concatArn<Name extends string>(pre: Name): JoinedString<Name, 'Arn'> {
   return concatLiteral(pre, 'Arn');
 }
 
-function concatBucket<T extends string>(pre: T): JoinedString<T, 'Bucket'> {
+function concatBucket<Name extends string>(
+  pre: Name
+): JoinedString<Name, 'Bucket'> {
   return concatLiteral(pre, 'Bucket');
 }
 
-function concatUrl<T extends string>(pre: T): JoinedString<T, 'Url'> {
+function concatUrl<Name extends string>(pre: Name): JoinedString<Name, 'Url'> {
   return concatLiteral(pre, 'Url');
 }
 
-function concatTable<T extends string>(pre: T): JoinedString<T, 'Table'> {
+function concatTable<Name extends string>(
+  pre: Name
+): JoinedString<Name, 'Table'> {
   return concatLiteral(pre, 'Table');
 }
 
-function concatQueue<T extends string>(pre: T): JoinedString<T, 'Queue'> {
+function concatQueue<Name extends string>(
+  pre: Name
+): JoinedString<Name, 'Queue'> {
   return concatLiteral(pre, 'Queue');
 }
 
-function concatUser<T extends string>(pre: T): JoinedString<T, 'User'> {
+function concatUser<Name extends string>(
+  pre: Name
+): JoinedString<Name, 'User'> {
   return concatLiteral(pre, 'User');
 }
 
-function concatDeadQueue<T extends string>(
-  pre: T
-): JoinedString<JoinedString<T, 'Dead'>, 'Queue'> {
+function concatDeadQueue<Name extends string>(
+  pre: Name
+): JoinedString<JoinedString<Name, 'Dead'>, 'Queue'> {
   return concatLiteral(pre, concatQueue('Dead'));
+}
+
+function concatStage<Name extends string>(
+  pre: Name,
+  stage: Stages
+): JoinedString<Name, Uppercase<Stages>> {
+  return concatLiteral(pre, stage.toUpperCase() as Uppercase<Stages>);
 }
 
 export {
@@ -44,4 +62,5 @@ export {
   concatTable,
   concatQueue,
   concatDeadQueue,
+  concatStage,
 };

@@ -1,10 +1,10 @@
 import { concatArn, concatBucket, concatName } from './cfn-outputs-utils';
 
-function generateCfnS3BucketName<T extends string>(pre: T) {
+function generateCfnS3BucketName<Name extends string>(pre: Name) {
   return concatName(concatBucket(pre));
 }
 
-function generateCfnS3BucketArn<T extends string>(pre: T) {
+function generateCfnS3BucketArn<Name extends string>(pre: Name) {
   return concatArn(concatBucket(pre));
 }
 

@@ -1,10 +1,10 @@
 import { concatLiteral } from '../utils';
 
-function generateCfnUserPoolName<T extends string>(pre: T) {
+function generateCfnUserPoolName<Name extends string>(pre: Name) {
   return concatLiteral(pre, 'UserPoolName');
 }
 
-function generateCfnUserPoolClientName<T extends string>(pre: T) {
+function generateCfnUserPoolClientName<Name extends string>(pre: Name) {
   return concatLiteral(pre, 'UserPoolClientName');
 }
 

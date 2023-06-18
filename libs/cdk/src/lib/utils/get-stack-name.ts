@@ -9,7 +9,10 @@ type StackName<Name extends string> = ConstructNameLiteral<
   Stages
 >;
 
-function getStackName<T extends string>(id: T, stage: Stages): StackName<T> {
+function getStackName<Name extends string>(
+  id: Name,
+  stage: Stages
+): StackName<Name> {
   return generateConstructNameLiteral(id, 'stack', stage);
 }
 

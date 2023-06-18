@@ -1,10 +1,10 @@
 import { concatArn, concatName, concatTable } from './cfn-outputs-utils';
 
-function generateCfnTableName<T extends string>(pre: T) {
+function generateCfnTableName<Name extends string>(pre: Name) {
   return concatName(concatTable(pre));
 }
 
-function generateCfnTableArn<T extends string>(pre: T) {
+function generateCfnTableArn<Name extends string>(pre: Name) {
   return concatArn(concatTable(pre));
 }
 
