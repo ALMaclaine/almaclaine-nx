@@ -3,30 +3,35 @@ import { QueueConstruct } from './queue.construct';
 import { Duration } from 'aws-cdk-lib';
 import type { Construct } from 'constructs';
 import type { DashJoined } from '../../types';
-import { generateConstructNameLiteral } from '../../utils/generate-construct-names';
+import {
+  generateQueueName,
+  lowerCaseLiteral,
+} from '../../utils/generate-construct-names';
+import { concatLiteral } from '../../utils/utils';
 
-function generateDeadQueueNameLiteral<StackName extends string>(
-  name: StackName
-): Lowercase<DashJoined<StackName, 'dead'>> {
-  return generateConstructNameLiteral(name, 'dead');
-}
+type DeadQueueConstructOptions<
+  StackName extends string,
+  DeadQueueName extends string
+> = Omit<QueueConstructOptions<StackName, DeadQueueName>, 'retentionPeriod'>;
 
-type DeadQueueConstructOptions<StackName extends string> = Omit<
-  QueueConstructOptions<StackName>,
-  'retentionPeriod'
->;
-
-class DeadQueueConstruct<StackName extends string> extends QueueConstruct<
-  Lowercase<DashJoined<StackName, 'dead'>>
+class DeadQueueConstruct<
+  StackName extends string,
+  DeadQueueName extends string
+> extends QueueConstruct<
+  Lowercase<DashJoined<StackName, 'dead'>>,
+  DeadQueueName
 > {
-  constructor(scope: Construct, options: DeadQueueConstructOptions<StackName>) {
+  constructor(
+    scope: Construct,
+    options: DeadQueueConstructOptions<StackName, DeadQueueName>
+  ) {
     super(scope, {
       ...options,
-      stackName: generateDeadQueueNameLiteral(options.stackName),
+      stackName: `${lowerCaseLiteral(options.stackName)}-dead`,
       retentionPeriod: Duration.days(14),
     });
   }
 }
 
-export { DeadQueueConstruct, generateDeadQueueNameLiteral };
+export { DeadQueueConstruct };
 export type { DeadQueueConstructOptions };

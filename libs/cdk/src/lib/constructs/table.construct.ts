@@ -2,31 +2,26 @@ import { RemovalPolicy } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import { AttributeType, BillingMode, Table } from 'aws-cdk-lib/aws-dynamodb';
 import { DYNAMO_PRIMARY_KEY_NAME, DYNAMO_SORT_KEY_NAME } from '../constants';
-import type { ConstructDefaultTypes, DashJoined } from '../types';
-import {
-  generateConstructName,
-  generateConstructNameLiteral,
-} from '../utils/generate-construct-names';
+import type { ConstructDefaultTypes } from '../types';
+import { generateTableName } from '../utils/generate-construct-names';
+import type { ConstructNameLiteral } from '../types';
 
-type TableConstructProps<StackName extends string> =
-  ConstructDefaultTypes<StackName>;
+type TableConstructProps<
+  StackName extends string,
+  TableName extends string
+> = ConstructDefaultTypes<StackName> & {
+  tableName: TableName;
+};
 
-function generateTableName(name: string): string {
-  return generateConstructName(name, 'dynamodb');
-}
-
-function generateTableNameLiteral<StackName extends string>(
-  stackName: StackName
-): Lowercase<DashJoined<StackName, 'dynamodb'>> {
-  return generateConstructNameLiteral(stackName, 'dynamodb');
-}
-
-class TableConstruct<StackName extends string> extends Construct {
+class TableConstruct<
+  StackName extends string,
+  TableName extends string
+> extends Construct {
   private readonly scope: Construct;
 
   private _table?: Table;
 
-  private readonly name: Lowercase<DashJoined<StackName, 'dynamodb'>>;
+  private readonly name: ConstructNameLiteral<StackName, TableName, 'dynamodb'>;
   private readonly prod: boolean;
 
   get table(): Table {
@@ -39,12 +34,13 @@ class TableConstruct<StackName extends string> extends Construct {
 
   constructor(
     scope: Construct,
-    { stackName, prod }: TableConstructProps<StackName>
+    { stackName, prod, tableName }: TableConstructProps<StackName, TableName>
   ) {
     super(scope, stackName);
     this.prod = prod ?? false;
     this.scope = scope;
-    this.name = generateTableNameLiteral(stackName);
+    this.name = generateTableName(stackName, tableName);
+
     this.initialize();
   }
 
@@ -66,5 +62,5 @@ class TableConstruct<StackName extends string> extends Construct {
   }
 }
 
-export { TableConstruct, generateTableName, generateTableNameLiteral };
+export { TableConstruct };
 export type { TableConstructProps };

@@ -6,23 +6,29 @@ import {
 } from 'aws-cdk-lib/aws-cognito';
 import { RemovalPolicy } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
-import type { ConstructDefaultTypes, DashJoined } from '../types';
-import { generateConstructNameLiteral } from '../utils/generate-construct-names';
+import type { ConstructDefaultTypes, ConstructNameLiteral } from '../types';
+import { generateAuthName } from '../utils/generate-construct-names';
 
-type CognitoConstructOptions<T extends string> = ConstructDefaultTypes<T>;
+type CognitoConstructOptions<
+  StackName extends string,
+  UserPoolName extends string
+> = ConstructDefaultTypes<StackName> & {
+  userPoolName: UserPoolName;
+};
 
-function generateCognitoCNameLiteral<StackName extends string>(
-  stackName: StackName
-): Lowercase<DashJoined<StackName, 'cognito-pool'>> {
-  return generateConstructNameLiteral(stackName, 'cognito-pool');
-}
-
-class CognitoConstruct<StackName extends string> extends Construct {
+class CognitoConstruct<
+  StackName extends string,
+  UserPoolName extends string
+> extends Construct {
   private readonly scope: Construct;
 
   private _userPool?: UserPool;
   private _userPoolClient?: UserPoolClient;
-  private readonly name: Lowercase<DashJoined<StackName, 'cognito-pool'>>;
+  private readonly name: ConstructNameLiteral<
+    StackName,
+    UserPoolName,
+    'cognito-pool'
+  >;
   private readonly prod: boolean;
 
   get userPoolClient(): UserPoolClient {
@@ -43,12 +49,16 @@ class CognitoConstruct<StackName extends string> extends Construct {
 
   constructor(
     scope: Construct,
-    { stackName, prod }: CognitoConstructOptions<StackName>
+    {
+      stackName,
+      prod,
+      userPoolName,
+    }: CognitoConstructOptions<StackName, UserPoolName>
   ) {
     super(scope, stackName);
     this.prod = prod ?? false;
     this.scope = scope;
-    this.name = generateCognitoCNameLiteral(stackName);
+    this.name = generateAuthName(stackName, userPoolName);
     this.initialize();
   }
 
@@ -81,10 +91,7 @@ class CognitoConstruct<StackName extends string> extends Construct {
   }
 
   private createUserPoolClient() {
-    const userPoolClientName = generateConstructNameLiteral(
-      this.name,
-      'client'
-    );
+    const userPoolClientName = `${this.name}-client` as const;
     this._userPoolClient = this.userPool.addClient(userPoolClientName, {
       userPoolClientName,
       authFlows: {
@@ -95,5 +102,5 @@ class CognitoConstruct<StackName extends string> extends Construct {
   }
 }
 
-export { CognitoConstruct, generateCognitoCNameLiteral };
+export { CognitoConstruct };
 export type { CognitoConstructOptions };

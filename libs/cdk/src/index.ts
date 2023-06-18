@@ -36,12 +36,11 @@ export {
 export {
   generateConstructNameLiteral,
   generateConstructPrefix,
-  generateConstructName,
-  generateQueueStackName,
-  generateS3StackName,
-  generateTableStackName,
-  generateUserStackName,
-  generateAuthStackName,
+  generateQueueName,
+  generateS3Name,
+  generateTableName,
+  generateUserName,
+  generateAuthName,
 } from './lib/utils/generate-construct-names';
 
 export {
@@ -61,28 +60,21 @@ export {
 
 export {
   TableConstruct,
-  generateTableName,
   generateTableNameLiteral,
 } from './lib/constructs/table.construct';
 export type { TableConstructProps } from './lib/constructs/table.construct';
 
 export {
   CognitoConstruct,
-  generateCognitoCName,
   generateCognitoCNameLiteral,
 } from './lib/constructs/cognito.construct';
 export type { CognitoConstructOptions } from './lib/constructs/cognito.construct';
 
-export {
-  UserConstruct,
-  generateUserName,
-  generateUserNameLiteral,
-} from './lib/constructs/user.construct';
+export { UserConstruct } from './lib/constructs/user.construct';
 export type { UserConstructOptions } from './lib/constructs/user.construct';
 
 export {
   QueueConstruct,
-  generateQueueName,
   generateQueueNameLiteral,
 } from './lib/constructs/queues/queue.construct';
 export type { QueueConstructOptions } from './lib/constructs/queues/queue.construct';
@@ -96,7 +88,6 @@ export type { DeadQueueConstructOptions } from './lib/constructs/queues/dead-que
 export {
   S3Construct,
   generateS3NameLiteral,
-  generateS3Name,
 } from './lib/constructs/s3.construct';
 export type { S3ConstructOptions } from './lib/constructs/s3.construct';
 

@@ -1,10 +1,11 @@
 import { Construct } from 'constructs';
-import type { ConstructDefaultTypes, DashJoined } from '../../types';
+import type { ConstructDefaultTypes } from '../../types';
 import type { DeadLetterQueue } from 'aws-cdk-lib/aws-sqs';
 import { Queue } from 'aws-cdk-lib/aws-sqs';
 import type { Duration } from 'aws-cdk-lib';
 import { RemovalPolicy } from 'aws-cdk-lib';
-import { generateConstructNameLiteral } from '../../utils/generate-construct-names';
+import { generateQueueName } from '../../utils/generate-construct-names';
+import type { ConstructNameLiteral } from '../../types';
 
 type QueueBaseProps = {
   retentionPeriod: Duration;
@@ -12,26 +13,26 @@ type QueueBaseProps = {
   receiveMessageWaitTime?: Duration;
 };
 
-type QueueConstructOptions<StackName extends string> =
-  ConstructDefaultTypes<StackName> &
-    QueueBaseProps & {
-      deadQueue?: DeadLetterQueue;
-      fifo?: boolean;
-    };
+type QueueConstructOptions<
+  StackName extends string,
+  QueueName extends string
+> = ConstructDefaultTypes<StackName> &
+  QueueBaseProps & {
+    deadQueue?: DeadLetterQueue;
+    fifo?: boolean;
+    queueName: QueueName;
+  };
 
-function generateQueueNameLiteral<StackName extends string>(
-  stackName: StackName
-): Lowercase<DashJoined<StackName, 'queue'>> {
-  return generateConstructNameLiteral(stackName, 'queue');
-}
-
-class QueueConstruct<StackName extends string> extends Construct {
+class QueueConstruct<
+  StackName extends string,
+  QueueName extends string
+> extends Construct {
   private readonly scope: Construct;
 
   private readonly prod: boolean;
 
   private _queue?: Queue;
-  readonly name: Lowercase<DashJoined<StackName, 'queue'>>;
+  readonly name: ConstructNameLiteral<StackName, QueueName, 'queue'>;
   private readonly deadQueue?: DeadLetterQueue;
   private readonly retentionPeriod: Duration;
   private readonly visibilityTimeout?: Duration;
@@ -56,9 +57,10 @@ class QueueConstruct<StackName extends string> extends Construct {
       visibilityTimeout,
       receiveMessageWaitTime,
       fifo,
-    }: QueueConstructOptions<StackName>
+      queueName,
+    }: QueueConstructOptions<StackName, QueueName>
   ) {
-    const _name = generateQueueNameLiteral(stackName);
+    const _name = generateQueueName(stackName, queueName);
     super(scope, _name);
     this.prod = prod ?? false;
     this.scope = scope;
@@ -88,5 +90,5 @@ class QueueConstruct<StackName extends string> extends Construct {
   }
 }
 
-export { QueueConstruct, generateQueueNameLiteral };
+export { QueueConstruct };
 export type { QueueConstructOptions, QueueBaseProps };

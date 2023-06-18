@@ -1,7 +1,7 @@
 import { Construct } from 'constructs';
-import type { ConstructDefaultTypes, DashJoined } from '../types';
+import type { ConstructDefaultTypes, ConstructNameLiteral } from '../types';
 import { User } from 'aws-cdk-lib/aws-iam';
-import { generateConstructNameLiteral } from '../utils/generate-construct-names';
+import { generateUserName } from '../utils/generate-construct-names';
 
 type UserConstructOptions<
   StackName extends string,
@@ -9,17 +9,6 @@ type UserConstructOptions<
 > = ConstructDefaultTypes<StackName> & {
   userName: UserName;
 };
-
-function generateUserNameLiteral<
-  StackName extends string,
-  UserName extends string
->(
-  stackName: StackName,
-  userName: UserName
-): Lowercase<DashJoined<StackName, `user-${UserName}`>> {
-  const a = generateConstructNameLiteral(stackName, 'user');
-  return generateConstructNameLiteral(a, userName);
-}
 
 class UserConstruct<
   StackName extends string,
@@ -29,7 +18,7 @@ class UserConstruct<
 
   private _user?: User;
 
-  private readonly name: Lowercase<DashJoined<StackName, `user-${UserName}`>>;
+  private readonly name: ConstructNameLiteral<StackName, UserName, 'user'>;
   private readonly prod: boolean;
 
   get user(): User {
@@ -48,7 +37,7 @@ class UserConstruct<
     super(scope, stackName);
     this.prod = options?.prod ?? false;
     this.scope = scope;
-    this.name = generateUserNameLiteral(stackName, userName);
+    this.name = generateUserName(stackName, userName);
     this.initialize();
   }
 
@@ -61,5 +50,5 @@ class UserConstruct<
   }
 }
 
-export { UserConstruct, generateUserNameLiteral };
+export { UserConstruct };
 export type { UserConstructOptions };

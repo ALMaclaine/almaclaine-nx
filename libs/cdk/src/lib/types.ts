@@ -10,4 +10,15 @@ type DashJoined<
 
 type JoinedString<T extends string, U extends string> = `${T}${U}`;
 
-export type { ConstructDefaultTypes, DashJoined, JoinedString };
+type ConstructNameLiteral<
+  StackName extends string,
+  ConstructName extends string,
+  ConstructType extends string
+> = Lowercase<DashJoined<StackName, DashJoined<ConstructType, ConstructName>>>;
+
+export type {
+  ConstructDefaultTypes,
+  DashJoined,
+  JoinedString,
+  ConstructNameLiteral,
+};
