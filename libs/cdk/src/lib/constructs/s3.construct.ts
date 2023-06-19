@@ -4,6 +4,7 @@ import { BlockPublicAccess, Bucket } from 'aws-cdk-lib/aws-s3';
 import { RemovalPolicy } from 'aws-cdk-lib';
 import { generateS3Name } from '../utils/generate-construct-names';
 import type { ConstructNameLiteral } from '../types';
+import { Tags } from '../utils/tags';
 
 type S3ConstructOptions<
   StackName extends string,
@@ -37,13 +38,12 @@ class S3Construct<
     scope: Construct,
     {
       stackName,
-      prod,
       versioned,
       bucketName,
     }: S3ConstructOptions<StackName, BucketName>
   ) {
     super(scope, stackName);
-    this.prod = prod ?? false;
+    this.prod = Tags.isProd(scope);
     this.scope = scope;
     this.name = generateS3Name(stackName, bucketName);
     this.versioned = versioned;

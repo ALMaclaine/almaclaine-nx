@@ -1,36 +1,79 @@
 import type { Construct } from 'constructs';
 import type { TagManager } from 'aws-cdk-lib';
 import { Stack } from 'aws-cdk-lib';
-import type { Option } from '@almaclaine/option';
-import { none, some } from '@almaclaine/option';
+import type { Stages } from '../constants';
+import { StagesEnum } from '../constants';
+import { StageSchema, TAG_STAGE } from '../constants';
 
-class Tags extends Map<string, string> {
-  constructor(struct: Construct) {
-    super();
-
-    const stack = Stack.of(struct);
-    const tags = stack.tags.renderTags() as TagManager;
-    this.fromTagManager(tags);
+class TagsMap extends Map<string, string> {
+  static fromTagsManager(tagManager: TagManager): TagsMap {
+    const map = new TagsMap();
+    for (const obj of Object.values(tagManager)) {
+      const { Key, Value } = obj as { Key: string; Value: string };
+      map.set(Key, Value);
+    }
+    return map;
   }
 
-  private static setToMap(tags: TagManager, map: Map<string, string>) {
+  static addTagsToMap(tags: TagManager, map: TagsMap): TagsMap {
     for (const obj of Object.values(tags)) {
       const { Key, Value } = obj as { Key: string; Value: string };
       map.set(Key, Value);
     }
+    return map;
+  }
+}
+
+class Tags {
+  private tags = new TagsMap();
+  private static getTagManager(scope: Construct): TagManager {
+    const stack = Stack.of(scope);
+    return stack.tags.renderTags() as TagManager;
+  }
+  constructor(scope: Construct) {
+    const tagsManager = Tags.getTagManager(scope);
+    this.tags = TagsMap.fromTagsManager(tagsManager);
   }
 
-  fromTagManager(tags: TagManager): Tags {
-    for (const obj of Object.values(tags)) {
-      const { Key, Value } = obj as { Key: string; Value: string };
-      this.set(Key, Value);
-    }
-    Tags.setToMap(tags, this);
-    return this;
+  static addTagsToMap(tags: TagManager, map: TagsMap): TagsMap {
+    return TagsMap.addTagsToMap(tags, map);
+  }
+
+  static fromTagsToMap(tags: TagManager): TagsMap {
+    return TagsMap.fromTagsManager(tags);
+  }
+
+  isProd() {
+    return this.getStage() === StagesEnum.PROD;
+  }
+
+  static fromScopeToMap(scope: Construct): Map<string, string> {
+    const tags = Tags.getTagManager(scope);
+    return Tags.fromTagsToMap(tags);
+  }
+
+  static isProd(scope: Construct) {
+    return Tags.getStage(scope) === StagesEnum.PROD;
+  }
+
+  isDeve() {
+    return this.getStage() === StagesEnum.DEVE;
+  }
+
+  static isDeve(scope: Construct) {
+    return Tags.getStage(scope) === StagesEnum.DEVE;
+  }
+
+  isTest() {
+    return this.getStage() === StagesEnum.TEST;
+  }
+
+  static isTest(scope: Construct) {
+    return Tags.getStage(scope) === StagesEnum.TEST;
   }
 
   getOrError(key: string): string {
-    const value = this.get(key);
+    const value = this.tags.get(key);
     if (!value) {
       throw new Error(`Tag ${key} does not exist`);
     }
@@ -38,20 +81,23 @@ class Tags extends Map<string, string> {
     return value;
   }
 
-  static getMap(tags: TagManager): Map<string, string> {
-    const map = new Map<string, string>();
-    Tags.setToMap(tags, map);
-    return map;
+  static getStageFromMap(map: TagsMap): Stages {
+    const value = map.get(TAG_STAGE);
+    return StageSchema.parse(value);
   }
 
-  static staticGetProp(tags: TagManager, key: string): Option<string> {
-    const map = Tags.getMap(tags);
-    const res = map.get(key);
-    if (res) {
-      return some(res);
-    } else {
-      return none();
-    }
+  static getStage(scope: Construct): Stages {
+    const map = Tags.fromScopeToMap(scope);
+    return Tags.getStageFromMap(map);
+  }
+
+  getStage(): Stages {
+    return Tags.getStageFromMap(this.tags);
+  }
+
+  static getMapFromManager(tags: TagManager): TagsMap {
+    const map = new TagsMap();
+    return Tags.addTagsToMap(tags, map);
   }
 }
 

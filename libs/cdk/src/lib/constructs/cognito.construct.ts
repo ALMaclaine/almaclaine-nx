@@ -8,6 +8,7 @@ import { RemovalPolicy } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import type { ConstructDefaultTypes, ConstructNameLiteral } from '../types';
 import { generateAuthName } from '../utils/generate-construct-names';
+import { Tags } from '../utils/tags';
 
 type CognitoConstructOptions<
   StackName extends string,
@@ -51,12 +52,11 @@ class CognitoConstruct<
     scope: Construct,
     {
       stackName,
-      prod,
       userPoolName,
     }: CognitoConstructOptions<StackName, UserPoolName>
   ) {
     super(scope, stackName);
-    this.prod = prod ?? false;
+    this.prod = Tags.isProd(scope);
     this.scope = scope;
     this.name = generateAuthName(stackName, userPoolName);
     this.initialize();

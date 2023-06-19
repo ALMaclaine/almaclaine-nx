@@ -1,5 +1,4 @@
 type ConstructDefaultTypes<StackName extends string> = {
-  prod: boolean;
   stackName: StackName;
 };
 

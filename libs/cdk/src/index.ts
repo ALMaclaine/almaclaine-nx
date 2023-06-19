@@ -1,7 +1,9 @@
 export {
   DYNAMO_PRIMARY_KEY_NAME,
   DYNAMO_SORT_KEY_NAME,
-  STAGES,
+  StagesEnum,
+  StageValues,
+  StageSchema,
   TAG_STAGE,
 } from './lib/constants';
 export type { Stages } from './lib/constants';
@@ -101,3 +103,5 @@ export {
   generateS3StackName,
   generateDynamoStackName,
 } from './lib/utils/generate-stack-names';
+
+export { CfnOutput } from './lib/constructs/cfn-output';

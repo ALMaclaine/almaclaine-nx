@@ -2,6 +2,7 @@ import { Construct } from 'constructs';
 import type { ConstructDefaultTypes, ConstructNameLiteral } from '../types';
 import { User } from 'aws-cdk-lib/aws-iam';
 import { generateUserName } from '../utils/generate-construct-names';
+import { Tags } from '../utils/tags';
 
 type UserConstructOptions<
   StackName extends string,
@@ -35,7 +36,7 @@ class UserConstruct<
   ) {
     const { stackName, userName } = options || {};
     super(scope, stackName);
-    this.prod = options?.prod ?? false;
+    this.prod = Tags.isProd(scope);
     this.scope = scope;
     this.name = generateUserName(stackName, userName);
     this.initialize();

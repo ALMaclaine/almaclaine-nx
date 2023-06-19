@@ -3,6 +3,7 @@ import type { QueueConstructOptions } from './queue.construct';
 import { Duration } from 'aws-cdk-lib';
 import { DeadQueueConstruct } from './dead-queue.construct';
 import { QueueConstruct } from './queue.construct';
+import { Tags } from '../../utils/tags';
 
 type QueuePairConstructOptions<
   StackName extends string,
@@ -46,7 +47,6 @@ class QueuePairConstruct<
     scope: Construct,
     {
       stackName,
-      prod,
       retentionPeriod,
       visibilityTimeout,
       receiveMessageWaitTime,
@@ -56,7 +56,7 @@ class QueuePairConstruct<
   ) {
     const _name = `${stackName}-queue-pair`;
     super(scope, _name);
-    this.prod = prod ?? false;
+    this.prod = Tags.isProd(scope);
     this.scope = scope;
     this.name = _name as StackName;
     this.retentionPeriod = retentionPeriod;
@@ -74,7 +74,6 @@ class QueuePairConstruct<
 
   private createDeadQueue() {
     this._deadQueue = new DeadQueueConstruct(this, {
-      prod: this.prod,
       queueName: this.queueName,
       stackName: this.name,
       receiveMessageWaitTime: Duration.seconds(20),
@@ -88,7 +87,6 @@ class QueuePairConstruct<
     }
 
     this._queue = new QueueConstruct(this, {
-      prod: this.prod,
       stackName: this.name,
       queueName: this.queueName,
       receiveMessageWaitTime: Duration.seconds(20),

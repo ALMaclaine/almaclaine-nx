@@ -6,6 +6,7 @@ import type { Duration } from 'aws-cdk-lib';
 import { RemovalPolicy } from 'aws-cdk-lib';
 import { generateQueueName } from '../../utils/generate-construct-names';
 import type { ConstructNameLiteral } from '../../types';
+import { Tags } from '../../utils/tags';
 
 type QueueBaseProps = {
   retentionPeriod: Duration;
@@ -51,7 +52,6 @@ class QueueConstruct<
     scope: Construct,
     {
       stackName,
-      prod,
       deadQueue,
       retentionPeriod,
       visibilityTimeout,
@@ -62,7 +62,7 @@ class QueueConstruct<
   ) {
     const _name = generateQueueName(stackName, queueName);
     super(scope, _name);
-    this.prod = prod ?? false;
+    this.prod = Tags.isProd(scope);
     this.scope = scope;
     this.deadQueue = deadQueue;
     this.retentionPeriod = retentionPeriod;
