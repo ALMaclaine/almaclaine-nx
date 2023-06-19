@@ -1,4 +1,3 @@
-import type { ConstructNameLiteral } from '../types';
 import { lowerCaseLiteral } from './utils';
 
 function generateConstructNameLiteral<
@@ -9,14 +8,10 @@ function generateConstructNameLiteral<
   stackName: StackName,
   constructName: ConstructName,
   constructType: ConstructType
-): ConstructNameLiteral<StackName, ConstructName, ConstructType> {
+): `${Lowercase<StackName>}-${Lowercase<ConstructName>}-${Lowercase<ConstructType>}` {
   return `${lowerCaseLiteral(stackName)}-${lowerCaseLiteral(
     constructName
-  )}-${lowerCaseLiteral(constructType)}` as ConstructNameLiteral<
-    StackName,
-    ConstructName,
-    ConstructType
-  >;
+  )}-${lowerCaseLiteral(constructType)}`;
 }
 
 function generateQueueName<
@@ -25,15 +20,15 @@ function generateQueueName<
 >(
   stackName: StackName,
   constructName: ConstructName
-): ConstructNameLiteral<StackName, ConstructName, 'queue'> {
-  return generateConstructNameLiteral(stackName, constructName, 'queue');
+): `${Lowercase<StackName>}-queue-${Lowercase<ConstructName>}` {
+  return generateConstructNameLiteral(stackName, 'queue', constructName);
 }
 
 function generateS3Name<StackName extends string, ConstructName extends string>(
   stackName: StackName,
   constructName: ConstructName
-): ConstructNameLiteral<StackName, ConstructName, 's3'> {
-  return generateConstructNameLiteral(stackName, constructName, 's3');
+): `${Lowercase<StackName>}-s3-${Lowercase<ConstructName>}` {
+  return generateConstructNameLiteral(stackName, 's3', constructName);
 }
 
 function generateTableName<
@@ -42,8 +37,8 @@ function generateTableName<
 >(
   stackName: StackName,
   constructName: ConstructName
-): ConstructNameLiteral<StackName, ConstructName, 'dynamodb'> {
-  return generateConstructNameLiteral(stackName, constructName, 'dynamodb');
+): `${Lowercase<StackName>}-dynamodb-${Lowercase<ConstructName>}` {
+  return generateConstructNameLiteral(stackName, 'dynamodb', constructName);
 }
 
 function generateUserName<
@@ -52,8 +47,8 @@ function generateUserName<
 >(
   stackName: StackName,
   constructName: ConstructName
-): ConstructNameLiteral<StackName, ConstructName, 'user'> {
-  return generateConstructNameLiteral(stackName, constructName, 'user');
+): `${Lowercase<StackName>}-user-${Lowercase<ConstructName>}` {
+  return generateConstructNameLiteral(stackName, 'user', constructName);
 }
 
 function generateAuthName<
@@ -62,8 +57,8 @@ function generateAuthName<
 >(
   stackName: StackName,
   constructName: ConstructName
-): ConstructNameLiteral<StackName, ConstructName, 'cognito-pool'> {
-  return generateConstructNameLiteral(stackName, constructName, 'cognito-pool');
+): `${Lowercase<StackName>}-cognito-pool-${Lowercase<ConstructName>}` {
+  return generateConstructNameLiteral(stackName, 'cognito-pool', constructName);
 }
 
 export {

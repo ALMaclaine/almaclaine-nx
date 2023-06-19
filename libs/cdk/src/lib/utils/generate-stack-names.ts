@@ -1,33 +1,32 @@
-import type { ConstructNameLiteral } from '../types';
-import { generateConstructNameLiteral } from './generate-construct-names';
+import { lowerCaseLiteral } from './utils';
 
 function generateQueueStackName<StackName extends string>(
   stackName: StackName
-): ConstructNameLiteral<StackName, 'queue', 'stack'> {
-  return generateConstructNameLiteral(stackName, 'queue', 'stack');
+): `${Lowercase<StackName>}-queue` {
+  return `${lowerCaseLiteral(stackName)}-queue`;
 }
 
 function generateUserStackName<StackName extends string>(
   stackName: StackName
-): ConstructNameLiteral<StackName, 'user', 'stack'> {
-  return generateConstructNameLiteral(stackName, 'user', 'stack');
+): `${Lowercase<StackName>}-user` {
+  return `${lowerCaseLiteral(stackName)}-user`;
 }
 
 function generateS3StackName<StackName extends string>(
   stackName: StackName
-): ConstructNameLiteral<StackName, 's3', 'stack'> {
-  return generateConstructNameLiteral(stackName, 's3', 'stack');
+): `${Lowercase<StackName>}-s3` {
+  return `${lowerCaseLiteral(stackName)}-s3`;
 }
 
-function generateTableStackName<StackName extends string>(
+function generateDynamoStackName<StackName extends string>(
   stackName: StackName
-): ConstructNameLiteral<StackName, 'dynamodb', 'stack'> {
-  return generateConstructNameLiteral(stackName, 'dynamodb', 'stack');
+): `${Lowercase<StackName>}-dynamodb` {
+  return `${lowerCaseLiteral(stackName)}-dynamodb`;
 }
 
 export {
   generateQueueStackName,
   generateUserStackName,
   generateS3StackName,
-  generateTableStackName,
+  generateDynamoStackName,
 };

@@ -1,5 +1,14 @@
 export { UNDEFINED, NULL } from './lib/general';
-export { WHITE_SPACES_SET, WHITE_SPACES } from './lib/string';
+export {
+  WHITE_SPACES_SET,
+  WHITE_SPACES,
+  DIGITS_SET,
+  DIGITS,
+  LETTERS_CAPITAL_SET,
+  LETTERS_CAPITAL,
+  LETTERS_LOWERCASE_SET,
+  LETTERS_LOWERCASE,
+} from './lib/string';
 
 export {
   MAX_INT32,

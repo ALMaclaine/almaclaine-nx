@@ -17,7 +17,6 @@ export {
   getStackName,
   getStackNameFromProps,
 } from './lib/utils/get-stack-names';
-export type { StackName } from './lib/utils/get-stack-names';
 
 export {
   generateCfnUserPoolName,
@@ -50,6 +49,8 @@ export {
 export {
   generateCfnVercelServerUserName,
   generateCfnVercelServerUserArn,
+  generateCfnVercelServerUserAccessKeyId,
+  generateCfnVercelServerUserSecretAccessKeyId,
 } from './lib/utils/cfn-outputs/cfn-outputs-user';
 
 export {
@@ -98,5 +99,5 @@ export {
   generateQueueStackName,
   generateUserStackName,
   generateS3StackName,
-  generateTableStackName,
+  generateDynamoStackName,
 } from './lib/utils/generate-stack-names';

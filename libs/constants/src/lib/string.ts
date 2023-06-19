@@ -26,5 +26,77 @@ const WHITE_SPACES = [
   '\u3000',
 ] as const;
 const WHITE_SPACES_SET = new Set<string>(WHITE_SPACES);
-export { WHITE_SPACES_SET };
-export { WHITE_SPACES };
+
+const DIGITS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'] as const;
+const DIGITS_SET = new Set<string>(DIGITS);
+
+const LETTERS_CAPITAL = [
+  'A',
+  'B',
+  'C',
+  'D',
+  'E',
+  'F',
+  'G',
+  'H',
+  'I',
+  'J',
+  'K',
+  'L',
+  'M',
+  'N',
+  'O',
+  'P',
+  'Q',
+  'R',
+  'S',
+  'T',
+  'U',
+  'V',
+  'W',
+  'X',
+  'Y',
+  'Z',
+] as const;
+const LETTERS_CAPITAL_SET = new Set<string>(LETTERS_CAPITAL);
+
+const LETTERS_LOWERCASE = [
+  'a',
+  'b',
+  'c',
+  'd',
+  'e',
+  'f',
+  'g',
+  'h',
+  'i',
+  'j',
+  'k',
+  'l',
+  'm',
+  'n',
+  'o',
+  'p',
+  'q',
+  'r',
+  's',
+  't',
+  'u',
+  'v',
+  'w',
+  'x',
+  'y',
+  'z',
+] as const;
+const LETTERS_LOWERCASE_SET = new Set<string>(LETTERS_LOWERCASE);
+
+export {
+  WHITE_SPACES_SET,
+  WHITE_SPACES,
+  DIGITS_SET,
+  DIGITS,
+  LETTERS_CAPITAL_SET,
+  LETTERS_CAPITAL,
+  LETTERS_LOWERCASE_SET,
+  LETTERS_LOWERCASE,
+};

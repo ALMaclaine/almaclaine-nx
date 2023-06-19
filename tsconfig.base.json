@@ -56,7 +56,8 @@
         "libs/use-setup-mantine-color-scheme-provider/src/index.ts"
       ],
       "@almaclaine/uuid": ["libs/uuid/src/index.ts"],
-      "@almaclaine/vercel": ["libs/vercel/src/index.ts"]
+      "@almaclaine/vercel": ["libs/vercel/src/index.ts"],
+      "@almaclaine/zod": ["libs/zod/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

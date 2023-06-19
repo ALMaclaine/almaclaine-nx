@@ -1,6 +1,6 @@
 {
   "name": "@almaclaine/cdk",
-  "version": "0.0.39",
+  "version": "0.0.45",
   "type": "commonjs",
   "main": "cjs/src/index.js",
   "module": "esm/src/index.js",

@@ -5,8 +5,8 @@ import { generateConstructNameLiteral } from './generate-construct-names';
 
 type StackName<Name extends string> = ConstructNameLiteral<
   Name,
-  'stack',
-  Stages
+  Stages,
+  'stack'
 >;
 
 function getStackName<Name extends string>(
