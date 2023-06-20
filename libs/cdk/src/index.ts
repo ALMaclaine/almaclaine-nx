@@ -105,3 +105,8 @@ export {
 } from './lib/utils/generate-stack-names';
 
 export { CfnOutput } from './lib/constructs/cfn-output';
+
+// Export SDK
+export { DynamoDBClient } from '@aws-sdk/client-dynamodb';
+export type { StackProps } from 'aws-cdk-lib';
+export { Stack, Fn, Duration, App } from 'aws-cdk-lib';
