@@ -65,6 +65,13 @@ class TableConstruct<
       removalPolicy: this.prod ? RemovalPolicy.RETAIN : RemovalPolicy.DESTROY,
     });
   }
+
+  static of<StackName extends string, TableName extends string>(
+    scope: Construct,
+    props: TableConstructProps<StackName, TableName>
+  ) {
+    return new TableConstruct(scope, props);
+  }
 }
 
 export { TableConstruct };

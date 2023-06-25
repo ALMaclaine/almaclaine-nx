@@ -17,6 +17,10 @@ class CfnOutput {
       value,
     });
   }
+
+  static of(options: CfnOutputOptions) {
+    return this.createOutput(options);
+  }
 }
 
 export { CfnOutput };

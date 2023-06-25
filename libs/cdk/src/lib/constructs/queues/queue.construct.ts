@@ -88,6 +88,13 @@ class QueueConstruct<
       queueName: this.name,
     });
   }
+
+  static of<StackName extends string, QueueName extends string>(
+    scope: Construct,
+    props: QueueConstructOptions<StackName, QueueName>
+  ) {
+    return new QueueConstruct<StackName, QueueName>(scope, props);
+  }
 }
 
 export { QueueConstruct };

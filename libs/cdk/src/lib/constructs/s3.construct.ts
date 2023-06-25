@@ -63,6 +63,13 @@ class S3Construct<
       removalPolicy: this.prod ? RemovalPolicy.RETAIN : RemovalPolicy.DESTROY,
     });
   }
+
+  static of<StackName extends string, BucketName extends string>(
+    scope: Construct,
+    options: S3ConstructOptions<StackName, BucketName>
+  ) {
+    return new S3Construct(scope, options);
+  }
 }
 
 export { S3Construct };

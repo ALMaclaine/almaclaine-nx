@@ -98,6 +98,13 @@ class QueuePairConstruct<
       },
     });
   }
+
+  static of<StackName extends string, QueueName extends string>(
+    scope: Construct,
+    props: QueuePairConstructOptions<StackName, QueueName>
+  ) {
+    return new QueuePairConstruct(scope, props);
+  }
 }
 
 export { QueuePairConstruct };

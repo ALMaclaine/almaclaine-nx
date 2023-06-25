@@ -100,6 +100,13 @@ class CognitoConstruct<
       },
     });
   }
+
+  static of<StackName extends string, UserPoolName extends string>(
+    scope: Construct,
+    options: CognitoConstructOptions<StackName, UserPoolName>
+  ) {
+    return new CognitoConstruct(scope, options);
+  }
 }
 
 export { CognitoConstruct };

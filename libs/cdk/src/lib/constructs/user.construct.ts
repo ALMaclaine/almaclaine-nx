@@ -49,6 +49,13 @@ class UserConstruct<
   private createUser() {
     this._user = new User(this.scope, this.name);
   }
+
+  static of<StackName extends string, UserName extends string>(
+    scope: Construct,
+    props: UserConstructOptions<StackName, UserName>
+  ) {
+    return new UserConstruct(scope, props);
+  }
 }
 
 export { UserConstruct };
