@@ -43,6 +43,10 @@ export {
   generateAuthName,
 } from './lib/utils/generate-construct-names';
 
+export type {
+  CfnTableArnType,
+  CfnTableNameType,
+} from './lib/utils/cfn-outputs/cfn-outputs-table';
 export {
   generateCfnTableName,
   generateCfnTableArn,
@@ -53,6 +57,10 @@ export {
   generateCfnVercelServerUserArn,
   generateCfnVercelServerUserAccessKeyId,
   generateCfnVercelServerUserSecretAccessKeyId,
+} from './lib/utils/cfn-outputs/cfn-outputs-user';
+export type {
+  CfnVercelServerUserArnType,
+  CfnVercelServerUserNameType,
 } from './lib/utils/cfn-outputs/cfn-outputs-user';
 
 export {
@@ -81,8 +89,6 @@ export type { DeadQueueConstructOptions } from './lib/constructs/queues/dead-que
 export { S3Construct } from './lib/constructs/s3.construct';
 export type { S3ConstructOptions } from './lib/constructs/s3.construct';
 
-export { createApp } from './lib/utils/create-app';
-
 export { lowerCaseLiteral, concatLiteral } from './lib/utils/utils';
 
 export {
@@ -108,5 +114,14 @@ export { CfnOutput } from './lib/constructs/cfn-output';
 
 // Export SDK
 export { DynamoDBClient } from '@aws-sdk/client-dynamodb';
-export type { StackProps } from 'aws-cdk-lib';
-export { Stack, Fn, Duration, App } from 'aws-cdk-lib';
+export type { StackProps, App as AppProps } from 'aws-cdk-lib';
+export { Fn, Duration } from 'aws-cdk-lib';
+
+export { Stack } from './lib/stack';
+
+export { importValue, importVercelUser } from './lib/utils/import-value';
+export { getUser, getVercelUser } from './lib/utils/get-user';
+
+export { Construct } from 'constructs';
+
+export { App } from './lib/app';

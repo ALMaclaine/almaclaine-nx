@@ -5,9 +5,17 @@ function generateCfnVercelServerUserName<Name extends string>(pre: Name) {
   return concatName(concatUser(concatLiteral(pre, 'VercelServer')));
 }
 
+type CfnVercelServerUserNameType = ReturnType<
+  typeof generateCfnVercelServerUserName
+>;
+
 function generateCfnVercelServerUserArn<Name extends string>(pre: Name) {
   return concatArn(concatUser(concatLiteral(pre, 'VercelServer')));
 }
+
+type CfnVercelServerUserArnType = ReturnType<
+  typeof generateCfnVercelServerUserArn
+>;
 
 function generateCfnVercelServerUserAccessKeyId<Name extends string>(
   pre: Name
@@ -29,3 +37,5 @@ export {
   generateCfnVercelServerUserAccessKeyId,
   generateCfnVercelServerUserSecretAccessKeyId,
 };
+
+export type { CfnVercelServerUserArnType, CfnVercelServerUserNameType };
