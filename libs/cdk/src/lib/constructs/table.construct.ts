@@ -1,3 +1,4 @@
+import type { App, StackProps } from 'aws-cdk-lib';
 import { RemovalPolicy } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import type { GlobalSecondaryIndexProps } from 'aws-cdk-lib/aws-dynamodb';
@@ -13,12 +14,15 @@ import type {
   CfnTableArnType,
   CfnTableNameType,
 } from '../utils/cfn-outputs/cfn-outputs-table';
+import { Stack } from '../stack';
+import { getStackNameFromProps } from '../utils/get-stack-names';
+import { getVercelUser } from '../utils/get-user';
 
 type GsiOptions =
   | { gsiCount: number }
   | { gsiProps: GlobalSecondaryIndexProps[] };
 
-type OutputNames = {
+type TableOutputNames = {
   tableOutputName?: CfnTableNameType;
   tableArn?: CfnTableArnType;
 };
@@ -29,13 +33,19 @@ type GrantType = {
   readWrite?: IGrantable[];
 };
 
+type TableStackProps<TableName extends string> = StackProps & {
+  tableName: TableName;
+  tableOutputName: CfnTableNameType;
+  tableArn: CfnTableArnType;
+};
+
 type TableConstructProps<
   StackName extends string,
   TableName extends string
 > = ConstructDefaultTypes<StackName> & {
   tableName: TableName;
   gsi?: GsiOptions;
-  outputNames?: OutputNames;
+  outputNames?: TableOutputNames;
   grants?: GrantType;
 };
 
@@ -78,7 +88,7 @@ class TableConstruct<
     this.scope = scope;
     this.name = generateTableName(stackName, tableName);
 
-    this.initialize();
+    this.createTable();
     gsi && this.handleAddGsi(gsi);
     outputNames && this.handleOutputNames(scope, outputNames);
     grants && this.handleAddGrants(grants);
@@ -90,7 +100,7 @@ class TableConstruct<
     grants.readWrite && this.grantReadWriteDataUsers(grants.readWrite);
   }
 
-  private handleOutputNames(scope: Construct, outputNames: OutputNames) {
+  private handleOutputNames(scope: Construct, outputNames: TableOutputNames) {
     if (outputNames.tableOutputName) {
       this.createOutputName(scope, outputNames.tableOutputName);
     }
@@ -118,10 +128,6 @@ class TableConstruct<
     }
   }
 
-  private initialize() {
-    this.createTable();
-  }
-
   private createTable() {
     this._table = new Table(this.scope, this.name, {
       partitionKey: {
@@ -140,7 +146,7 @@ class TableConstruct<
   }
 
   grantReadDataUsers(user: IGrantable[]) {
-    user.forEach((u) => this.table.grantReadData(u));
+    user.forEach((u) => this.grantReadDataUser(u));
   }
 
   grantReadWriteDataUser(user: IGrantable) {
@@ -148,7 +154,7 @@ class TableConstruct<
   }
 
   grantReadWriteDataUsers(user: IGrantable[]) {
-    user.forEach((u) => this.table.grantReadWriteData(u));
+    user.forEach((u) => this.grantReadWriteDataUser(u));
   }
 
   grantFullAccessUser(user: IGrantable) {
@@ -156,7 +162,7 @@ class TableConstruct<
   }
 
   grantFullAccessUsers(user: IGrantable[]) {
-    user.forEach((u) => this.table.grantFullAccess(u));
+    user.forEach((u) => this.grantFullAccessUser(u));
   }
 
   grantWriteDataUser(user: IGrantable) {

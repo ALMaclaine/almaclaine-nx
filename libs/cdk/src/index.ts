@@ -47,6 +47,7 @@ export type {
   CfnTableArnType,
   CfnTableNameType,
 } from './lib/utils/cfn-outputs/cfn-outputs-table';
+
 export {
   generateCfnTableName,
   generateCfnTableArn,
@@ -58,14 +59,23 @@ export {
   generateCfnVercelServerUserAccessKeyId,
   generateCfnVercelServerUserSecretAccessKeyId,
 } from './lib/utils/cfn-outputs/cfn-outputs-user';
+
 export type {
   CfnVercelServerUserArnType,
   CfnVercelServerUserNameType,
+  CfnVercelServerUserAccessKeyIdType,
+  CfnVercelServerUserSecretAccessKeyIdType,
+  CfnUserNameType,
+  CfnUserArnType,
 } from './lib/utils/cfn-outputs/cfn-outputs-user';
 
 export {
   generateCfnS3BucketName,
   generateCfnS3BucketArn,
+} from './lib/utils/cfn-outputs/cfn-outputs-s3';
+export type {
+  CfnS3BucketArnType,
+  CfnS3BucketNameType,
 } from './lib/utils/cfn-outputs/cfn-outputs-s3';
 
 export { TableConstruct } from './lib/constructs/table.construct';

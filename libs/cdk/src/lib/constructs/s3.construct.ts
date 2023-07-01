@@ -1,10 +1,27 @@
 import { Construct } from 'constructs';
-import type { ConstructDefaultTypes, DashJoined } from '../types';
+import type { ConstructDefaultTypes } from '../types';
 import { BlockPublicAccess, Bucket } from 'aws-cdk-lib/aws-s3';
 import { RemovalPolicy } from 'aws-cdk-lib';
 import { generateS3Name } from '../utils/generate-construct-names';
 import type { ConstructNameLiteral } from '../types';
 import { Tags } from '../utils/tags';
+import type { IGrantable } from 'aws-cdk-lib/aws-iam';
+import { CfnOutput } from './cfn-output';
+import type {
+  CfnS3BucketArnType,
+  CfnS3BucketNameType,
+} from '../utils/cfn-outputs/cfn-outputs-s3';
+
+type S3OutputNames = {
+  bucketName?: CfnS3BucketNameType;
+  bucketArn?: CfnS3BucketArnType;
+};
+
+type GrantType = {
+  write?: IGrantable[];
+  read?: IGrantable[];
+  readWrite?: IGrantable[];
+};
 
 type S3ConstructOptions<
   StackName extends string,
@@ -12,6 +29,8 @@ type S3ConstructOptions<
 > = ConstructDefaultTypes<StackName> & {
   versioned?: boolean;
   bucketName: BucketName;
+  grants?: GrantType;
+  outputNames?: S3OutputNames;
 };
 
 class S3Construct<
@@ -22,9 +41,13 @@ class S3Construct<
 
   private _bucket?: Bucket;
 
-  private readonly name: ConstructNameLiteral<StackName, BucketName, 's3'>;
+  private readonly _name: ConstructNameLiteral<StackName, BucketName, 's3'>;
   private readonly prod: boolean;
   private readonly versioned?: boolean;
+
+  get name(): ConstructNameLiteral<StackName, BucketName, 's3'> {
+    return this._name;
+  }
 
   get bucket(): Bucket {
     if (!this._bucket) {
@@ -40,23 +63,74 @@ class S3Construct<
       stackName,
       versioned,
       bucketName,
+      outputNames,
+      grants,
     }: S3ConstructOptions<StackName, BucketName>
   ) {
     super(scope, stackName);
     this.prod = Tags.isProd(scope);
     this.scope = scope;
-    this.name = generateS3Name(stackName, bucketName);
+    this._name = generateS3Name(stackName, bucketName);
     this.versioned = versioned;
-    this.initialize();
+    this.createS3();
+    outputNames && this.handleOutputs(outputNames);
+    grants && this.handleGrants(grants);
   }
 
-  private initialize() {
-    this.createS3();
+  handleOutputs(outputNames: S3OutputNames) {
+    outputNames.bucketArn &&
+      this.createOutputArn(this.scope, outputNames.bucketArn);
+    outputNames.bucketName &&
+      this.createOutputName(this.scope, outputNames.bucketName);
+  }
+
+  createOutputArn(scope: Construct, bucketArn: CfnS3BucketArnType) {
+    CfnOutput.createOutput(scope, {
+      value: this.bucket.bucketArn,
+      name: bucketArn,
+    });
+  }
+
+  createOutputName(scope: Construct, bucketName: CfnS3BucketNameType) {
+    CfnOutput.createOutput(scope, {
+      value: this.bucket.bucketName,
+      name: bucketName,
+    });
+  }
+
+  handleGrants(grants: GrantType) {
+    grants.read && this.grantReadDataUsers(grants.read);
+    grants.write && this.grantWriteDataUsers(grants.write);
+    grants.readWrite && this.grantReadWriteDataUsers(grants.readWrite);
+  }
+
+  grantReadWriteDataUser(user: IGrantable) {
+    this.bucket.grantReadWrite(user);
+  }
+
+  grantReadWriteDataUsers(users: IGrantable[]) {
+    users.forEach((user) => this.bucket.grantReadWrite(user));
+  }
+
+  grantReadDataUser(user: IGrantable) {
+    this.bucket.grantRead(user);
+  }
+
+  grantReadDataUsers(users: IGrantable[]) {
+    users.forEach((user) => this.bucket.grantRead(user));
+  }
+
+  grantWriteDataUser(user: IGrantable) {
+    this.bucket.grantWrite(user);
+  }
+
+  grantWriteDataUsers(users: IGrantable[]) {
+    users.forEach((user) => this.bucket.grantWrite(user));
   }
 
   private createS3() {
-    this._bucket = new Bucket(this.scope, this.name, {
-      bucketName: this.name,
+    this._bucket = new Bucket(this.scope, this._name, {
+      bucketName: this._name,
       blockPublicAccess: BlockPublicAccess.BLOCK_ALL,
       enforceSSL: this.prod,
       versioned: this.versioned || this.prod,
