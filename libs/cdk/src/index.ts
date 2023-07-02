@@ -1,6 +1,8 @@
 export {
   DYNAMO_PRIMARY_KEY_NAME,
-  DYNAMO_SORT_KEY_NAME,
+  RDSConstruct,
+  generateCfnRDSInstanceIdentifier,
+  generateCfnRDSInstanceArn,
   StagesEnum,
   StageValues,
   StageSchema,
@@ -134,4 +136,6 @@ export { getUser, getVercelUser } from './lib/utils/get-user';
 
 export { Construct } from 'constructs';
 
-export { App } from './lib/app';
+export { RDSConstruct };
+export { generateCfnRDSInstanceIdentifier, generateCfnRDSInstanceArn };
+
