@@ -4,6 +4,11 @@ import { Tags } from '../utils/tags';
 
 type RDSConstructProps<StackName extends string> = DatabaseInstanceProps & {
   stackName: StackName;
+  engine: string;
+  version: string;
+  instanceType: string;
+  storageType: string;
+  allocatedStorage: number;
 };
 
 class RDSConstruct<StackName extends string> extends Construct {
@@ -28,9 +33,16 @@ class RDSConstruct<StackName extends string> extends Construct {
   ) {
     super(scope, stackName);
     this.scope = scope;
-
-    this._database = new DatabaseInstance(this.scope, stackName, props);
+    this._database = new DatabaseInstance(this.scope, stackName, {
+      ...props,
+      engine: props.engine,
+      version: props.version,
+      instanceType: props.instanceType,
+      storageType: props.storageType,
+      allocatedStorage: props.allocatedStorage,
+    });
   }
 }
 
 export { RDSConstruct };
+
