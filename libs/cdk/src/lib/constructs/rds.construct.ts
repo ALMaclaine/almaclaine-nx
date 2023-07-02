@@ -1,6 +1,6 @@
 import { Construct } from 'constructs';
 import { DatabaseInstance, DatabaseInstanceProps } from 'aws-cdk-lib/aws-rds';
-import { Tags } from '../utils/tags';
+import { generateCfnRDSInstanceIdentifier, generateCfnRDSInstanceArn } from '../utils/cfn-outputs/cfn-outputs-rds';
 
 type RDSConstructProps<StackName extends string> = DatabaseInstanceProps & {
   stackName: StackName;
@@ -56,6 +56,13 @@ class RDSConstruct<StackName extends string> extends Construct {
       storageType: props.storageType,
       allocatedStorage: props.allocatedStorage,
     });
+
+    // Generate CFN outputs for the RDS instance
+    generateCfnRDSInstanceIdentifier(stackName);
+    generateCfnRDSInstanceArn(stackName);
+
+    // Handle the grants for the RDS instance
+    this._database.grantConnect(props.grantee);
   }
 }
 
