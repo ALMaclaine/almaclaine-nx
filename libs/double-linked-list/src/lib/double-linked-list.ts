@@ -1,193 +1,193 @@
-type NodeProps<T> = {
+type NadeProps<T> = {
   value: T;
-  nextNode?: Node<T>;
-  prevNode?: Node<T>;
+  nextNade?: Nade<T>;
+  prevNade?: Nade<T>;
 };
 
-class Node<T> {
-  nextNode?: Node<T>;
-  prevNode?: Node<T>;
+class Nade<T> {
+  nextNade?: Nade<T>;
+  prevNade?: Nade<T>;
   readonly value: T;
 
-  constructor({ value, nextNode, prevNode }: NodeProps<T>) {
-    this.nextNode = nextNode;
-    this.prevNode = prevNode;
+  constructor({ value, nextNade, prevNade }: NadeProps<T>) {
+    this.nextNade = nextNade;
+    this.prevNade = prevNade;
     this.value = value;
   }
 }
 
 class DoubleLinkedList<T> {
-  private tail?: Node<T>;
-  private head?: Node<T>;
-  private nodeSet = new Set<Node<T>>();
+  private tail?: Nade<T>;
+  private head?: Nade<T>;
+  private NadeSet = new Set<Nade<T>>();
   private valueSet = new Set<T>();
 
   //
   // Add Methods
   //
 
-  addFront(value: T): Node<T> {
-    const newNode = new Node<T>({ value });
-    this.addNodeFront(newNode);
-    return newNode;
+  addFront(value: T): Nade<T> {
+    const newNade = new Nade<T>({ value });
+    this.addNadeFront(newNade);
+    return newNade;
   }
 
-  addFrontMany(values: T[]): Node<T>[] {
+  addFrontMany(values: T[]): Nade<T>[] {
     return values.map((val) => this.addFront(val));
   }
 
-  addBack(value: T): Node<T> {
-    const newNode = new Node<T>({ value });
-    this.addNodeBack(newNode);
-    return newNode;
+  addBack(value: T): Nade<T> {
+    const newNade = new Nade<T>({ value });
+    this.addNadeBack(newNade);
+    return newNade;
   }
 
-  addBackMany(values: T[]): Node<T>[] {
+  addBackMany(values: T[]): Nade<T>[] {
     return values.map((val) => this.addBack(val));
   }
 
-  addIndex(value: T, index: number): Node<T> {
-    const newNode = new Node<T>({ value });
-    this.addNodeIndex(newNode, index);
-    return newNode;
+  addIndex(value: T, index: number): Nade<T> {
+    const newNade = new Nade<T>({ value });
+    this.addNadeIndex(newNade, index);
+    return newNade;
   }
 
-  private addNode(node: Node<T>): void {
-    if (this.containsNode(node)) {
-      throw new Error('Cannot add same node multiple times');
+  private addNade(Nade: Nade<T>): void {
+    if (this.containsNade(Nade)) {
+      throw new Error('Cannot add same Nade multiple times');
     } else {
-      this.valueSet.add(node.value);
-      this.nodeSet.add(node);
+      this.valueSet.add(Nade.value);
+      this.NadeSet.add(Nade);
     }
   }
 
-  addNodeIndex(node: Node<T>, index: number): void {
+  addNadeIndex(Nade: Nade<T>, index: number): void {
     if (index <= 0) {
-      this.addNodeFront(node);
+      this.addNadeFront(Nade);
     } else if (index >= this.length) {
-      this.addNodeBack(node);
+      this.addNadeBack(Nade);
     } else {
-      let tmpNode = this.head;
+      let tmpNade = this.head;
       let i = 0;
-      while (tmpNode) {
+      while (tmpNade) {
         if (i++ === index - 1) {
-          this.addNodeAfterNode(node, tmpNode);
+          this.addNadeAfterNade(Nade, tmpNade);
           return;
         }
 
-        tmpNode = tmpNode.nextNode;
+        tmpNade = tmpNade.nextNade;
       }
     }
   }
 
-  addNodeFront(node: Node<T>): void {
-    this.addNode(node);
+  addNadeFront(Nade: Nade<T>): void {
+    this.addNade(Nade);
     if (!this.head && !this.tail) {
-      this.addNodeEmpty(node);
+      this.addNadeEmpty(Nade);
     } else if (this.head && this.head === this.tail) {
-      this.head = node;
-      this.head.nextNode = this.tail;
-      this.tail.prevNode = this.head;
+      this.head = Nade;
+      this.head.nextNade = this.tail;
+      this.tail.prevNade = this.head;
     } else {
       if (this.head) {
-        node.nextNode = this.head;
-        this.head.prevNode = node;
-        this.head = node;
+        Nade.nextNade = this.head;
+        this.head.prevNade = Nade;
+        this.head = Nade;
       } else {
         throw new Error('Should not happen');
       }
     }
   }
 
-  addNodeFrontMany(nodes: Node<T>[]): void {
-    nodes.forEach((node) => this.addNodeFront(node));
+  addNadeFrontMany(Nades: Nade<T>[]): void {
+    Nades.forEach((Nade) => this.addNadeFront(Nade));
   }
 
-  addNodeBack(node: Node<T>): void {
-    this.addNode(node);
+  addNadeBack(Nade: Nade<T>): void {
+    this.addNade(Nade);
     if (!this.head && !this.tail) {
-      this.addNodeEmpty(node);
+      this.addNadeEmpty(Nade);
     } else if (this.tail && this.head === this.tail) {
-      this.tail = node;
-      this.head.nextNode = this.tail;
-      this.tail.prevNode = this.head;
+      this.tail = Nade;
+      this.head.nextNade = this.tail;
+      this.tail.prevNade = this.head;
     } else {
       if (this.tail) {
-        node.prevNode = this.tail;
-        this.tail.nextNode = node;
-        this.tail = node;
+        Nade.prevNade = this.tail;
+        this.tail.nextNade = Nade;
+        this.tail = Nade;
       } else {
         throw new Error('Should not happen');
       }
     }
   }
 
-  addNodeBackMany(nodes: Node<T>[]): void {
-    nodes.forEach((node) => this.addNodeBack(node));
+  addNadeBackMany(Nades: Nade<T>[]): void {
+    Nades.forEach((Nade) => this.addNadeBack(Nade));
   }
 
-  addNodeBeforeNode(nodeToAdd: Node<T>, beforeNode: Node<T>): void {
-    if (!this.nodeSet.has(beforeNode)) {
-      throw new Error('Before node is not part of list');
+  addNadeBeforeNade(NadeToAdd: Nade<T>, beforeNade: Nade<T>): void {
+    if (!this.NadeSet.has(beforeNade)) {
+      throw new Error('Before Nade is not part of list');
     }
 
-    if (this.nodeSet.has(nodeToAdd)) {
-      throw new Error('Cannot add same node multiple times');
+    if (this.NadeSet.has(NadeToAdd)) {
+      throw new Error('Cannot add same Nade multiple times');
     } else {
-      this.nodeSet.add(nodeToAdd);
+      this.NadeSet.add(NadeToAdd);
     }
 
-    nodeToAdd.nextNode = beforeNode;
-    nodeToAdd.prevNode = beforeNode.prevNode;
-    if (beforeNode.prevNode?.nextNode) {
-      beforeNode.prevNode.nextNode = nodeToAdd;
+    NadeToAdd.nextNade = beforeNade;
+    NadeToAdd.prevNade = beforeNade.prevNade;
+    if (beforeNade.prevNade?.nextNade) {
+      beforeNade.prevNade.nextNade = NadeToAdd;
     }
 
-    beforeNode.prevNode = nodeToAdd;
+    beforeNade.prevNade = NadeToAdd;
 
-    if (beforeNode === this.head) {
-      this.head = nodeToAdd;
+    if (beforeNade === this.head) {
+      this.head = NadeToAdd;
     }
   }
 
-  addBeforeNode(value: T, beforeNode: Node<T>): Node<T> {
-    const node = new Node({ value: value });
-    this.addNodeBeforeNode(node, beforeNode);
-    return node;
+  addBeforeNade(value: T, beforeNade: Nade<T>): Nade<T> {
+    const Nade = new Node({ value: value });
+    this.addNadeBeforeNade(Nade, beforeNade);
+    return Nade;
   }
 
-  addNodeAfterNode(nodeToAdd: Node<T>, afterNode: Node<T>): void {
-    if (!this.nodeSet.has(afterNode)) {
-      throw new Error('Before node is not part of list');
+  addNadeAfterNade(NadeToAdd: Nade<T>, afterNade: Nade<T>): void {
+    if (!this.NadeSet.has(afterNade)) {
+      throw new Error('Before Nade is not part of list');
     }
 
-    if (this.nodeSet.has(nodeToAdd)) {
-      throw new Error('Cannot add same node multiple times');
+    if (this.NadeSet.has(NadeToAdd)) {
+      throw new Error('Cannot add same Nade multiple times');
     } else {
-      this.nodeSet.add(nodeToAdd);
+      this.NadeSet.add(NadeToAdd);
     }
 
-    nodeToAdd.prevNode = afterNode;
-    nodeToAdd.nextNode = afterNode.nextNode;
-    if (afterNode.nextNode?.prevNode) {
-      afterNode.nextNode.prevNode = nodeToAdd;
+    NadeToAdd.prevNade = afterNade;
+    NadeToAdd.nextNade = afterNade.nextNade;
+    if (afterNade.nextNade?.prevNade) {
+      afterNade.nextNade.prevNade = NadeToAdd;
     }
 
-    afterNode.nextNode = nodeToAdd;
+    afterNade.nextNade = NadeToAdd;
 
-    if (afterNode === this.tail) {
-      this.tail = nodeToAdd;
+    if (afterNade === this.tail) {
+      this.tail = NadeToAdd;
     }
   }
 
-  addAfterNode(value: T, afterNode: Node<T>): Node<T> {
-    const node = new Node({ value: value });
-    this.addNodeAfterNode(node, afterNode);
-    return node;
+  addAfterNade(value: T, afterNade: Nade<T>): Nade<T> {
+    const Nade = new Nade({ value: value });
+    this.addNadeAfterNade(Nade, afterNade);
+    return Nade;
   }
 
-  private addNodeEmpty(node: Node<T>): void {
-    this.head = node;
+  private addNadeEmpty(Nade: Nade<T>): void {
+    this.head = Nade;
     this.tail = this.head;
   }
 
@@ -195,7 +195,7 @@ class DoubleLinkedList<T> {
   // Peek methods
   //
 
-  peekHead(): Node<T> | undefined {
+  peekHead(): Nade<T> | undefined {
     return this?.head;
   }
 
@@ -203,7 +203,7 @@ class DoubleLinkedList<T> {
     return this?.head?.value;
   }
 
-  peekTail(): Node<T> | undefined {
+  peekTail(): Nade<T> | undefined {
     return this?.tail;
   }
 
@@ -211,103 +211,103 @@ class DoubleLinkedList<T> {
     return this?.tail?.value;
   }
 
-  removeNode(node?: Node<T>): Node<T> | undefined {
-    if (node === undefined) {
+  removeNade(Nade?: Nade<T>): Nade<T> | undefined {
+    if (Nade === undefined) {
       return;
     }
 
-    if (!this.containsNode(node)) {
-      throw new Error('List does not contain node');
+    if (!this.containsNade(Nade)) {
+      throw new Error('List does not contain Nade');
     }
 
-    if (node) {
-      if (node.prevNode) {
-        node.prevNode.nextNode = node.nextNode;
+    if (Nade) {
+      if (Nade.prevNade) {
+        Nade.prevNade.nextNade = Nade.nextNade;
       }
 
-      if (node.nextNode) {
-        node.nextNode.prevNode = node.prevNode;
+      if (Nade.nextNade) {
+        Nade.nextNade.prevNade = Nade.prevNade;
       }
 
-      if (node === this.head) {
-        this.head = node.nextNode;
+      if (Nade === this.head) {
+        this.head = Nade.nextNade;
       }
 
-      if (node === this.tail) {
-        this.tail = node.prevNode;
+      if (Nade === this.tail) {
+        this.tail = Nade.prevNade;
       }
     }
 
-    return node;
+    return Nade;
   }
 
   //
   // remove methods
   //
 
-  removeAtIndex(index: number): Node<T> | void {
-    let tmpNode = this.head;
+  removeAtIndex(index: number): Nade<T> | void {
+    let tmpNade = this.head;
     let i = 0;
-    while (tmpNode) {
+    while (tmpNade) {
       if (i++ === index) {
-        return this.removeNode(tmpNode);
+        return this.removeNade(tmpNade);
       }
 
-      tmpNode = tmpNode.nextNode;
+      tmpNade = tmpNade.nextNade;
     }
   }
 
-  removeFirstOccurrence(value: T): Node<T> | void {
-    let tmpNode = this.head;
-    while (tmpNode) {
-      if (tmpNode.value === value) {
-        this.removeNode(tmpNode);
-        return tmpNode;
+  removeFirstOccurrence(value: T): Nade<T> | void {
+    let tmpNade = this.head;
+    while (tmpNade) {
+      if (tmpNade.value === value) {
+        this.removeNade(tmpNade);
+        return tmpNade;
       }
 
-      tmpNode = tmpNode.nextNode;
+      tmpNade = tmpNade.nextNade;
     }
   }
 
-  removeLastOccurrence(value: T): Node<T> | void {
-    let tmpNode = this.tail;
-    while (tmpNode) {
-      if (tmpNode.value === value) {
-        this.removeNode(tmpNode);
-        return tmpNode;
+  removeLastOccurrence(value: T): Nade<T> | void {
+    let tmpNade = this.tail;
+    while (tmpNade) {
+      if (tmpNade.value === value) {
+        this.removeNade(tmpNade);
+        return tmpNade;
       }
 
-      tmpNode = tmpNode.prevNode;
+      tmpNade = tmpNade.prevNade;
     }
   }
 
-  removeAllOccurrences(value: T): Node<T>[] {
-    const out: Node<T>[] = [];
-    let tmpNode = this.head;
-    while (tmpNode) {
-      if (tmpNode.value === value) {
-        this.removeNode(tmpNode);
-        out.push(tmpNode);
+  removeAllOccurrences(value: T): Nade<T>[] {
+    const out: Nade<T>[] = [];
+    let tmpNade = this.head;
+    while (tmpNade) {
+      if (tmpNade.value === value) {
+        this.removeNade(tmpNade);
+        out.push(tmpNade);
       }
 
-      tmpNode = tmpNode.nextNode;
+      tmpNade = tmpNade.nextNade;
     }
     return out;
   }
 
-  removeHead(): Node<T> | undefined {
-    return this.removeNode(this.head);
+  removeHead(): Nade<T> | undefined {
+    return this.removeNade(this.head);
   }
 
-  removeTail(): Node<T> | undefined {
-    return this.removeNode(this.tail);
+  removeTail(): Nade<T> | undefined {
+    return this.removeNade(this.tail);
   }
 
   //
   // contain methods
   //
-  containsNode(node: Node<T>): boolean {
-    return this.nodeSet.has(node);
+  containsNade(Nade: Nade<T>): boolean {
+    return this.NadeSet.has(Nade);
   }
 
   containsValue(value: T): boolean {
@@ -338,44 +338,44 @@ class DoubleLinkedList<T> {
 
   //
   // indexOf methods
-  indexOfNode(node: Node<T>): number {
-    let tmpNode = this.head;
+  indexOfNade(Nade: Nade<T>): number {
+    let tmpNade = this.head;
     let i = 0;
-    while (tmpNode) {
-      if (tmpNode === node) {
+    while (tmpNade) {
+      if (tmpNade === Nade) {
         return i;
       }
 
       i++;
-      tmpNode = tmpNode.nextNode;
+      tmpNade = tmpNade.nextNade;
     }
     return -1;
   }
 
   lastIndexOfValue(value: T): number {
-    let tmpNode = this.tail;
+    let tmpNade = this.tail;
     let i = this.length - 1;
-    while (tmpNode) {
-      if (tmpNode.value === value) {
+    while (tmpNade) {
+      if (tmpNade.value === value) {
         return i;
       }
 
       i--;
-      tmpNode = tmpNode.prevNode;
+      tmpNade = tmpNade.prevNade;
     }
     return -1;
   }
 
   indexOfValue(value: T): number {
-    let tmpNode = this.head;
+    let tmpNade = this.head;
     let i = 0;
-    while (tmpNode) {
-      if (tmpNode.value === value) {
+    while (tmpNade) {
+      if (tmpNade.value === value) {
         return i;
       }
 
       i++;
-      tmpNode = tmpNode.nextNode;
+      tmpNade = tmpNade.nextNade;
     }
     return -1;
   }
@@ -387,22 +387,22 @@ class DoubleLinkedList<T> {
   clear(): void {
     this.head = undefined;
     this.tail = undefined;
-    this.nodeSet.clear();
+    this.NadeSet.clear();
     this.valueSet.clear();
   }
 
   clone(): DoubleLinkedList<T> {
     const dll = new DoubleLinkedList<T>();
-    let node = this.head;
-    while (node !== undefined) {
-      dll.addBack(node.value);
-      node = node.nextNode;
+    let Nade = this.head;
+    while (Nade !== undefined) {
+      dll.addBack(Nade.value);
+      Nade = Nade.nextNade;
     }
     return dll;
   }
 
   get length(): number {
-    return this.nodeSet.size;
+    return this.NadeSet.size;
   }
 
   toArray(): T[] {
@@ -410,34 +410,34 @@ class DoubleLinkedList<T> {
   }
 
   *valueIterator(): IterableIterator<T> {
-    let tmpNode = this.head;
-    while (tmpNode) {
-      yield tmpNode?.value;
-      tmpNode = tmpNode?.nextNode;
+    let tmpNade = this.head;
+    while (tmpNade) {
+      yield tmpNade?.value;
+      tmpNade = tmpNade?.nextNade;
     }
   }
 
-  *nodeIterator(): IterableIterator<Node<T>> {
-    let tmpNode = this.head;
-    while (tmpNode) {
-      yield tmpNode;
-      tmpNode = tmpNode?.nextNode;
+  *NadeIterator(): IterableIterator<Nade<T>> {
+    let tmpNade = this.head;
+    while (tmpNade) {
+      yield tmpNade;
+      tmpNade = tmpNade?.nextNade;
     }
   }
 
   *valueIteratorReverse(): IterableIterator<T> {
-    let tmpNode = this.tail;
-    while (tmpNode) {
-      yield tmpNode?.value;
-      tmpNode = tmpNode?.prevNode;
+    let tmpNade = this.tail;
+    while (tmpNade) {
+      yield tmpNade?.value;
+      tmpNade = tmpNade?.prevNade;
     }
   }
 
-  *nodeIteratorReverse(): IterableIterator<Node<T>> {
-    let tmpNode = this.tail;
-    while (tmpNode) {
-      yield tmpNode;
-      tmpNode = tmpNode?.prevNode;
+  *NadeIteratorReverse(): IterableIterator<Nade<T>> {
+    let tmpNade = this.tail;
+    while (tmpNade) {
+      yield tmpNade;
+      tmpNade = tmpNade?.prevNade;
     }
   }
 
@@ -446,5 +446,5 @@ class DoubleLinkedList<T> {
   }
 }
 
-export { DoubleLinkedList, Node };
-export type { NodeProps };
+export { DoubleLinkedList, Nade };
+export type { NadeProps };
