@@ -44,8 +44,8 @@ export {
 } from './lib/utils/generate-construct-names';
 
 export type {
-  CfnTableArnType,
-  CfnTableNameType,
+  CfnTableArn,
+  CfnTableName,
 } from './lib/utils/cfn-outputs/cfn-outputs-table';
 
 export {
@@ -61,12 +61,12 @@ export {
 } from './lib/utils/cfn-outputs/cfn-outputs-user';
 
 export type {
-  CfnVercelServerUserArnType,
-  CfnVercelServerUserNameType,
-  CfnVercelServerUserAccessKeyIdType,
-  CfnVercelServerUserSecretAccessKeyIdType,
-  CfnUserNameType,
-  CfnUserArnType,
+  CfnVercelServerUserArn,
+  CfnVercelServerUserName,
+  CfnVercelServerUserAccessKeyId,
+  CfnVercelServerUserSecretAccessKeyId,
+  CfnUserName,
+  CfnUserArn,
 } from './lib/utils/cfn-outputs/cfn-outputs-user';
 
 export {
@@ -74,8 +74,8 @@ export {
   generateCfnS3BucketArn,
 } from './lib/utils/cfn-outputs/cfn-outputs-s3';
 export type {
-  CfnS3BucketArnType,
-  CfnS3BucketNameType,
+  CfnS3BucketArn,
+  CfnS3BucketName,
 } from './lib/utils/cfn-outputs/cfn-outputs-s3';
 
 export { TableConstruct } from './lib/constructs/table.construct';
@@ -140,7 +140,10 @@ export {
   createTableStack,
   createVercelTableStack,
 } from './lib/stacks/table-stacks';
-export type { CreateVercelTableStackProps } from './lib/stacks/table-stacks';
+export type { CreateVercelTableStackOptions } from './lib/stacks/table-stacks';
 
 export { createUserStack } from './lib/stacks/user-stacks';
 export type { CreateUserStackOptions } from './lib/stacks/user-stacks';
+
+export { createBucketStack } from './lib/stacks/s3-stacks';
+export type { CreateBucketStackOptions } from './lib/stacks/s3-stacks';

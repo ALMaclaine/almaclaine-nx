@@ -1,4 +1,3 @@
-import type { App, StackProps } from 'aws-cdk-lib';
 import { RemovalPolicy } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import type { GlobalSecondaryIndexProps } from 'aws-cdk-lib/aws-dynamodb';
@@ -11,8 +10,8 @@ import { Tags } from '../utils/tags';
 import type { IGrantable } from 'aws-cdk-lib/aws-iam';
 import { CfnOutput } from './cfn-output';
 import type {
-  CfnTableArnType,
-  CfnTableNameType,
+  CfnTableArn,
+  CfnTableName,
 } from '../utils/cfn-outputs/cfn-outputs-table';
 
 type GsiOptions =
@@ -20,8 +19,8 @@ type GsiOptions =
   | { gsiProps: GlobalSecondaryIndexProps[] };
 
 type TableOutputNames = {
-  tableOutputName?: CfnTableNameType;
-  tableArn?: CfnTableArnType;
+  tableOutputName?: CfnTableName;
+  tableArn?: CfnTableArn;
 };
 
 type GrantType = {
@@ -32,7 +31,7 @@ type GrantType = {
 
 type TableConstructOptions<
   StackName extends string,
-  TableName extends string
+  TableName extends CfnTableName
 > = ConstructDefaultTypes<StackName> & {
   tableName: TableName;
   gsi?: GsiOptions;
@@ -42,7 +41,7 @@ type TableConstructOptions<
 
 class TableConstruct<
   StackName extends string,
-  TableName extends string
+  TableName extends CfnTableName
 > extends Construct {
   private readonly scope: Construct;
 
@@ -168,14 +167,14 @@ class TableConstruct<
     this.table.addGlobalSecondaryIndex(props);
   }
 
-  createOutputArn(scope: Construct, tableArn: CfnTableArnType) {
+  createOutputArn(scope: Construct, tableArn: CfnTableArn) {
     CfnOutput.createOutput(scope, {
       value: this.table.tableArn,
       name: tableArn,
     });
   }
 
-  createOutputName(scope: Construct, tableName: CfnTableNameType) {
+  createOutputName(scope: Construct, tableName: CfnTableName) {
     CfnOutput.createOutput(scope, {
       value: this.table.tableName,
       name: tableName,
@@ -198,7 +197,7 @@ class TableConstruct<
     this._gsiCount = count;
   }
 
-  static of<StackName extends string, TableName extends string>(
+  static of<StackName extends string, TableName extends CfnTableName>(
     scope: Construct,
     props: TableConstructOptions<StackName, TableName>
   ) {
