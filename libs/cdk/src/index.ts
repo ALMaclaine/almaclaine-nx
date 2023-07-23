@@ -135,3 +135,9 @@ export { getUser, getVercelUser } from './lib/utils/get-user';
 export { Construct } from 'constructs';
 
 export { App } from './lib/app';
+
+export {
+  createTableStack,
+  createVercelTableStack,
+} from './lib/stacks/table-stacks';
+export type { CreateVercelTableStackProps } from './lib/stacks/table-stacks';

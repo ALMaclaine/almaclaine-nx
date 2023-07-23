@@ -23,20 +23,14 @@ type GsiOptions =
   | { gsiProps: GlobalSecondaryIndexProps[] };
 
 type TableOutputNames = {
-  tableOutputName?: CfnTableNameType;
-  tableArn?: CfnTableArnType;
+  tableOutputName: CfnTableNameType;
+  tableArn: CfnTableArnType;
 };
 
 type GrantType = {
   write?: IGrantable[];
   read?: IGrantable[];
   readWrite?: IGrantable[];
-};
-
-type TableStackProps<TableName extends string> = StackProps & {
-  tableName: TableName;
-  tableOutputName: CfnTableNameType;
-  tableArn: CfnTableArnType;
 };
 
 type TableConstructProps<
