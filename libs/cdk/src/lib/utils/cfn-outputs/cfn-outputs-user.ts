@@ -5,13 +5,13 @@ function generateCfnUserName<Name extends string>(pre: Name) {
   return concatName(concatUser(pre));
 }
 
-type CfnUserNameType = ReturnType<typeof generateCfnUserName>;
+type CfnUserName = ReturnType<typeof generateCfnUserName>;
 
 function generateCfnVercelServerUserName<Name extends string>(pre: Name) {
   return generateCfnUserName(concatLiteral(pre, 'VercelServer'));
 }
 
-type CfnVercelServerUserNameType = ReturnType<
+type CfnVercelServerUserName = ReturnType<
   typeof generateCfnVercelServerUserName
 >;
 
@@ -19,15 +19,13 @@ function generateCfnUserArn<Name extends string>(pre: Name) {
   return concatArn(concatUser(pre));
 }
 
-type CfnUserArnType = ReturnType<typeof generateCfnUserArn>;
+type CfnUserArn = ReturnType<typeof generateCfnUserArn>;
 
 function generateCfnVercelServerUserArn<Name extends string>(pre: Name) {
   return generateCfnUserArn(concatLiteral(pre, 'VercelServer'));
 }
 
-type CfnVercelServerUserArnType = ReturnType<
-  typeof generateCfnVercelServerUserArn
->;
+type CfnVercelServerUserArn = ReturnType<typeof generateCfnVercelServerUserArn>;
 
 function generateCfnVercelServerUserAccessKeyId<Name extends string>(
   pre: Name
@@ -35,7 +33,7 @@ function generateCfnVercelServerUserAccessKeyId<Name extends string>(
   return generateCfnUserName(concatLiteral(pre, 'VercelServerAccessKeyId'));
 }
 
-type CfnVercelServerUserAccessKeyIdType = ReturnType<
+type CfnVercelServerUserAccessKeyId = ReturnType<
   typeof generateCfnVercelServerUserAccessKeyId
 >;
 
@@ -47,7 +45,7 @@ function generateCfnVercelServerUserSecretAccessKeyId<Name extends string>(
   );
 }
 
-type CfnVercelServerUserSecretAccessKeyIdType = ReturnType<
+type CfnVercelServerUserSecretAccessKeyId = ReturnType<
   typeof generateCfnVercelServerUserSecretAccessKeyId
 >;
 
@@ -60,10 +58,10 @@ export {
 };
 
 export type {
-  CfnVercelServerUserArnType,
-  CfnVercelServerUserNameType,
-  CfnVercelServerUserAccessKeyIdType,
-  CfnVercelServerUserSecretAccessKeyIdType,
-  CfnUserNameType,
-  CfnUserArnType,
+  CfnVercelServerUserArn,
+  CfnVercelServerUserName,
+  CfnVercelServerUserAccessKeyId,
+  CfnVercelServerUserSecretAccessKeyId,
+  CfnUserName,
+  CfnUserArn,
 };

@@ -1,4 +1,3 @@
-import type { App, StackProps } from 'aws-cdk-lib';
 import { RemovalPolicy } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import type { GlobalSecondaryIndexProps } from 'aws-cdk-lib/aws-dynamodb';
@@ -11,20 +10,17 @@ import { Tags } from '../utils/tags';
 import type { IGrantable } from 'aws-cdk-lib/aws-iam';
 import { CfnOutput } from './cfn-output';
 import type {
-  CfnTableArnType,
-  CfnTableNameType,
+  CfnTableArn,
+  CfnTableName,
 } from '../utils/cfn-outputs/cfn-outputs-table';
-import { Stack } from '../stack';
-import { getStackNameFromProps } from '../utils/get-stack-names';
-import { getVercelUser } from '../utils/get-user';
 
 type GsiOptions =
   | { gsiCount: number }
   | { gsiProps: GlobalSecondaryIndexProps[] };
 
 type TableOutputNames = {
-  tableOutputName?: CfnTableNameType;
-  tableArn?: CfnTableArnType;
+  tableOutputName?: CfnTableName;
+  tableArn?: CfnTableArn;
 };
 
 type GrantType = {
@@ -33,15 +29,9 @@ type GrantType = {
   readWrite?: IGrantable[];
 };
 
-type TableStackProps<TableName extends string> = StackProps & {
-  tableName: TableName;
-  tableOutputName: CfnTableNameType;
-  tableArn: CfnTableArnType;
-};
-
-type TableConstructProps<
+type TableConstructOptions<
   StackName extends string,
-  TableName extends string
+  TableName extends CfnTableName
 > = ConstructDefaultTypes<StackName> & {
   tableName: TableName;
   gsi?: GsiOptions;
@@ -51,7 +41,7 @@ type TableConstructProps<
 
 class TableConstruct<
   StackName extends string,
-  TableName extends string
+  TableName extends CfnTableName
 > extends Construct {
   private readonly scope: Construct;
 
@@ -81,7 +71,7 @@ class TableConstruct<
       gsi,
       outputNames,
       grants,
-    }: TableConstructProps<StackName, TableName>
+    }: TableConstructOptions<StackName, TableName>
   ) {
     super(scope, stackName);
     this.prod = Tags.isProd(scope);
@@ -177,14 +167,14 @@ class TableConstruct<
     this.table.addGlobalSecondaryIndex(props);
   }
 
-  createOutputArn(scope: Construct, tableArn: CfnTableArnType) {
+  createOutputArn(scope: Construct, tableArn: CfnTableArn) {
     CfnOutput.createOutput(scope, {
       value: this.table.tableArn,
       name: tableArn,
     });
   }
 
-  createOutputName(scope: Construct, tableName: CfnTableNameType) {
+  createOutputName(scope: Construct, tableName: CfnTableName) {
     CfnOutput.createOutput(scope, {
       value: this.table.tableName,
       name: tableName,
@@ -207,13 +197,13 @@ class TableConstruct<
     this._gsiCount = count;
   }
 
-  static of<StackName extends string, TableName extends string>(
+  static of<StackName extends string, TableName extends CfnTableName>(
     scope: Construct,
-    props: TableConstructProps<StackName, TableName>
+    props: TableConstructOptions<StackName, TableName>
   ) {
     return new TableConstruct(scope, props);
   }
 }
 
 export { TableConstruct };
-export type { TableConstructProps };
+export type { TableConstructOptions };

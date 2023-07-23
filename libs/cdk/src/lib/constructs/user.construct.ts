@@ -5,22 +5,22 @@ import { generateUserName } from '../utils/generate-construct-names';
 import { Tags } from '../utils/tags';
 import { CfnOutput } from './cfn-output';
 import type {
-  CfnUserArnType,
-  CfnUserNameType,
-  CfnVercelServerUserAccessKeyIdType,
-  CfnVercelServerUserSecretAccessKeyIdType,
+  CfnUserArn,
+  CfnUserName,
+  CfnVercelServerUserAccessKeyId,
+  CfnVercelServerUserSecretAccessKeyId,
 } from '../utils/cfn-outputs/cfn-outputs-user';
 
 type UserOutputNames = {
-  userOutputName?: CfnUserNameType;
-  userArn?: CfnUserArnType;
-  accessKeyId?: CfnVercelServerUserAccessKeyIdType;
-  secretAccessKey?: CfnVercelServerUserSecretAccessKeyIdType;
+  userOutputName?: CfnUserName;
+  userArn?: CfnUserArn;
+  accessKeyId?: CfnVercelServerUserAccessKeyId;
+  secretAccessKey?: CfnVercelServerUserSecretAccessKeyId;
 };
 
 type UserConstructOptions<
   StackName extends string,
-  UserName extends CfnUserNameType
+  UserName extends CfnUserName
 > = ConstructDefaultTypes<StackName> & {
   userName: UserName;
   createAccessKey?: boolean;
@@ -29,7 +29,7 @@ type UserConstructOptions<
 
 class UserConstruct<
   StackName extends string,
-  UserName extends CfnUserNameType
+  UserName extends CfnUserName
 > extends Construct {
   private readonly scope: Construct;
 
@@ -80,21 +80,21 @@ class UserConstruct<
     this._user = new User(this.scope, this.name);
   }
 
-  static of<StackName extends string, UserName extends CfnUserNameType>(
+  static of<StackName extends string, UserName extends CfnUserName>(
     scope: Construct,
     props: UserConstructOptions<StackName, UserName>
   ) {
     return new UserConstruct(scope, props);
   }
 
-  createOutputName(scope: Construct, userName: CfnUserNameType) {
+  createOutputName(scope: Construct, userName: CfnUserName) {
     CfnOutput.createOutput(scope, {
       value: this.user.userName,
       name: userName,
     });
   }
 
-  createOutputArn(scope: Construct, userArn: CfnUserArnType) {
+  createOutputArn(scope: Construct, userArn: CfnUserArn) {
     CfnOutput.createOutput(scope, {
       value: this.user.userArn,
       name: userArn,
@@ -103,7 +103,7 @@ class UserConstruct<
 
   createOutputAccessKey(
     scope: Construct,
-    userAccessKey: CfnVercelServerUserAccessKeyIdType
+    userAccessKey: CfnVercelServerUserAccessKeyId
   ) {
     if (!this.accessKey) {
       throw Error(
@@ -119,7 +119,7 @@ class UserConstruct<
 
   createOutputSecretKey(
     scope: Construct,
-    userSecretKeyName: CfnVercelServerUserSecretAccessKeyIdType
+    userSecretKeyName: CfnVercelServerUserSecretAccessKeyId
   ) {
     if (!this.accessKey) {
       throw Error(

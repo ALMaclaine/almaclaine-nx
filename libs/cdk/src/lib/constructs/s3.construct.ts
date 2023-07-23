@@ -8,13 +8,13 @@ import { Tags } from '../utils/tags';
 import type { IGrantable } from 'aws-cdk-lib/aws-iam';
 import { CfnOutput } from './cfn-output';
 import type {
-  CfnS3BucketArnType,
-  CfnS3BucketNameType,
+  CfnS3BucketArn,
+  CfnS3BucketName,
 } from '../utils/cfn-outputs/cfn-outputs-s3';
 
 type S3OutputNames = {
-  bucketName?: CfnS3BucketNameType;
-  bucketArn?: CfnS3BucketArnType;
+  bucketName?: CfnS3BucketName;
+  bucketArn?: CfnS3BucketArn;
 };
 
 type GrantType = {
@@ -25,7 +25,7 @@ type GrantType = {
 
 type S3ConstructOptions<
   StackName extends string,
-  BucketName extends string
+  BucketName extends CfnS3BucketName
 > = ConstructDefaultTypes<StackName> & {
   versioned?: boolean;
   bucketName: BucketName;
@@ -35,7 +35,7 @@ type S3ConstructOptions<
 
 class S3Construct<
   StackName extends string,
-  BucketName extends string
+  BucketName extends CfnS3BucketName
 > extends Construct {
   private readonly scope: Construct;
 
@@ -84,14 +84,14 @@ class S3Construct<
       this.createOutputName(this.scope, outputNames.bucketName);
   }
 
-  createOutputArn(scope: Construct, bucketArn: CfnS3BucketArnType) {
+  createOutputArn(scope: Construct, bucketArn: CfnS3BucketArn) {
     CfnOutput.createOutput(scope, {
       value: this.bucket.bucketArn,
       name: bucketArn,
     });
   }
 
-  createOutputName(scope: Construct, bucketName: CfnS3BucketNameType) {
+  createOutputName(scope: Construct, bucketName: CfnS3BucketName) {
     CfnOutput.createOutput(scope, {
       value: this.bucket.bucketName,
       name: bucketName,
@@ -138,7 +138,7 @@ class S3Construct<
     });
   }
 
-  static of<StackName extends string, BucketName extends string>(
+  static of<StackName extends string, BucketName extends CfnS3BucketName>(
     scope: Construct,
     options: S3ConstructOptions<StackName, BucketName>
   ) {
