@@ -79,7 +79,7 @@ export type {
 } from './lib/utils/cfn-outputs/cfn-outputs-s3';
 
 export { TableConstruct } from './lib/constructs/table.construct';
-export type { TableConstructProps } from './lib/constructs/table.construct';
+export type { TableConstructOptions } from './lib/constructs/table.construct';
 
 export { CognitoConstruct } from './lib/constructs/cognito.construct';
 export type { CognitoConstructOptions } from './lib/constructs/cognito.construct';
@@ -141,3 +141,6 @@ export {
   createVercelTableStack,
 } from './lib/stacks/table-stacks';
 export type { CreateVercelTableStackProps } from './lib/stacks/table-stacks';
+
+export { createUserStack } from './lib/stacks/user-stacks';
+export type { CreateUserStackOptions } from './lib/stacks/user-stacks';

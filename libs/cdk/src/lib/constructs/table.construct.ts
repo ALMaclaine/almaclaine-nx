@@ -14,17 +14,14 @@ import type {
   CfnTableArnType,
   CfnTableNameType,
 } from '../utils/cfn-outputs/cfn-outputs-table';
-import { Stack } from '../stack';
-import { getStackNameFromProps } from '../utils/get-stack-names';
-import { getVercelUser } from '../utils/get-user';
 
 type GsiOptions =
   | { gsiCount: number }
   | { gsiProps: GlobalSecondaryIndexProps[] };
 
 type TableOutputNames = {
-  tableOutputName: CfnTableNameType;
-  tableArn: CfnTableArnType;
+  tableOutputName?: CfnTableNameType;
+  tableArn?: CfnTableArnType;
 };
 
 type GrantType = {
@@ -33,7 +30,7 @@ type GrantType = {
   readWrite?: IGrantable[];
 };
 
-type TableConstructProps<
+type TableConstructOptions<
   StackName extends string,
   TableName extends string
 > = ConstructDefaultTypes<StackName> & {
@@ -75,7 +72,7 @@ class TableConstruct<
       gsi,
       outputNames,
       grants,
-    }: TableConstructProps<StackName, TableName>
+    }: TableConstructOptions<StackName, TableName>
   ) {
     super(scope, stackName);
     this.prod = Tags.isProd(scope);
@@ -203,11 +200,11 @@ class TableConstruct<
 
   static of<StackName extends string, TableName extends string>(
     scope: Construct,
-    props: TableConstructProps<StackName, TableName>
+    props: TableConstructOptions<StackName, TableName>
   ) {
     return new TableConstruct(scope, props);
   }
 }
 
 export { TableConstruct };
-export type { TableConstructProps };
+export type { TableConstructOptions };
