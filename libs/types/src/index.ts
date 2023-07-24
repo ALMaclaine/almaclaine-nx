@@ -1,5 +1,6 @@
 export type { ArrayCallback } from './lib/array-callback';
 export type { ArrayValues } from './lib/array-values';
+export type { Augmentable } from './lib/augmentable';
 export type { ComparatorBoolean } from './lib/comparator-boolean';
 export { cast } from './lib/cast';
 export type { DeepPartial } from './lib/deep-partial';
