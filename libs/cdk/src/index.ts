@@ -18,7 +18,7 @@ export { Tags } from './lib/utils/tags';
 export {
   getStackName,
   getStackNameFromProps,
-} from './lib/utils/get-stack-names';
+} from './lib/stacks/utils/get-stack-names';
 
 export {
   generateCfnUserPoolName,
@@ -36,12 +36,11 @@ export {
 
 export {
   generateConstructNameLiteral,
-  generateQueueName,
-  generateS3Name,
-  generateTableName,
-  generateUserName,
-  generateAuthName,
+  ConstructNameGenerator,
+  ValidConstructEnum,
 } from './lib/utils/generate-construct-names';
+
+export type { ValidConstruct } from './lib/utils/generate-construct-names';
 
 export type {
   CfnTableArn,
@@ -130,7 +129,7 @@ export {
   generateUserStackName,
   generateS3StackName,
   generateDynamoStackName,
-} from './lib/utils/generate-stack-names';
+} from './lib/stacks/utils/generate-stack-names';
 
 export { CfnOutput } from './lib/constructs/cfn-output';
 

@@ -1,4 +1,5 @@
 import { lowerCaseLiteral } from './utils';
+import type { ArrayValues } from '@almaclaine/types';
 
 function generateConstructNameLiteral<
   StackName extends string,
@@ -14,59 +15,55 @@ function generateConstructNameLiteral<
   )}-${lowerCaseLiteral(constructType)}`;
 }
 
-function generateQueueName<
-  StackName extends string,
-  ConstructName extends string
->(
-  stackName: StackName,
-  constructName: ConstructName
-): `${Lowercase<StackName>}-queue-${Lowercase<ConstructName>}` {
-  return generateConstructNameLiteral(stackName, 'queue', constructName);
-}
+const ValidConstructValues = [
+  'queue',
+  's3',
+  'dynamodb',
+  'user',
+  'cognito-pool',
+] as const;
 
-function generateS3Name<StackName extends string, ConstructName extends string>(
-  stackName: StackName,
-  constructName: ConstructName
-): `${Lowercase<StackName>}-s3-${Lowercase<ConstructName>}` {
-  return generateConstructNameLiteral(stackName, 's3', constructName);
-}
+const ValidConstructSet = new Set(ValidConstructValues);
 
-function generateTableName<
-  StackName extends string,
-  ConstructName extends string
->(
-  stackName: StackName,
-  constructName: ConstructName
-): `${Lowercase<StackName>}-dynamodb-${Lowercase<ConstructName>}` {
-  return generateConstructNameLiteral(stackName, 'dynamodb', constructName);
-}
+type ValidConstruct = ArrayValues<typeof ValidConstructValues>;
 
-function generateUserName<
-  StackName extends string,
-  ConstructName extends string
->(
-  stackName: StackName,
-  constructName: ConstructName
-): `${Lowercase<StackName>}-user-${Lowercase<ConstructName>}` {
-  return generateConstructNameLiteral(stackName, 'user', constructName);
-}
+const ValidConstructEnum = {
+  queue: 'queue',
+  s3: 's3',
+  dynamodb: 'dynamodb',
+  user: 'user',
+  cognitoPool: 'cognito-pool',
+} as const;
 
-function generateAuthName<
-  StackName extends string,
-  ConstructName extends string
->(
-  stackName: StackName,
-  constructName: ConstructName
-): `${Lowercase<StackName>}-cognito-pool-${Lowercase<ConstructName>}` {
-  return generateConstructNameLiteral(stackName, 'cognito-pool', constructName);
+class ConstructNameGenerator<StackName extends string> {
+  constructor(private readonly stackName: StackName) {}
+
+  generateConstructName<
+    ConstructName extends string,
+    ConstructType extends ValidConstruct
+  >(constructName: ConstructName, constructType: ConstructType) {
+    if (!ValidConstructSet.has(constructType)) {
+      throw new Error(
+        `Construct type ${constructType} is not a valid construct type`
+      );
+    }
+
+    return generateConstructNameLiteral(
+      this.stackName,
+      constructName,
+      constructType
+    );
+  }
+
+  static of<StackName extends string>(stackName: StackName) {
+    return new ConstructNameGenerator(stackName);
+  }
 }
 
 export {
-  lowerCaseLiteral,
   generateConstructNameLiteral,
-  generateQueueName,
-  generateS3Name,
-  generateTableName,
-  generateUserName,
-  generateAuthName,
+  ConstructNameGenerator,
+  ValidConstructEnum,
 };
+
+export type { ValidConstruct };

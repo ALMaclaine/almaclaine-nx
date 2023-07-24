@@ -1,5 +1,5 @@
 import type { App, StackProps } from 'aws-cdk-lib';
-import { getStackNameFromProps } from './utils/get-stack-names';
+import { getStackNameFromProps } from './stacks/utils/get-stack-names';
 import { Stack as _Stack } from 'aws-cdk-lib';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
