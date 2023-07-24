@@ -13,7 +13,7 @@ import type {
 } from '../utils/cfn-outputs/cfn-outputs-s3';
 
 type S3OutputNames = {
-  bucketName?: CfnS3BucketName;
+  bucketOutputName?: CfnS3BucketName;
   bucketArn?: CfnS3BucketArn;
 };
 
@@ -25,7 +25,7 @@ type GrantType = {
 
 type S3ConstructOptions<
   StackName extends string,
-  BucketName extends CfnS3BucketName
+  BucketName extends string
 > = ConstructDefaultTypes<StackName> & {
   versioned?: boolean;
   bucketName: BucketName;
@@ -35,7 +35,7 @@ type S3ConstructOptions<
 
 class S3Construct<
   StackName extends string,
-  BucketName extends CfnS3BucketName
+  BucketName extends string
 > extends Construct {
   private readonly scope: Construct;
 
@@ -80,8 +80,8 @@ class S3Construct<
   handleOutputs(outputNames: S3OutputNames) {
     outputNames.bucketArn &&
       this.createOutputArn(this.scope, outputNames.bucketArn);
-    outputNames.bucketName &&
-      this.createOutputName(this.scope, outputNames.bucketName);
+    outputNames.bucketOutputName &&
+      this.createOutputName(this.scope, outputNames.bucketOutputName);
   }
 
   createOutputArn(scope: Construct, bucketArn: CfnS3BucketArn) {
@@ -138,7 +138,7 @@ class S3Construct<
     });
   }
 
-  static of<StackName extends string, BucketName extends CfnS3BucketName>(
+  static of<StackName extends string, BucketName extends string>(
     scope: Construct,
     options: S3ConstructOptions<StackName, BucketName>
   ) {
