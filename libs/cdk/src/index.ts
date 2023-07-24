@@ -105,7 +105,11 @@ export type { DeadQueueConstructOptions } from './lib/constructs/queues/dead-que
 export { S3Construct } from './lib/constructs/s3.construct';
 export type { S3ConstructOptions } from './lib/constructs/s3.construct';
 
-export { lowerCaseLiteral, concatLiteral } from './lib/utils/utils';
+export {
+  lowerCaseLiteral,
+  concatLiteral,
+  upperCaseLiteral,
+} from './lib/utils/utils';
 
 export {
   concatAccessKeyId,

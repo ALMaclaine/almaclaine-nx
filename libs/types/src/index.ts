@@ -1,6 +1,6 @@
 export type { ArrayCallback } from './lib/array-callback';
 export type { ArrayValues } from './lib/array-values';
-export type { Augmentable } from './lib/augmentable';
+export { Augmentable } from './lib/augmentable';
 export type { ComparatorBoolean } from './lib/comparator-boolean';
 export { cast } from './lib/cast';
 export type { DeepPartial } from './lib/deep-partial';
@@ -19,4 +19,5 @@ export type { Sized } from './lib/sized';
 export type { Spread } from './lib/spread';
 export type { Transform } from './lib/transform';
 export type { TypeOrArray } from './lib/type-or-array';
+export type { UnionToIntersection } from './lib/union-to-intersection';
 export type { Whitespace } from './lib/whitespace';
