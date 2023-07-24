@@ -145,5 +145,5 @@ export type { CreateVercelTableStackOptions } from './lib/stacks/table-stacks';
 export { createUserStack } from './lib/stacks/user-stacks';
 export type { CreateUserStackOptions } from './lib/stacks/user-stacks';
 
-export { createBucketStack } from './lib/stacks/s3-stacks';
-export type { CreateBucketStackOptions } from './lib/stacks/s3-stacks';
+export { createS3Stack } from './lib/stacks/s3-stacks';
+export type { CreateS3StackOptions } from './lib/stacks/s3-stacks';
