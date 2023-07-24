@@ -12,6 +12,18 @@ function concatArn<Name extends string>(pre: Name): JoinedString<Name, 'Arn'> {
   return concatLiteral(pre, 'Arn');
 }
 
+function concatAccessKeyId<Name extends string>(
+  pre: Name
+): JoinedString<Name, 'AccessKeyId'> {
+  return concatLiteral(pre, 'AccessKeyId');
+}
+
+function concatSecretAccessKeyId<Name extends string>(
+  pre: Name
+): JoinedString<Name, 'SecretAccessKeyId'> {
+  return concatLiteral(pre, 'SecretAccessKeyId');
+}
+
 function concatBucket<Name extends string>(
   pre: Name
 ): JoinedString<Name, 'Bucket'> {
@@ -54,13 +66,15 @@ function concatStage<Name extends string>(
 }
 
 export {
+  concatAccessKeyId,
   concatArn,
-  concatName,
   concatBucket,
+  concatDeadQueue,
+  concatName,
+  concatQueue,
+  concatSecretAccessKeyId,
+  concatStage,
+  concatTable,
   concatUrl,
   concatUser,
-  concatTable,
-  concatQueue,
-  concatDeadQueue,
-  concatStage,
 };

@@ -1,4 +1,10 @@
-import { concatArn, concatName, concatUser } from './cfn-outputs-utils';
+import {
+  concatAccessKeyId,
+  concatArn,
+  concatName,
+  concatSecretAccessKeyId,
+  concatUser,
+} from './cfn-outputs-utils';
 import { concatLiteral } from '../utils';
 
 function generateCfnUserName<Name extends string>(pre: Name) {
@@ -7,6 +13,26 @@ function generateCfnUserName<Name extends string>(pre: Name) {
 
 type CfnUserName = ReturnType<typeof generateCfnUserName>;
 
+function generateCfnUserArn<Name extends string>(pre: Name) {
+  return concatArn(concatUser(pre));
+}
+
+type CfnUserArn = ReturnType<typeof generateCfnUserArn>;
+
+function generateCfnUserAccessKeyId<Name extends string>(pre: Name) {
+  return concatAccessKeyId(concatUser(pre));
+}
+
+type CfnUserAccessKeyId = ReturnType<typeof generateCfnUserAccessKeyId>;
+
+function generateCfnUserSecretAccessKeyId<Name extends string>(pre: Name) {
+  return concatSecretAccessKeyId(concatUser(pre));
+}
+
+type CfnUserSecretAccessKeyId = ReturnType<
+  typeof generateCfnUserSecretAccessKeyId
+>;
+
 function generateCfnVercelServerUserName<Name extends string>(pre: Name) {
   return generateCfnUserName(concatLiteral(pre, 'VercelServer'));
 }
@@ -14,12 +40,6 @@ function generateCfnVercelServerUserName<Name extends string>(pre: Name) {
 type CfnVercelServerUserName = ReturnType<
   typeof generateCfnVercelServerUserName
 >;
-
-function generateCfnUserArn<Name extends string>(pre: Name) {
-  return concatArn(concatUser(pre));
-}
-
-type CfnUserArn = ReturnType<typeof generateCfnUserArn>;
 
 function generateCfnVercelServerUserArn<Name extends string>(pre: Name) {
   return generateCfnUserArn(concatLiteral(pre, 'VercelServer'));
@@ -30,7 +50,7 @@ type CfnVercelServerUserArn = ReturnType<typeof generateCfnVercelServerUserArn>;
 function generateCfnVercelServerUserAccessKeyId<Name extends string>(
   pre: Name
 ) {
-  return generateCfnUserName(concatLiteral(pre, 'VercelServerAccessKeyId'));
+  return generateCfnUserAccessKeyId(concatLiteral(pre, 'VercelServer'));
 }
 
 type CfnVercelServerUserAccessKeyId = ReturnType<
@@ -41,7 +61,7 @@ function generateCfnVercelServerUserSecretAccessKeyId<Name extends string>(
   pre: Name
 ) {
   return concatName(
-    concatUser(concatLiteral(pre, 'VercelServerSecretAccessKeyId'))
+    generateCfnUserSecretAccessKeyId(concatLiteral(pre, 'VercelServer'))
   );
 }
 
@@ -50,18 +70,23 @@ type CfnVercelServerUserSecretAccessKeyId = ReturnType<
 >;
 
 export {
+  generateCfnUserAccessKeyId,
+  generateCfnUserArn,
   generateCfnUserName,
-  generateCfnVercelServerUserName,
-  generateCfnVercelServerUserArn,
+  generateCfnUserSecretAccessKeyId,
   generateCfnVercelServerUserAccessKeyId,
+  generateCfnVercelServerUserArn,
+  generateCfnVercelServerUserName,
   generateCfnVercelServerUserSecretAccessKeyId,
 };
 
 export type {
+  CfnUserAccessKeyId,
+  CfnUserArn,
+  CfnUserName,
+  CfnUserSecretAccessKeyId,
+  CfnVercelServerUserAccessKeyId,
   CfnVercelServerUserArn,
   CfnVercelServerUserName,
-  CfnVercelServerUserAccessKeyId,
   CfnVercelServerUserSecretAccessKeyId,
-  CfnUserName,
-  CfnUserArn,
 };

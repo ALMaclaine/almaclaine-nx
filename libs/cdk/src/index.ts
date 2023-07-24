@@ -54,19 +54,25 @@ export {
 } from './lib/utils/cfn-outputs/cfn-outputs-table';
 
 export {
-  generateCfnVercelServerUserName,
-  generateCfnVercelServerUserArn,
+  generateCfnUserAccessKeyId,
+  generateCfnUserArn,
+  generateCfnUserName,
+  generateCfnUserSecretAccessKeyId,
   generateCfnVercelServerUserAccessKeyId,
+  generateCfnVercelServerUserArn,
+  generateCfnVercelServerUserName,
   generateCfnVercelServerUserSecretAccessKeyId,
 } from './lib/utils/cfn-outputs/cfn-outputs-user';
 
 export type {
+  CfnUserAccessKeyId,
+  CfnUserArn,
+  CfnUserName,
+  CfnUserSecretAccessKeyId,
+  CfnVercelServerUserAccessKeyId,
   CfnVercelServerUserArn,
   CfnVercelServerUserName,
-  CfnVercelServerUserAccessKeyId,
   CfnVercelServerUserSecretAccessKeyId,
-  CfnUserName,
-  CfnUserArn,
 } from './lib/utils/cfn-outputs/cfn-outputs-user';
 
 export {
@@ -102,15 +108,17 @@ export type { S3ConstructOptions } from './lib/constructs/s3.construct';
 export { lowerCaseLiteral, concatLiteral } from './lib/utils/utils';
 
 export {
+  concatAccessKeyId,
   concatArn,
-  concatName,
   concatBucket,
+  concatDeadQueue,
+  concatName,
+  concatQueue,
+  concatSecretAccessKeyId,
+  concatStage,
+  concatTable,
   concatUrl,
   concatUser,
-  concatTable,
-  concatQueue,
-  concatDeadQueue,
-  concatStage,
 } from './lib/utils/cfn-outputs/cfn-outputs-utils';
 
 export {
