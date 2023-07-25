@@ -11,7 +11,7 @@ import { Tags } from '../utils/tags';
 import {
   ConstructNameGenerator,
   ConstructEnum,
-} from '../utils/generate-construct-names';
+} from './utils/generate-construct-names';
 
 type CognitoConstructOptions<
   StackName extends string,

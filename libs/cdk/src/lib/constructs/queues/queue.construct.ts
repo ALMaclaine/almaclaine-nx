@@ -9,7 +9,7 @@ import { Tags } from '../../utils/tags';
 import {
   ConstructEnum,
   ConstructNameGenerator,
-} from '../../utils/generate-construct-names';
+} from '../utils/generate-construct-names';
 
 type QueueBaseProps = {
   retentionPeriod: Duration;

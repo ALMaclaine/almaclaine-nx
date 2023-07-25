@@ -7,7 +7,7 @@ import type { ConstructDefaultTypes } from '../types';
 import {
   ConstructEnum,
   ConstructNameGenerator,
-} from '../utils/generate-construct-names';
+} from './utils/generate-construct-names';
 import type { ConstructNameLiteral } from '../types';
 import { Tags } from '../utils/tags';
 import type { IGrantable } from 'aws-cdk-lib/aws-iam';

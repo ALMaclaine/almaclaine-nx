@@ -17,4 +17,23 @@ function concatLiteral<T extends string, K extends string>(
   return `${valT}${valK}`;
 }
 
-export { lowerCaseLiteral, concatLiteral, upperCaseLiteral };
+function generateConstructNameLiteral<
+  StackName extends string,
+  ConstructName extends string,
+  ConstructType extends string
+>(
+  stackName: StackName,
+  constructName: ConstructName,
+  constructType: ConstructType
+): `${Lowercase<StackName>}-${Lowercase<ConstructName>}-${Lowercase<ConstructType>}` {
+  return `${lowerCaseLiteral(stackName)}-${lowerCaseLiteral(
+    constructName
+  )}-${lowerCaseLiteral(constructType)}`;
+}
+
+export {
+  lowerCaseLiteral,
+  concatLiteral,
+  upperCaseLiteral,
+  generateConstructNameLiteral,
+};

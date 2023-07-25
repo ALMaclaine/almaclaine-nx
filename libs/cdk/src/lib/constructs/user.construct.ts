@@ -12,7 +12,7 @@ import type {
 import {
   ConstructEnum,
   ConstructNameGenerator,
-} from '../utils/generate-construct-names';
+} from './utils/generate-construct-names';
 
 type UserOutputNames = {
   userOutputName?: CfnUserName;

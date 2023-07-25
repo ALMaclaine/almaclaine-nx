@@ -38,9 +38,9 @@ export {
   generateConstructNameLiteral,
   ConstructNameGenerator,
   ConstructEnum,
-} from './lib/utils/generate-construct-names';
+} from './lib/constructs/utils/generate-construct-names';
 
-export type { ValidConstruct } from './lib/utils/generate-construct-names';
+export type { ValidConstruct } from './lib/constructs/utils/generate-construct-names';
 
 export type {
   CfnTableArn,

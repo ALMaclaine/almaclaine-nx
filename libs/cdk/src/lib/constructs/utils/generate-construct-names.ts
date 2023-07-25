@@ -1,19 +1,5 @@
-import { lowerCaseLiteral } from './utils';
 import type { ArrayValues } from '@almaclaine/types';
-
-function generateConstructNameLiteral<
-  StackName extends string,
-  ConstructName extends string,
-  ConstructType extends string
->(
-  stackName: StackName,
-  constructName: ConstructName,
-  constructType: ConstructType
-): `${Lowercase<StackName>}-${Lowercase<ConstructName>}-${Lowercase<ConstructType>}` {
-  return `${lowerCaseLiteral(stackName)}-${lowerCaseLiteral(
-    constructName
-  )}-${lowerCaseLiteral(constructType)}`;
-}
+import { generateConstructNameLiteral } from '../../utils/utils';
 
 const ConstructValues = [
   'queue',
@@ -60,6 +46,6 @@ class ConstructNameGenerator<StackName extends string> {
   }
 }
 
-export { generateConstructNameLiteral, ConstructNameGenerator, ConstructEnum };
+export { ConstructNameGenerator, ConstructEnum };
 
 export type { ValidConstruct };

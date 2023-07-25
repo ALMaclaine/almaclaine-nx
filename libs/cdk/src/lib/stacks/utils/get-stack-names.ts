@@ -1,7 +1,7 @@
 import type { Stages } from '../../constants';
 import type { StackProps } from 'aws-cdk-lib';
 import type { ConstructNameLiteral } from '../../types';
-import { generateConstructNameLiteral } from '../../utils/generate-construct-names';
+import { generateConstructNameLiteral } from '../../utils/utils';
 
 type StackName<Name extends string> = ConstructNameLiteral<
   Name,
