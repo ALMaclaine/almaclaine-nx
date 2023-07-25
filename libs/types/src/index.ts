@@ -11,6 +11,7 @@ export type { FromSpaceCaseToSnakeCase } from './lib/from-space-case-to-snake-ca
 export type { LettersCapital } from './lib/letters-capital';
 export type { LettersLowercase } from './lib/letters-lowercase';
 export type { LiteralEnum } from './lib/literal-enum';
+export type { MethodReturnType } from './lib/method-return-type';
 export type { ObjectValues } from './lib/object-values';
 export type { PartialPick } from './lib/partial-pick';
 export type { ArrayPredicate, Predicate } from './lib/predicate';

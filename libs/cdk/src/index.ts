@@ -20,19 +20,7 @@ export {
   getStackNameFromProps,
 } from './lib/stacks/utils/get-stack-names';
 
-export {
-  generateCfnUserPoolName,
-  generateCfnUserPoolClientName,
-} from './lib/utils/cfn-outputs/cfn-outputs-user-pool';
-
-export {
-  generateCfnDeadQueueName,
-  generateCfnQueueName,
-  generateCfnQueueUrl,
-  generateCfnQueueArn,
-  generateCfnDeadQueueArn,
-  generateCfnDeadQueueUrl,
-} from './lib/utils/cfn-outputs/cfn-outputs-queue';
+export { CfnOutputNameGenerator } from './lib/utils/cfn-outputs/cfn-output-name-generator';
 
 export {
   ConstructNameGenerator,
@@ -40,47 +28,6 @@ export {
 } from './lib/constructs/utils/generate-construct-names';
 
 export type { ValidConstruct } from './lib/constructs/utils/generate-construct-names';
-
-export type {
-  CfnTableArn,
-  CfnTableName,
-} from './lib/utils/cfn-outputs/cfn-outputs-table';
-
-export {
-  generateCfnTableName,
-  generateCfnTableArn,
-} from './lib/utils/cfn-outputs/cfn-outputs-table';
-
-export {
-  generateCfnUserAccessKeyId,
-  generateCfnUserArn,
-  generateCfnUserName,
-  generateCfnUserSecretAccessKeyId,
-  generateCfnVercelServerUserAccessKeyId,
-  generateCfnVercelServerUserArn,
-  generateCfnVercelServerUserName,
-  generateCfnVercelServerUserSecretAccessKeyId,
-} from './lib/utils/cfn-outputs/cfn-outputs-user';
-
-export type {
-  CfnUserAccessKeyId,
-  CfnUserArn,
-  CfnUserName,
-  CfnUserSecretAccessKeyId,
-  CfnVercelServerUserAccessKeyId,
-  CfnVercelServerUserArn,
-  CfnVercelServerUserName,
-  CfnVercelServerUserSecretAccessKeyId,
-} from './lib/utils/cfn-outputs/cfn-outputs-user';
-
-export {
-  generateCfnS3BucketName,
-  generateCfnS3BucketArn,
-} from './lib/utils/cfn-outputs/cfn-outputs-s3';
-export type {
-  CfnS3BucketArn,
-  CfnS3BucketName,
-} from './lib/utils/cfn-outputs/cfn-outputs-s3';
 
 export { TableConstruct } from './lib/constructs/table.construct';
 export type { TableConstructOptions } from './lib/constructs/table.construct';
@@ -111,25 +58,18 @@ export {
 } from './lib/utils/utils';
 
 export {
-  concatAccessKeyId,
-  concatArn,
-  concatBucket,
-  concatDeadQueue,
-  concatName,
-  concatQueue,
-  concatSecretAccessKeyId,
+  Concat,
+  ConcatEnum,
   concatStage,
-  concatTable,
-  concatUrl,
-  concatUser,
 } from './lib/utils/cfn-outputs/cfn-outputs-utils';
 
 export {
-  generateQueueStackName,
-  generateUserStackName,
-  generateS3StackName,
-  generateDynamoStackName,
+  GenerateStackName,
+  StackTypeEnum,
+  StackTypeValues,
 } from './lib/stacks/utils/generate-stack-names';
+
+export type { StackType } from './lib/stacks/utils/generate-stack-names';
 
 export { CfnOutput } from './lib/constructs/cfn-output';
 
@@ -140,7 +80,7 @@ export { Fn, Duration } from 'aws-cdk-lib';
 
 export { Stack } from './lib/stack';
 
-export { importValue, importVercelUser } from './lib/utils/import-value';
+export { importValue } from './lib/utils/import-value';
 export { getUser, getVercelUser } from './lib/utils/get-user';
 
 export { Construct } from 'constructs';

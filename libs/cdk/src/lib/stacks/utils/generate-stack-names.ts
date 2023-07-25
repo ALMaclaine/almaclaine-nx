@@ -1,47 +1,34 @@
 import { lowerCaseLiteral } from '../../utils/utils';
+import type { ArrayValues } from '@almaclaine/types';
 
-function generateQueueStackName<StackName extends string>(
-  stackName: StackName
-): `${Lowercase<StackName>}-queue` {
-  return `${lowerCaseLiteral(stackName)}-queue`;
+const StackTypeValues = ['queue', 'user', 's3', 'dynamodb'] as const;
+type StackType = ArrayValues<typeof StackTypeValues>;
+
+const StackTypeSet = new Set(StackTypeValues);
+
+const StackTypeEnum = {
+  QUEUE: 'queue',
+  USER: 'user',
+  S3: 's3',
+  DYNAMODB: 'dynamodb',
+} as const;
+
+class GenerateStackName {
+  private static validateStackType(stackType: StackType) {
+    if (!StackTypeSet.has(stackType)) {
+      throw new Error(`Stack type ${stackType} is not a valid stack type`);
+    }
+  }
+
+  static generate<Name extends string, Type extends StackType>(
+    stackName: Name,
+    stackType: Type
+  ): `${Lowercase<Name>}-${Type}` {
+    this.validateStackType(stackType);
+    return `${lowerCaseLiteral(stackName)}-${stackType}`;
+  }
 }
 
-type GenerateQueueStackName = ReturnType<typeof generateQueueStackName>;
+export { GenerateStackName, StackTypeEnum, StackTypeValues };
 
-function generateUserStackName<StackName extends string>(
-  stackName: StackName
-): `${Lowercase<StackName>}-user` {
-  return `${lowerCaseLiteral(stackName)}-user`;
-}
-
-type GenerateUserStackName = ReturnType<typeof generateUserStackName>;
-
-function generateS3StackName<StackName extends string>(
-  stackName: StackName
-): `${Lowercase<StackName>}-s3` {
-  return `${lowerCaseLiteral(stackName)}-s3`;
-}
-
-type GenerateS3StackName = ReturnType<typeof generateS3StackName>;
-
-function generateDynamoStackName<StackName extends string>(
-  stackName: StackName
-): `${Lowercase<StackName>}-dynamodb` {
-  return `${lowerCaseLiteral(stackName)}-dynamodb`;
-}
-
-type GenerateDynamoStackName = ReturnType<typeof generateDynamoStackName>;
-
-export {
-  generateQueueStackName,
-  generateUserStackName,
-  generateS3StackName,
-  generateDynamoStackName,
-};
-
-export type {
-  GenerateQueueStackName,
-  GenerateUserStackName,
-  GenerateS3StackName,
-  GenerateDynamoStackName,
-};
+export type { StackType };

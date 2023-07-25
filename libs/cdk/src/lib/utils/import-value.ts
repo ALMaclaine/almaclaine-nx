@@ -1,11 +1,13 @@
 import { Fn } from 'aws-cdk-lib';
-import type { CfnVercelServerUserArn } from './cfn-outputs/cfn-outputs-user';
+import type { CfnOutputNameGenerator } from './cfn-outputs/cfn-output-name-generator';
 
 function importValue(output: string) {
   return Fn.importValue(output);
 }
 
-function importVercelUser(vercelUser: CfnVercelServerUserArn) {
+function importVercelUser<UserName extends string>(
+  vercelUser: ReturnType<typeof CfnOutputNameGenerator.vercelServerUserArn>
+) {
   return importValue(vercelUser);
 }
 

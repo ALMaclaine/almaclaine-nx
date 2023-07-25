@@ -2,13 +2,12 @@ import type { Stack } from '../stack';
 import type { TableConstructOptions } from '../constructs/table.construct';
 import { TableConstruct } from '../constructs/table.construct';
 import { getVercelUser } from '../utils/get-user';
-import type { CfnVercelServerUserArn } from '../utils/cfn-outputs/cfn-outputs-user';
 import { merge } from 'moderndash';
-import type { CfnTableName } from '../utils/cfn-outputs/cfn-outputs-table';
+import type { CfnOutputNameGenerator } from '../utils/cfn-outputs/cfn-output-name-generator';
 
 function createTableStack<
   StackName extends string,
-  TableName extends CfnTableName
+  TableName extends ReturnType<typeof CfnOutputNameGenerator.tableName>
 >(
   stack: Stack,
   props: Omit<TableConstructOptions<StackName, TableName>, 'stackName'>
@@ -18,14 +17,14 @@ function createTableStack<
 
 type CreateVercelTableStackOptions<
   StackName extends string,
-  TableName extends CfnTableName
+  TableName extends ReturnType<typeof CfnOutputNameGenerator.tableName>
 > = Omit<TableConstructOptions<StackName, TableName>, 'stackName'> & {
-  vercelUserArn: CfnVercelServerUserArn;
+  vercelUserArn: ReturnType<typeof CfnOutputNameGenerator.vercelServerUserArn>;
 };
 
 function createVercelTableStack<
   StackName extends string,
-  TableName extends CfnTableName
+  TableName extends ReturnType<typeof CfnOutputNameGenerator.tableName>
 >(stack: Stack, props: CreateVercelTableStackOptions<StackName, TableName>) {
   createTableStack(
     stack,

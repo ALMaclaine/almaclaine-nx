@@ -93,7 +93,7 @@ class QueuePairConstruct<
       retentionPeriod: this.retentionPeriod,
       visibilityTimeout: Duration.minutes(10),
       deadQueue: {
-        QUEUE: this._deadQueue?.QUEUE,
+        queue: this._deadQueue?.queue,
         maxReceiveCount: 3,
       },
     });

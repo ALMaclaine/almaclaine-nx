@@ -3,27 +3,24 @@ import type { ConstructDefaultTypes, ConstructNameLiteral } from '../types';
 import { CfnAccessKey, User } from 'aws-cdk-lib/aws-iam';
 import { Tags } from '../utils/tags';
 import { CfnOutput } from './cfn-output';
-import type {
-  CfnUserArn,
-  CfnUserName,
-  CfnVercelServerUserAccessKeyId,
-  CfnVercelServerUserSecretAccessKeyId,
-} from '../utils/cfn-outputs/cfn-outputs-user';
 import {
   ConstructEnum,
   ConstructNameGenerator,
 } from './utils/generate-construct-names';
+import type { CfnOutputNameGenerator } from '../utils/cfn-outputs/cfn-output-name-generator';
 
 type UserOutputNames = {
-  userOutputName?: CfnUserName;
-  userArn?: CfnUserArn;
-  accessKeyId?: CfnVercelServerUserAccessKeyId;
-  secretAccessKey?: CfnVercelServerUserSecretAccessKeyId;
+  userOutputName?: ReturnType<typeof CfnOutputNameGenerator.userName>;
+  userArn?: ReturnType<typeof CfnOutputNameGenerator.userArn>;
+  accessKeyId?: ReturnType<typeof CfnOutputNameGenerator.userAccessKeyId>;
+  secretAccessKey?: ReturnType<
+    typeof CfnOutputNameGenerator.userSecretAccessKeyId
+  >;
 };
 
 type UserConstructOptions<
   StackName extends string,
-  UserName extends CfnUserName
+  UserName extends ReturnType<typeof CfnOutputNameGenerator.userName>
 > = ConstructDefaultTypes<StackName> & {
   userName: UserName;
   createAccessKey?: boolean;
@@ -32,7 +29,7 @@ type UserConstructOptions<
 
 class UserConstruct<
   StackName extends string,
-  UserName extends CfnUserName
+  UserName extends ReturnType<typeof CfnOutputNameGenerator.userName>
 > extends Construct {
   private readonly scope: Construct;
 
@@ -64,7 +61,7 @@ class UserConstruct<
     this.createUser();
     if (createAccessKey) {
       this.accessKey = new CfnAccessKey(this.scope, 'CfnAccessKey', {
-        userName: this.USER.userName,
+        userName: this.user.userName,
       });
     }
 
@@ -85,30 +82,36 @@ class UserConstruct<
     this._user = new User(this.scope, this.name);
   }
 
-  static of<StackName extends string, UserName extends CfnUserName>(
-    scope: Construct,
-    props: UserConstructOptions<StackName, UserName>
-  ) {
+  static of<
+    StackName extends string,
+    UserName extends ReturnType<typeof CfnOutputNameGenerator.userName>
+  >(scope: Construct, props: UserConstructOptions<StackName, UserName>) {
     return new UserConstruct(scope, props);
   }
 
-  createOutputName(scope: Construct, userName: CfnUserName) {
+  createOutputName(
+    scope: Construct,
+    userName: ReturnType<typeof CfnOutputNameGenerator.userName>
+  ) {
     CfnOutput.createOutput(scope, {
-      value: this.USER.userName,
+      value: this.user.userName,
       name: userName,
     });
   }
 
-  createOutputArn(scope: Construct, userArn: CfnUserArn) {
+  createOutputArn(
+    scope: Construct,
+    userArn: ReturnType<typeof CfnOutputNameGenerator.userArn>
+  ) {
     CfnOutput.createOutput(scope, {
-      value: this.USER.userArn,
+      value: this.user.userArn,
       name: userArn,
     });
   }
 
   createOutputAccessKey(
     scope: Construct,
-    userAccessKey: CfnVercelServerUserAccessKeyId
+    userAccessKey: ReturnType<typeof CfnOutputNameGenerator.userAccessKeyId>
   ) {
     if (!this.accessKey) {
       throw Error(
@@ -124,7 +127,9 @@ class UserConstruct<
 
   createOutputSecretKey(
     scope: Construct,
-    userSecretKeyName: CfnVercelServerUserSecretAccessKeyId
+    userSecretKeyName: ReturnType<
+      typeof CfnOutputNameGenerator.userSecretAccessKeyId
+    >
   ) {
     if (!this.accessKey) {
       throw Error(

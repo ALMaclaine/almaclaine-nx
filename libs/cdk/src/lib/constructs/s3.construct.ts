@@ -10,14 +10,11 @@ import type { ConstructNameLiteral } from '../types';
 import { Tags } from '../utils/tags';
 import type { IGrantable } from 'aws-cdk-lib/aws-iam';
 import { CfnOutput } from './cfn-output';
-import type {
-  CfnS3BucketArn,
-  CfnS3BucketName,
-} from '../utils/cfn-outputs/cfn-outputs-s3';
+import type { CfnOutputNameGenerator } from '../utils/cfn-outputs/cfn-output-name-generator';
 
 type S3OutputNames = {
-  bucketOutputName?: CfnS3BucketName;
-  bucketArn?: CfnS3BucketArn;
+  bucketOutputName?: ReturnType<typeof CfnOutputNameGenerator.s3BucketName>;
+  bucketArn?: ReturnType<typeof CfnOutputNameGenerator.s3BucketArn>;
 };
 
 type GrantType = {
@@ -89,14 +86,20 @@ class S3Construct<
       this.createOutputName(this.scope, outputNames.bucketOutputName);
   }
 
-  createOutputArn(scope: Construct, bucketArn: CfnS3BucketArn) {
+  createOutputArn(
+    scope: Construct,
+    bucketArn: ReturnType<typeof CfnOutputNameGenerator.s3BucketArn>
+  ) {
     CfnOutput.createOutput(scope, {
       value: this.bucket.bucketArn,
       name: bucketArn,
     });
   }
 
-  createOutputName(scope: Construct, bucketName: CfnS3BucketName) {
+  createOutputName(
+    scope: Construct,
+    bucketName: ReturnType<typeof CfnOutputNameGenerator.s3BucketName>
+  ) {
     CfnOutput.createOutput(scope, {
       value: this.bucket.bucketName,
       name: bucketName,

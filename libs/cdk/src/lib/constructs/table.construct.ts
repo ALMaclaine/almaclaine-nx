@@ -12,18 +12,15 @@ import type { ConstructNameLiteral } from '../types';
 import { Tags } from '../utils/tags';
 import type { IGrantable } from 'aws-cdk-lib/aws-iam';
 import { CfnOutput } from './cfn-output';
-import type {
-  CfnTableArn,
-  CfnTableName,
-} from '../utils/cfn-outputs/cfn-outputs-table';
+import type { CfnOutputNameGenerator } from '../utils/cfn-outputs/cfn-output-name-generator';
 
 type GsiOptions =
   | { gsiCount: number }
   | { gsiProps: GlobalSecondaryIndexProps[] };
 
 type TableOutputNames = {
-  tableOutputName?: CfnTableName;
-  tableArn?: CfnTableArn;
+  tableOutputName?: ReturnType<typeof CfnOutputNameGenerator.tableName>;
+  tableArn?: ReturnType<typeof CfnOutputNameGenerator.tableArn>;
 };
 
 type GrantType = {
@@ -34,7 +31,7 @@ type GrantType = {
 
 type TableConstructOptions<
   StackName extends string,
-  TableName extends CfnTableName
+  TableName extends ReturnType<typeof CfnOutputNameGenerator.tableName>
 > = ConstructDefaultTypes<StackName> & {
   tableName: TableName;
   gsi?: GsiOptions;
@@ -44,7 +41,7 @@ type TableConstructOptions<
 
 class TableConstruct<
   StackName extends string,
-  TableName extends CfnTableName
+  TableName extends ReturnType<typeof CfnOutputNameGenerator.tableName>
 > extends Construct {
   private readonly scope: Construct;
 
@@ -172,14 +169,20 @@ class TableConstruct<
     this.table.addGlobalSecondaryIndex(props);
   }
 
-  createOutputArn(scope: Construct, tableArn: CfnTableArn) {
+  createOutputArn(
+    scope: Construct,
+    tableArn: ReturnType<typeof CfnOutputNameGenerator.tableArn>
+  ) {
     CfnOutput.createOutput(scope, {
       value: this.table.tableArn,
       name: tableArn,
     });
   }
 
-  createOutputName(scope: Construct, tableName: CfnTableName) {
+  createOutputName(
+    scope: Construct,
+    tableName: ReturnType<typeof CfnOutputNameGenerator.tableName>
+  ) {
     CfnOutput.createOutput(scope, {
       value: this.table.tableName,
       name: tableName,
@@ -202,10 +205,10 @@ class TableConstruct<
     this._gsiCount = count;
   }
 
-  static of<StackName extends string, TableName extends CfnTableName>(
-    scope: Construct,
-    props: TableConstructOptions<StackName, TableName>
-  ) {
+  static of<
+    StackName extends string,
+    TableName extends ReturnType<typeof CfnOutputNameGenerator.tableName>
+  >(scope: Construct, props: TableConstructOptions<StackName, TableName>) {
     return new TableConstruct(scope, props);
   }
 }

@@ -15,9 +15,15 @@ type ConstructNameLiteral<
   ConstructType extends string
 > = Lowercase<DashJoined<StackName, DashJoined<ConstructType, ConstructName>>>;
 
+type UnderscoreJoin<
+  Left extends string,
+  Right extends string
+> = `${Left}_${Right}`;
+
 export type {
   ConstructDefaultTypes,
+  ConstructNameLiteral,
   DashJoined,
   JoinedString,
-  ConstructNameLiteral,
+  UnderscoreJoin,
 };

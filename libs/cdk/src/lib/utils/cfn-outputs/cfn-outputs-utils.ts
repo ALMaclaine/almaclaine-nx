@@ -3,67 +3,11 @@ import { concatLiteral, upperCaseLiteral } from '../utils';
 import type { Stages } from '../../constants';
 import type { ArrayValues } from '@almaclaine/types';
 
-function concatName<Name extends string>(
-  pre: Name
-): JoinedString<Name, 'Name'> {
-  return concatLiteral(pre, 'Name');
-}
-
-function concatArn<Name extends string>(pre: Name): JoinedString<Name, 'Arn'> {
-  return concatLiteral(pre, 'Arn');
-}
-
-function concatAccessKeyId<Name extends string>(
-  pre: Name
-): JoinedString<Name, 'AccessKeyId'> {
-  return concatLiteral(pre, 'AccessKeyId');
-}
-
-function concatSecretAccessKeyId<Name extends string>(
-  pre: Name
-): JoinedString<Name, 'SecretAccessKeyId'> {
-  return concatLiteral(pre, 'SecretAccessKeyId');
-}
-
-function concatBucket<Name extends string>(
-  pre: Name
-): JoinedString<Name, 'Bucket'> {
-  return concatLiteral(pre, 'Bucket');
-}
-
-function concatUrl<Name extends string>(pre: Name): JoinedString<Name, 'Url'> {
-  return concatLiteral(pre, 'Url');
-}
-
-function concatTable<Name extends string>(
-  pre: Name
-): JoinedString<Name, 'Table'> {
-  return concatLiteral(pre, 'Table');
-}
-
-function concatQueue<Name extends string>(
-  pre: Name
-): JoinedString<Name, 'Queue'> {
-  return concatLiteral(pre, 'Queue');
-}
-
-function concatUser<Name extends string>(
-  pre: Name
-): JoinedString<Name, 'User'> {
-  return concatLiteral(pre, 'User');
-}
-
-function concatDeadQueue<Name extends string>(
-  pre: Name
-): JoinedString<JoinedString<Name, 'Dead'>, 'Queue'> {
-  return concatLiteral(pre, concatQueue('Dead'));
-}
-
 function concatStage<Name extends string>(
   pre: Name,
   stage: Stages
 ): JoinedString<Name, Uppercase<Stages>> {
-  return concatLiteral(pre, stage.toUpperCase() as Uppercase<Stages>);
+  return concatLiteral(pre, upperCaseLiteral(stage));
 }
 
 const ConcatSymbolValues = [
@@ -75,8 +19,12 @@ const ConcatSymbolValues = [
   'Url',
   'Table',
   'Queue',
+  'DeadQueue',
   'User',
   'Dead',
+  'VercelServer',
+  'UserPool',
+  'UserPoolClient',
 ] as const;
 
 const ConcatSet = new Set(ConcatSymbolValues);
@@ -94,33 +42,32 @@ const ConcatEnum = {
   QUEUE: 'Queue',
   USER: 'User',
   DEAD: 'Dead',
+  DEAD_QUEUE: 'DeadQueue',
+  VERCEL_SERVER: 'VercelServer',
+  USER_POOL: 'UserPool',
+  USER_POOL_CLIENT: 'UserPoolClient',
 } as const;
 
 class Concat {
-  static concat<Pre extends string, Symbols extends ConcatSymbol>(
-    pre: Pre,
-    symbol: Symbols
-  ): JoinedString<Uppercase<Pre>, Symbols> {
+  private static validateSymbol(symbol: ConcatSymbol) {
     if (!ConcatSet.has(symbol)) {
       throw new Error(`Symbol ${symbol} is not a valid symbol`);
     }
+  }
+  static concat<Pre extends string, Symbols extends ConcatSymbol>(
+    pre: Pre,
+    symbol: Symbols
+  ): JoinedString<Pre, Symbols> {
+    Concat.validateSymbol(symbol);
+    return concatLiteral(pre, symbol);
+  }
 
-    return concatLiteral(upperCaseLiteral(pre), symbol);
+  static concatC<Pre extends string, Symbols extends ConcatSymbol>(
+    symbol: Symbols
+  ): (pre: Pre) => JoinedString<Pre, Symbols> {
+    Concat.validateSymbol(symbol);
+    return (pre: Pre) => Concat.concat(pre, symbol);
   }
 }
 
-const test = Concat.concat('test' as const, ConcatEnum.QUEUE);
-
-export {
-  concatAccessKeyId,
-  concatArn,
-  concatBucket,
-  concatDeadQueue,
-  concatName,
-  concatQueue,
-  concatSecretAccessKeyId,
-  concatStage,
-  concatTable,
-  concatUrl,
-  concatUser,
-};
+export { Concat, ConcatEnum, concatStage };
