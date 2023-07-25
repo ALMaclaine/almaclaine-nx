@@ -1,7 +1,6 @@
 import { Construct } from 'constructs';
 import type { ConstructDefaultTypes, ConstructNameLiteral } from '../types';
 import { CfnAccessKey, User } from 'aws-cdk-lib/aws-iam';
-import { generateUserName } from '../utils/generate-construct-names';
 import { Tags } from '../utils/tags';
 import { CfnOutput } from './cfn-output';
 import type {
@@ -10,6 +9,10 @@ import type {
   CfnVercelServerUserAccessKeyId,
   CfnVercelServerUserSecretAccessKeyId,
 } from '../utils/cfn-outputs/cfn-outputs-user';
+import {
+  ConstructEnum,
+  ConstructNameGenerator,
+} from '../utils/generate-construct-names';
 
 type UserOutputNames = {
   userOutputName?: CfnUserName;
@@ -55,7 +58,9 @@ class UserConstruct<
     super(scope, stackName);
     this.prod = Tags.isProd(scope);
     this.scope = scope;
-    this.name = generateUserName(stackName, userName);
+
+    const cng = ConstructNameGenerator.of(stackName);
+    this.name = cng.generateConstructName(userName, ConstructEnum.user);
     this.createUser();
     if (createAccessKey) {
       this.accessKey = new CfnAccessKey(this.scope, 'CfnAccessKey', {

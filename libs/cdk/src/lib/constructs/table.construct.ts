@@ -4,7 +4,10 @@ import type { GlobalSecondaryIndexProps } from 'aws-cdk-lib/aws-dynamodb';
 import { AttributeType, BillingMode, Table } from 'aws-cdk-lib/aws-dynamodb';
 import { DYNAMO_PRIMARY_KEY_NAME, DYNAMO_SORT_KEY_NAME } from '../constants';
 import type { ConstructDefaultTypes } from '../types';
-import { generateTableName } from '../utils/generate-construct-names';
+import {
+  ConstructEnum,
+  ConstructNameGenerator,
+} from '../utils/generate-construct-names';
 import type { ConstructNameLiteral } from '../types';
 import { Tags } from '../utils/tags';
 import type { IGrantable } from 'aws-cdk-lib/aws-iam';
@@ -76,7 +79,9 @@ class TableConstruct<
     super(scope, stackName);
     this.prod = Tags.isProd(scope);
     this.scope = scope;
-    this.name = generateTableName(stackName, tableName);
+
+    const cng = ConstructNameGenerator.of(stackName);
+    this.name = cng.generateConstructName(tableName, ConstructEnum.dynamodb);
 
     this.createTable();
     gsi && this.handleAddGsi(gsi);

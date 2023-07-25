@@ -4,9 +4,12 @@ import type { DeadLetterQueue } from 'aws-cdk-lib/aws-sqs';
 import { Queue } from 'aws-cdk-lib/aws-sqs';
 import type { Duration } from 'aws-cdk-lib';
 import { RemovalPolicy } from 'aws-cdk-lib';
-import { generateQueueName } from '../../utils/generate-construct-names';
 import type { ConstructNameLiteral } from '../../types';
 import { Tags } from '../../utils/tags';
+import {
+  ConstructEnum,
+  ConstructNameGenerator,
+} from '../../utils/generate-construct-names';
 
 type QueueBaseProps = {
   retentionPeriod: Duration;
@@ -60,7 +63,8 @@ class QueueConstruct<
       queueName,
     }: QueueConstructOptions<StackName, QueueName>
   ) {
-    const _name = generateQueueName(stackName, queueName);
+    const cng = ConstructNameGenerator.of(stackName);
+    const _name = cng.generateConstructName(queueName, ConstructEnum.queue);
     super(scope, _name);
     this.prod = Tags.isProd(scope);
     this.scope = scope;

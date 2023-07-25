@@ -15,7 +15,7 @@ function generateConstructNameLiteral<
   )}-${lowerCaseLiteral(constructType)}`;
 }
 
-const ValidConstructValues = [
+const ConstructValues = [
   'queue',
   's3',
   'dynamodb',
@@ -23,11 +23,11 @@ const ValidConstructValues = [
   'cognito-pool',
 ] as const;
 
-const ValidConstructSet = new Set(ValidConstructValues);
+const ConstructSet = new Set(ConstructValues);
 
-type ValidConstruct = ArrayValues<typeof ValidConstructValues>;
+type ValidConstruct = ArrayValues<typeof ConstructValues>;
 
-const ValidConstructEnum = {
+const ConstructEnum = {
   queue: 'queue',
   s3: 's3',
   dynamodb: 'dynamodb',
@@ -42,7 +42,7 @@ class ConstructNameGenerator<StackName extends string> {
     ConstructName extends string,
     ConstructType extends ValidConstruct
   >(constructName: ConstructName, constructType: ConstructType) {
-    if (!ValidConstructSet.has(constructType)) {
+    if (!ConstructSet.has(constructType)) {
       throw new Error(
         `Construct type ${constructType} is not a valid construct type`
       );
@@ -50,8 +50,8 @@ class ConstructNameGenerator<StackName extends string> {
 
     return generateConstructNameLiteral(
       this.stackName,
-      constructName,
-      constructType
+      constructType,
+      constructName
     );
   }
 
@@ -60,10 +60,6 @@ class ConstructNameGenerator<StackName extends string> {
   }
 }
 
-export {
-  generateConstructNameLiteral,
-  ConstructNameGenerator,
-  ValidConstructEnum,
-};
+export { generateConstructNameLiteral, ConstructNameGenerator, ConstructEnum };
 
 export type { ValidConstruct };

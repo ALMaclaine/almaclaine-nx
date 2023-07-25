@@ -37,7 +37,7 @@ export {
 export {
   generateConstructNameLiteral,
   ConstructNameGenerator,
-  ValidConstructEnum,
+  ConstructEnum,
 } from './lib/utils/generate-construct-names';
 
 export type { ValidConstruct } from './lib/utils/generate-construct-names';

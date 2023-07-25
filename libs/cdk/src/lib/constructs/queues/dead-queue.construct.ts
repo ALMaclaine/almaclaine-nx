@@ -3,7 +3,7 @@ import { QueueConstruct } from './queue.construct';
 import { Duration } from 'aws-cdk-lib';
 import type { Construct } from 'constructs';
 import type { DashJoined } from '../../types';
-import { lowerCaseLiteral } from '../../utils/generate-construct-names';
+import { lowerCaseLiteral } from '../../utils/utils';
 
 type DeadQueueConstructOptions<
   StackName extends string,

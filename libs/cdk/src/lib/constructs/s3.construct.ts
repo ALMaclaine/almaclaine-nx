@@ -2,7 +2,10 @@ import { Construct } from 'constructs';
 import type { ConstructDefaultTypes } from '../types';
 import { BlockPublicAccess, Bucket } from 'aws-cdk-lib/aws-s3';
 import { RemovalPolicy } from 'aws-cdk-lib';
-import { generateS3Name } from '../utils/generate-construct-names';
+import {
+  ConstructEnum,
+  ConstructNameGenerator,
+} from '../utils/generate-construct-names';
 import type { ConstructNameLiteral } from '../types';
 import { Tags } from '../utils/tags';
 import type { IGrantable } from 'aws-cdk-lib/aws-iam';
@@ -70,7 +73,9 @@ class S3Construct<
     super(scope, stackName);
     this.prod = Tags.isProd(scope);
     this.scope = scope;
-    this._name = generateS3Name(stackName, bucketName);
+
+    const cng = ConstructNameGenerator.of(stackName);
+    this._name = cng.generateConstructName(bucketName, ConstructEnum.s3);
     this.versioned = versioned;
     this.createS3();
     outputNames && this.handleOutputs(outputNames);
