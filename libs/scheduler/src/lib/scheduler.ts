@@ -31,7 +31,7 @@ class Scheduler {
       }
     } else {
       const scheduling = new Scheduling({ timeToExecute, repeat, interval });
-      this.queue.add(scheduling);
+      this.QUEUE.add(scheduling);
       this.callbackManager.addCallback(scheduling.id, schedulingCallback);
     }
   }
@@ -43,9 +43,9 @@ class Scheduler {
   private addStart() {
     this.emitter.on('start', () => {
       const now = Date.now();
-      const peek = this.queue.peekFirstValue();
+      const peek = this.QUEUE.peekFirstValue();
       if (peek && peek?.timeToExecute <= now) {
-        const item = this.queue.removeFirstValue();
+        const item = this.QUEUE.removeFirstValue();
         if (item) {
           this.emitter.emit('finished', item);
         }
@@ -62,7 +62,7 @@ class Scheduler {
 
       if (scheduling.shouldRepeat()) {
         scheduling.setupNextRepeat();
-        this.queue.add(scheduling);
+        this.QUEUE.add(scheduling);
       } else {
         this.callbackManager.removeCallback(scheduling.id);
       }

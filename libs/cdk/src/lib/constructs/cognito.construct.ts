@@ -65,7 +65,7 @@ class CognitoConstruct<
     const cng = ConstructNameGenerator.of(stackName);
     this.name = cng.generateConstructName(
       userPoolName,
-      ConstructEnum.cognitoPool
+      ConstructEnum.COGNITO_POOL
     );
     this.initialize();
   }

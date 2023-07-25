@@ -1,6 +1,7 @@
 import type { JoinedString } from '../../types';
-import { concatLiteral } from '../utils';
+import { concatLiteral, upperCaseLiteral } from '../utils';
 import type { Stages } from '../../constants';
+import type { ArrayValues } from '@almaclaine/types';
 
 function concatName<Name extends string>(
   pre: Name
@@ -64,6 +65,51 @@ function concatStage<Name extends string>(
 ): JoinedString<Name, Uppercase<Stages>> {
   return concatLiteral(pre, stage.toUpperCase() as Uppercase<Stages>);
 }
+
+const ConcatSymbolValues = [
+  'Name',
+  'Arn',
+  'AccessKeyId',
+  'SecretAccessKeyId',
+  'Bucket',
+  'Url',
+  'Table',
+  'Queue',
+  'User',
+  'Dead',
+] as const;
+
+const ConcatSet = new Set(ConcatSymbolValues);
+
+type ConcatSymbol = ArrayValues<typeof ConcatSymbolValues>;
+
+const ConcatEnum = {
+  NAME: 'Name',
+  ARN: 'Arn',
+  ACCESS_KEY_ID: 'AccessKeyId',
+  SECRET_ACCESS_KEY_ID: 'SecretAccessKeyId',
+  BUCKET: 'Bucket',
+  URL: 'Url',
+  TABLE: 'Table',
+  QUEUE: 'Queue',
+  USER: 'User',
+  DEAD: 'Dead',
+} as const;
+
+class Concat {
+  static concat<Pre extends string, Symbols extends ConcatSymbol>(
+    pre: Pre,
+    symbol: Symbols
+  ): JoinedString<Uppercase<Pre>, Symbols> {
+    if (!ConcatSet.has(symbol)) {
+      throw new Error(`Symbol ${symbol} is not a valid symbol`);
+    }
+
+    return concatLiteral(upperCaseLiteral(pre), symbol);
+  }
+}
+
+const test = Concat.concat('test' as const, ConcatEnum.QUEUE);
 
 export {
   concatAccessKeyId,

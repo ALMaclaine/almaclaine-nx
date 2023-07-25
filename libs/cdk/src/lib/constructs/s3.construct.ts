@@ -75,7 +75,7 @@ class S3Construct<
     this.scope = scope;
 
     const cng = ConstructNameGenerator.of(stackName);
-    this._name = cng.generateConstructName(bucketName, ConstructEnum.s3);
+    this._name = cng.generateConstructName(bucketName, ConstructEnum.S3);
     this.versioned = versioned;
     this.createS3();
     outputNames && this.handleOutputs(outputNames);

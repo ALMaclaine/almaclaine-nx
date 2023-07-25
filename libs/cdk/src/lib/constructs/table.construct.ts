@@ -81,7 +81,7 @@ class TableConstruct<
     this.scope = scope;
 
     const cng = ConstructNameGenerator.of(stackName);
-    this.name = cng.generateConstructName(tableName, ConstructEnum.dynamodb);
+    this.name = cng.generateConstructName(tableName, ConstructEnum.DYNAMODB);
 
     this.createTable();
     gsi && this.handleAddGsi(gsi);

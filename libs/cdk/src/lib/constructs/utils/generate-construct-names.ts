@@ -14,11 +14,11 @@ const ConstructSet = new Set(ConstructValues);
 type ValidConstruct = ArrayValues<typeof ConstructValues>;
 
 const ConstructEnum = {
-  queue: 'queue',
-  s3: 's3',
-  dynamodb: 'dynamodb',
-  user: 'user',
-  cognitoPool: 'cognito-pool',
+  QUEUE: 'queue',
+  S3: 's3',
+  DYNAMODB: 'dynamodb',
+  USER: 'user',
+  COGNITO_POOL: 'cognito-pool',
 } as const;
 
 class ConstructNameGenerator<StackName extends string> {

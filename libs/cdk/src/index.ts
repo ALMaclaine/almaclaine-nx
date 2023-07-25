@@ -35,7 +35,6 @@ export {
 } from './lib/utils/cfn-outputs/cfn-outputs-queue';
 
 export {
-  generateConstructNameLiteral,
   ConstructNameGenerator,
   ConstructEnum,
 } from './lib/constructs/utils/generate-construct-names';
@@ -108,6 +107,7 @@ export {
   lowerCaseLiteral,
   concatLiteral,
   upperCaseLiteral,
+  generateConstructNameLiteral,
 } from './lib/utils/utils';
 
 export {

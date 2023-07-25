@@ -64,7 +64,7 @@ class QueueConstruct<
     }: QueueConstructOptions<StackName, QueueName>
   ) {
     const cng = ConstructNameGenerator.of(stackName);
-    const _name = cng.generateConstructName(queueName, ConstructEnum.queue);
+    const _name = cng.generateConstructName(queueName, ConstructEnum.QUEUE);
     super(scope, _name);
     this.prod = Tags.isProd(scope);
     this.scope = scope;

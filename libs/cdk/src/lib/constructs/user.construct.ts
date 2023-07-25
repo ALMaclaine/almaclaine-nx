@@ -60,11 +60,11 @@ class UserConstruct<
     this.scope = scope;
 
     const cng = ConstructNameGenerator.of(stackName);
-    this.name = cng.generateConstructName(userName, ConstructEnum.user);
+    this.name = cng.generateConstructName(userName, ConstructEnum.USER);
     this.createUser();
     if (createAccessKey) {
       this.accessKey = new CfnAccessKey(this.scope, 'CfnAccessKey', {
-        userName: this.user.userName,
+        userName: this.USER.userName,
       });
     }
 
@@ -94,14 +94,14 @@ class UserConstruct<
 
   createOutputName(scope: Construct, userName: CfnUserName) {
     CfnOutput.createOutput(scope, {
-      value: this.user.userName,
+      value: this.USER.userName,
       name: userName,
     });
   }
 
   createOutputArn(scope: Construct, userArn: CfnUserArn) {
     CfnOutput.createOutput(scope, {
-      value: this.user.userArn,
+      value: this.USER.userArn,
       name: userArn,
     });
   }
