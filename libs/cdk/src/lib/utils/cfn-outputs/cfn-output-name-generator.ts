@@ -1,6 +1,5 @@
 import { Concat, ConcatEnum } from './cfn-outputs-utils';
 import { pipe } from '@effect/data/Function';
-import type { MethodReturnType } from '@almaclaine/types';
 
 class CfnOutputNameGenerator {
   static queueName<Name extends string>(pre: Name) {
