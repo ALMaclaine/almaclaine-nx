@@ -20,8 +20,7 @@
         "outputPath": "dist/libs/s3",
         "main": "libs/s3/src/index.ts",
         "tsConfig": "libs/s3/tsconfig.lib.json",
-        "assets": ["libs/s3/*.md"],
-        "buildableProjectDepsInPackageJsonType": "dependencies"
+        "assets": ["libs/s3/*.md"]
       }
     },
     "build:esm": {
@@ -38,8 +37,7 @@
         "main": "libs/s3/src/index.ts",
         "tsConfig": "libs/s3/tsconfig.lib.json",
         "assets": ["libs/s3/*.md"],
-        "swcrc": "libs/s3/.lib.esm.swcrc",
-        "buildableProjectDepsInPackageJsonType": "dependencies"
+        "swcrc": "libs/s3/.lib.esm.swcrc"
       }
     },
     "build:cjs": {
@@ -56,8 +54,7 @@
         "main": "libs/s3/src/index.ts",
         "tsConfig": "libs/s3/tsconfig.lib.json",
         "assets": ["libs/s3/*.md"],
-        "swcrc": "libs/s3/.lib.cjs.swcrc",
-        "buildableProjectDepsInPackageJsonType": "dependencies"
+        "swcrc": "libs/s3/.lib.cjs.swcrc"
       }
     },
     "publish": {
@@ -72,15 +69,12 @@
       "dependsOn": ["build"]
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["libs/s3/**/*.ts"]
-      }
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
     },
     "test": {
       "executor": "@nx/vite:test",
-      "outputs": ["coverage/libs/s3"],
+      "outputs": ["{workspaceRoot}/coverage/libs/s3"],
       "options": {
         "passWithNoTests": true,
         "reportsDirectory": "../../coverage/libs/s3"

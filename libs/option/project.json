@@ -20,8 +20,7 @@
         "outputPath": "dist/libs/option",
         "main": "libs/option/src/index.ts",
         "tsConfig": "libs/option/tsconfig.lib.json",
-        "assets": ["libs/option/*.md"],
-        "buildableProjectDepsInPackageJsonType": "dependencies"
+        "assets": ["libs/option/*.md"]
       }
     },
     "build:esm": {
@@ -38,8 +37,7 @@
         "main": "libs/option/src/index.ts",
         "tsConfig": "libs/option/tsconfig.lib.json",
         "assets": ["libs/option/*.md"],
-        "swcrc": "libs/option/.lib.esm.swcrc",
-        "buildableProjectDepsInPackageJsonType": "dependencies"
+        "swcrc": "libs/option/.lib.esm.swcrc"
       }
     },
     "build:cjs": {
@@ -56,8 +54,7 @@
         "main": "libs/option/src/index.ts",
         "tsConfig": "libs/option/tsconfig.lib.json",
         "assets": ["libs/option/*.md"],
-        "swcrc": "libs/option/.lib.cjs.swcrc",
-        "buildableProjectDepsInPackageJsonType": "dependencies"
+        "swcrc": "libs/option/.lib.cjs.swcrc"
       }
     },
     "publish": {
@@ -72,15 +69,12 @@
       "dependsOn": ["build"]
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["libs/option/**/*.ts"]
-      }
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
     },
     "test": {
       "executor": "@nx/vite:test",
-      "outputs": ["coverage/libs/option"],
+      "outputs": ["{workspaceRoot}/coverage/libs/option"],
       "options": {
         "passWithNoTests": true,
         "reportsDirectory": "../../coverage/libs/option"

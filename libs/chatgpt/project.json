@@ -15,15 +15,12 @@
       }
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["libs/chatgpt/**/*.ts"]
-      }
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
     },
     "test": {
       "executor": "@nx/vite:test",
-      "outputs": ["coverage/libs/chatgpt"],
+      "outputs": ["{workspaceRoot}/coverage/libs/chatgpt"],
       "options": {
         "passWithNoTests": true,
         "reportsDirectory": "../../coverage/libs/chatgpt"

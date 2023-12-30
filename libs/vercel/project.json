@@ -20,8 +20,7 @@
         "outputPath": "dist/libs/vercel",
         "main": "libs/vercel/src/index.ts",
         "tsConfig": "libs/vercel/tsconfig.lib.json",
-        "assets": ["libs/vercel/*.md"],
-        "buildableProjectDepsInPackageJsonType": "dependencies"
+        "assets": ["libs/vercel/*.md"]
       }
     },
     "build:esm": {
@@ -38,8 +37,7 @@
         "main": "libs/vercel/src/index.ts",
         "tsConfig": "libs/vercel/tsconfig.lib.json",
         "assets": ["libs/vercel/*.md"],
-        "swcrc": "libs/vercel/.lib.esm.swcrc",
-        "buildableProjectDepsInPackageJsonType": "dependencies"
+        "swcrc": "libs/vercel/.lib.esm.swcrc"
       }
     },
     "build:cjs": {
@@ -56,8 +54,7 @@
         "main": "libs/vercel/src/index.ts",
         "tsConfig": "libs/vercel/tsconfig.lib.json",
         "assets": ["libs/vercel/*.md"],
-        "swcrc": "libs/vercel/.lib.cjs.swcrc",
-        "buildableProjectDepsInPackageJsonType": "dependencies"
+        "swcrc": "libs/vercel/.lib.cjs.swcrc"
       }
     },
     "publish": {
@@ -72,15 +69,12 @@
       "dependsOn": ["build"]
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["libs/vercel/**/*.ts"]
-      }
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
     },
     "test": {
       "executor": "@nx/vite:test",
-      "outputs": ["coverage/libs/vercel"],
+      "outputs": ["{workspaceRoot}/coverage/libs/vercel"],
       "options": {
         "passWithNoTests": true,
         "reportsDirectory": "../../coverage/libs/vercel"

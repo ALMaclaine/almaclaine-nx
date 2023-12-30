@@ -20,8 +20,7 @@
         "outputPath": "dist/libs/nx",
         "main": "libs/nx/src/index.ts",
         "tsConfig": "libs/nx/tsconfig.lib.json",
-        "assets": ["libs/nx/*.md"],
-        "buildableProjectDepsInPackageJsonType": "dependencies"
+        "assets": ["libs/nx/*.md"]
       }
     },
     "build:esm": {
@@ -38,8 +37,7 @@
         "main": "libs/nx/src/index.ts",
         "tsConfig": "libs/nx/tsconfig.lib.json",
         "assets": ["libs/nx/*.md"],
-        "swcrc": "libs/nx/.lib.esm.swcrc",
-        "buildableProjectDepsInPackageJsonType": "dependencies"
+        "swcrc": "libs/nx/.lib.esm.swcrc"
       }
     },
     "build:cjs": {
@@ -56,8 +54,7 @@
         "main": "libs/nx/src/index.ts",
         "tsConfig": "libs/nx/tsconfig.lib.json",
         "assets": ["libs/nx/*.md"],
-        "swcrc": "libs/nx/.lib.cjs.swcrc",
-        "buildableProjectDepsInPackageJsonType": "dependencies"
+        "swcrc": "libs/nx/.lib.cjs.swcrc"
       }
     },
     "publish": {
@@ -72,15 +69,12 @@
       "dependsOn": ["build"]
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["libs/nx/**/*.ts"]
-      }
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
     },
     "test": {
       "executor": "@nx/vite:test",
-      "outputs": ["coverage/libs/nx"],
+      "outputs": ["{workspaceRoot}/coverage/libs/nx"],
       "options": {
         "passWithNoTests": true,
         "reportsDirectory": "../../coverage/libs/nx"
