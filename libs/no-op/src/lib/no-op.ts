@@ -1,7 +1,9 @@
-const noOp: () => void = () => {
-  // noOp
-};
+function noOp(): void {}
 
-const noOpObj = () => ({});
+function noOpObj() {
+  return {};
+}
 
-export { noOp, noOpObj };
+async function noOpAsync() {}
+
+export { noOp, noOpObj, noOpAsync };

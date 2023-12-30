@@ -1,6 +1,6 @@
 {
   "name": "@almaclaine/no-op",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "main": "cjs/src/index.js",
   "module": "esm/src/index.js",
   "types": "src/index.d.ts"
