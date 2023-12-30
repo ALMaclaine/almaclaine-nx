@@ -20,8 +20,7 @@
         "outputPath": "dist/libs/log",
         "main": "libs/log/src/index.ts",
         "tsConfig": "libs/log/tsconfig.lib.json",
-        "assets": ["libs/log/*.md"],
-        "buildableProjectDepsInPackageJsonType": "dependencies"
+        "assets": ["libs/log/*.md"]
       }
     },
     "build:esm": {
@@ -38,8 +37,7 @@
         "main": "libs/log/src/index.ts",
         "tsConfig": "libs/log/tsconfig.lib.json",
         "assets": ["libs/log/*.md"],
-        "swcrc": "libs/log/.lib.esm.swcrc",
-        "buildableProjectDepsInPackageJsonType": "dependencies"
+        "swcrc": "libs/log/.lib.esm.swcrc"
       }
     },
     "build:cjs": {
@@ -56,8 +54,7 @@
         "main": "libs/log/src/index.ts",
         "tsConfig": "libs/log/tsconfig.lib.json",
         "assets": ["libs/log/*.md"],
-        "swcrc": "libs/log/.lib.cjs.swcrc",
-        "buildableProjectDepsInPackageJsonType": "dependencies"
+        "swcrc": "libs/log/.lib.cjs.swcrc"
       }
     },
     "publish": {
@@ -72,15 +69,12 @@
       "dependsOn": ["build"]
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["libs/log/**/*.ts"]
-      }
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
     },
     "test": {
       "executor": "@nx/vite:test",
-      "outputs": ["coverage/libs/log"],
+      "outputs": ["{workspaceRoot}/coverage/libs/log"],
       "options": {
         "passWithNoTests": true,
         "reportsDirectory": "../../coverage/libs/log"

@@ -20,8 +20,7 @@
         "outputPath": "dist/libs/cdk",
         "main": "libs/cdk/src/index.ts",
         "tsConfig": "libs/cdk/tsconfig.lib.json",
-        "assets": ["libs/cdk/*.md"],
-        "buildableProjectDepsInPackageJsonType": "dependencies"
+        "assets": ["libs/cdk/*.md"]
       }
     },
     "build:esm": {
@@ -38,8 +37,7 @@
         "main": "libs/cdk/src/index.ts",
         "tsConfig": "libs/cdk/tsconfig.lib.json",
         "assets": ["libs/cdk/*.md"],
-        "swcrc": "libs/cdk/.lib.esm.swcrc",
-        "buildableProjectDepsInPackageJsonType": "dependencies"
+        "swcrc": "libs/cdk/.lib.esm.swcrc"
       }
     },
     "build:cjs": {
@@ -56,8 +54,7 @@
         "main": "libs/cdk/src/index.ts",
         "tsConfig": "libs/cdk/tsconfig.lib.json",
         "assets": ["libs/cdk/*.md"],
-        "swcrc": "libs/cdk/.lib.cjs.swcrc",
-        "buildableProjectDepsInPackageJsonType": "dependencies"
+        "swcrc": "libs/cdk/.lib.cjs.swcrc"
       }
     },
     "publish": {
@@ -72,15 +69,12 @@
       "dependsOn": ["build"]
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["libs/cdk/**/*.ts"]
-      }
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
     },
     "test": {
       "executor": "@nx/vite:test",
-      "outputs": ["coverage/libs/cdk"],
+      "outputs": ["{workspaceRoot}/coverage/libs/cdk"],
       "options": {
         "passWithNoTests": true,
         "reportsDirectory": "../../coverage/libs/cdk"

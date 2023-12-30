@@ -20,8 +20,7 @@
         "outputPath": "dist/libs/double-linked-list",
         "main": "libs/double-linked-list/src/index.ts",
         "tsConfig": "libs/double-linked-list/tsconfig.lib.json",
-        "assets": ["libs/double-linked-list/*.md"],
-        "buildableProjectDepsInPackageJsonType": "dependencies"
+        "assets": ["libs/double-linked-list/*.md"]
       }
     },
     "build:esm": {
@@ -38,8 +37,7 @@
         "main": "libs/double-linked-list/src/index.ts",
         "tsConfig": "libs/double-linked-list/tsconfig.lib.json",
         "assets": ["libs/double-linked-list/*.md"],
-        "swcrc": "libs/double-linked-list/.lib.esm.swcrc",
-        "buildableProjectDepsInPackageJsonType": "dependencies"
+        "swcrc": "libs/double-linked-list/.lib.esm.swcrc"
       }
     },
     "build:cjs": {
@@ -56,8 +54,7 @@
         "main": "libs/double-linked-list/src/index.ts",
         "tsConfig": "libs/double-linked-list/tsconfig.lib.json",
         "assets": ["libs/double-linked-list/*.md"],
-        "swcrc": "libs/double-linked-list/.lib.cjs.swcrc",
-        "buildableProjectDepsInPackageJsonType": "dependencies"
+        "swcrc": "libs/double-linked-list/.lib.cjs.swcrc"
       }
     },
     "publish": {
@@ -72,15 +69,12 @@
       "dependsOn": ["build"]
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["libs/double-linked-list/**/*.ts"]
-      }
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
     },
     "test": {
       "executor": "@nx/vite:test",
-      "outputs": ["coverage/libs/double-linked-list"],
+      "outputs": ["{workspaceRoot}/coverage/libs/double-linked-list"],
       "options": {
         "passWithNoTests": true,
         "reportsDirectory": "../../coverage/libs/double-linked-list"

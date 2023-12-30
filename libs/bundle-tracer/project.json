@@ -22,15 +22,12 @@
       "dependsOn": ["build"]
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["libs/bundle-tracer/**/*.ts"]
-      }
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
     },
     "test": {
       "executor": "@nx/vite:test",
-      "outputs": ["coverage/libs/bundle-tracer"],
+      "outputs": ["{workspaceRoot}/coverage/libs/bundle-tracer"],
       "options": {
         "passWithNoTests": true,
         "reportsDirectory": "../../coverage/libs/bundle-tracer"

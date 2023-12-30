@@ -20,8 +20,7 @@
         "outputPath": "dist/libs/scheduler",
         "main": "libs/scheduler/src/index.ts",
         "tsConfig": "libs/scheduler/tsconfig.lib.json",
-        "assets": ["libs/scheduler/*.md"],
-        "buildableProjectDepsInPackageJsonType": "dependencies"
+        "assets": ["libs/scheduler/*.md"]
       }
     },
     "build:esm": {
@@ -38,8 +37,7 @@
         "main": "libs/scheduler/src/index.ts",
         "tsConfig": "libs/scheduler/tsconfig.lib.json",
         "assets": ["libs/scheduler/*.md"],
-        "swcrc": "libs/scheduler/.lib.esm.swcrc",
-        "buildableProjectDepsInPackageJsonType": "dependencies"
+        "swcrc": "libs/scheduler/.lib.esm.swcrc"
       }
     },
     "build:cjs": {
@@ -56,8 +54,7 @@
         "main": "libs/scheduler/src/index.ts",
         "tsConfig": "libs/scheduler/tsconfig.lib.json",
         "assets": ["libs/scheduler/*.md"],
-        "swcrc": "libs/scheduler/.lib.cjs.swcrc",
-        "buildableProjectDepsInPackageJsonType": "dependencies"
+        "swcrc": "libs/scheduler/.lib.cjs.swcrc"
       }
     },
     "publish": {
@@ -72,15 +69,12 @@
       "dependsOn": ["build"]
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["libs/scheduler/**/*.ts"]
-      }
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
     },
     "test": {
       "executor": "@nx/vite:test",
-      "outputs": ["coverage/libs/scheduler"],
+      "outputs": ["{workspaceRoot}/coverage/libs/scheduler"],
       "options": {
         "passWithNoTests": true,
         "reportsDirectory": "../../coverage/libs/scheduler"

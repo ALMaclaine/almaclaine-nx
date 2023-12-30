@@ -20,8 +20,7 @@
         "outputPath": "dist/libs/trpc",
         "main": "libs/trpc/src/index.ts",
         "tsConfig": "libs/trpc/tsconfig.lib.json",
-        "assets": ["libs/trpc/*.md"],
-        "buildableProjectDepsInPackageJsonType": "dependencies"
+        "assets": ["libs/trpc/*.md"]
       }
     },
     "build:esm": {
@@ -38,8 +37,7 @@
         "main": "libs/trpc/src/index.ts",
         "tsConfig": "libs/trpc/tsconfig.lib.json",
         "assets": ["libs/trpc/*.md"],
-        "swcrc": "libs/trpc/.lib.esm.swcrc",
-        "buildableProjectDepsInPackageJsonType": "dependencies"
+        "swcrc": "libs/trpc/.lib.esm.swcrc"
       }
     },
     "build:cjs": {
@@ -56,8 +54,7 @@
         "main": "libs/trpc/src/index.ts",
         "tsConfig": "libs/trpc/tsconfig.lib.json",
         "assets": ["libs/trpc/*.md"],
-        "swcrc": "libs/trpc/.lib.cjs.swcrc",
-        "buildableProjectDepsInPackageJsonType": "dependencies"
+        "swcrc": "libs/trpc/.lib.cjs.swcrc"
       }
     },
     "publish": {
@@ -72,15 +69,12 @@
       "dependsOn": ["build"]
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["libs/trpc/**/*.ts"]
-      }
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
     },
     "test": {
       "executor": "@nx/vite:test",
-      "outputs": ["coverage/libs/trpc"],
+      "outputs": ["{workspaceRoot}/coverage/libs/trpc"],
       "options": {
         "passWithNoTests": true,
         "reportsDirectory": "../../coverage/libs/trpc"

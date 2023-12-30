@@ -20,8 +20,7 @@
         "outputPath": "dist/libs/equals",
         "main": "libs/equals/src/index.ts",
         "tsConfig": "libs/equals/tsconfig.lib.json",
-        "assets": ["libs/equals/*.md"],
-        "buildableProjectDepsInPackageJsonType": "dependencies"
+        "assets": ["libs/equals/*.md"]
       }
     },
     "build:esm": {
@@ -38,8 +37,7 @@
         "main": "libs/equals/src/index.ts",
         "tsConfig": "libs/equals/tsconfig.lib.json",
         "assets": ["libs/equals/*.md"],
-        "swcrc": "libs/equals/.lib.esm.swcrc",
-        "buildableProjectDepsInPackageJsonType": "dependencies"
+        "swcrc": "libs/equals/.lib.esm.swcrc"
       }
     },
     "build:cjs": {
@@ -56,8 +54,7 @@
         "main": "libs/equals/src/index.ts",
         "tsConfig": "libs/equals/tsconfig.lib.json",
         "assets": ["libs/equals/*.md"],
-        "swcrc": "libs/equals/.lib.cjs.swcrc",
-        "buildableProjectDepsInPackageJsonType": "dependencies"
+        "swcrc": "libs/equals/.lib.cjs.swcrc"
       }
     },
     "publish": {
@@ -72,15 +69,12 @@
       "dependsOn": ["build"]
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["libs/equals/**/*.ts"]
-      }
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
     },
     "test": {
       "executor": "@nx/vite:test",
-      "outputs": ["coverage/libs/equals"],
+      "outputs": ["{workspaceRoot}/coverage/libs/equals"],
       "options": {
         "passWithNoTests": true,
         "reportsDirectory": "../../coverage/libs/equals"

@@ -14,25 +14,18 @@
         "build:esm",
         "build:cjs"
       ],
-      "outputs": [
-        "{options.outputPath}"
-      ],
+      "outputs": ["{options.outputPath}"],
       "options": {
         "clean": false,
         "outputPath": "dist/libs/random",
         "main": "libs/random/src/index.ts",
         "tsConfig": "libs/random/tsconfig.lib.json",
-        "assets": [
-          "libs/random/*.md"
-        ],
-        "buildableProjectDepsInPackageJsonType": "dependencies"
+        "assets": ["libs/random/*.md"]
       }
     },
     "build:cjs": {
       "executor": "@nx/js:swc",
-      "outputs": [
-        "{options.outputPath}"
-      ],
+      "outputs": ["{options.outputPath}"],
       "dependsOn": [
         {
           "target": "build:cjs",
@@ -43,18 +36,13 @@
         "outputPath": "dist/libs/random/cjs",
         "main": "libs/random/src/index.ts",
         "tsConfig": "libs/random/tsconfig.lib.json",
-        "assets": [
-          "libs/random/*.md"
-        ],
-        "swcrc": "libs/random/.lib.cjs.swcrc",
-        "buildableProjectDepsInPackageJsonType": "dependencies"
+        "assets": ["libs/random/*.md"],
+        "swcrc": "libs/random/.lib.cjs.swcrc"
       }
     },
     "build:esm": {
       "executor": "@nx/js:swc",
-      "outputs": [
-        "{options.outputPath}"
-      ],
+      "outputs": ["{options.outputPath}"],
       "dependsOn": [
         {
           "target": "build:esm",
@@ -65,38 +53,24 @@
         "outputPath": "dist/libs/random/esm",
         "main": "libs/random/src/index.ts",
         "tsConfig": "libs/random/tsconfig.lib.json",
-        "assets": [
-          "libs/random/*.md"
-        ],
-        "swcrc": "libs/random/.lib.esm.swcrc",
-        "buildableProjectDepsInPackageJsonType": "dependencies"
+        "assets": ["libs/random/*.md"],
+        "swcrc": "libs/random/.lib.esm.swcrc"
       }
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
-      "outputs": [
-        "{options.outputFile}"
-      ],
-      "options": {
-        "lintFilePatterns": [
-          "libs/random/**/*.ts"
-        ]
-      }
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
     },
     "publish": {
       "executor": "nx:run-commands",
       "options": {
         "command": "node tools/scripts/publish.cjs random {args.ver} {args.tag}"
       },
-      "dependsOn": [
-        "build"
-      ]
+      "dependsOn": ["build"]
     },
     "test": {
       "executor": "@nx/vite:test",
-      "outputs": [
-        "coverage/libs/random"
-      ],
+      "outputs": ["{workspaceRoot}/coverage/libs/random"],
       "options": {
         "passWithNoTests": true,
         "reportsDirectory": "../../coverage/libs/random"
