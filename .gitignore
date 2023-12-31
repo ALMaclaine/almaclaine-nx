@@ -61,3 +61,6 @@ amplifytools.xcconfig
 #amplify-do-not-edit-end
 
 .nx/cache
+
+// ts type files
+libs/**/*.d.ts
