@@ -5,17 +5,67 @@
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nx/js:tsc",
+      "executor": "@nx/js:swc",
+      "dependsOn": [
+        {
+          "target": "build",
+          "dependencies": true
+        },
+        "build:esm",
+        "build:cjs"
+      ],
       "outputs": ["{options.outputPath}"],
       "options": {
+        "clean": false,
         "outputPath": "dist/libs/linkwarden",
         "main": "libs/linkwarden/src/index.ts",
         "tsConfig": "libs/linkwarden/tsconfig.lib.json",
         "assets": ["libs/linkwarden/*.md"]
       }
     },
+    "build:esm": {
+      "executor": "@nx/js:swc",
+      "dependsOn": [
+        {
+          "target": "build:esm",
+          "dependencies": true
+        }
+      ],
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/linkwarden/esm",
+        "main": "libs/linkwarden/src/index.ts",
+        "tsConfig": "libs/linkwarden/tsconfig.lib.json",
+        "assets": ["libs/linkwarden/*.md"],
+        "swcrc": "libs/linkwarden/.lib.esm.swcrc"
+      }
+    },
+    "build:cjs": {
+      "executor": "@nx/js:swc",
+      "dependsOn": [
+        {
+          "target": "build:cjs",
+          "dependencies": true
+        }
+      ],
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/linkwarden/cjs",
+        "main": "libs/linkwarden/src/index.ts",
+        "tsConfig": "libs/linkwarden/tsconfig.lib.json",
+        "assets": ["libs/linkwarden/*.md"],
+        "swcrc": "libs/linkwarden/.lib.cjs.swcrc"
+      }
+    },
     "publish": {
-      "command": "node tools/scripts/publish.mjs linkwarden {args.ver} {args.tag}",
+      "executor": "@almaclaine/publish:publish",
+      "dependsOn": ["build"]
+    },
+    "publish:upload": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node tools/scripts/publish.cjs linkwarden {args.ver} {args.tag} {args.mfa}"
+      },
       "dependsOn": ["build"]
     },
     "lint": {
@@ -24,8 +74,9 @@
     },
     "test": {
       "executor": "@nx/vite:test",
-      "outputs": ["{options.reportsDirectory}"],
+      "outputs": ["{workspaceRoot}/coverage/libs/linkwarden"],
       "options": {
+        "passWithNoTests": true,
         "reportsDirectory": "../../coverage/libs/linkwarden"
       }
     }

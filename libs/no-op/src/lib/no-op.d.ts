@@ -1,3 +1,4 @@
-declare const noOp: () => void;
-declare const noOpObj: () => {};
-export { noOp, noOpObj };
+declare function noOp(): void;
+declare function noOpObj(): {};
+declare function noOpAsync(): Promise<void>;
+export { noOp, noOpObj, noOpAsync };
