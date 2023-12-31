@@ -29,6 +29,7 @@
       "@almaclaine/equals": ["libs/equals/src/index.ts"],
       "@almaclaine/ical": ["libs/ical/src/index.ts"],
       "@almaclaine/is": ["libs/is/src/index.ts"],
+      "@almaclaine/linkwarden": ["libs/linkwarden/src/index.ts"],
       "@almaclaine/log": ["libs/log/src/index.ts"],
       "@almaclaine/mantine-color-scheme-provider": [
         "libs/mantine-color-scheme-provider/src/index.ts"
